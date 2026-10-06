@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>Sales Org Kickoff, October 20th–23rd</title>
+<title>Fall Summit, October 20th–23rd</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -84,9 +84,9 @@
   .count { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.75rem; padding: .55rem 1rem; border: 1.5px solid var(--teal); border-radius: 999px; font: inherit; font-weight: 600; color: #fff; background: rgba(11,37,48,.35); cursor: pointer; }
   .count:hover { border-color: var(--gold-2); }
   .count i { width: .6rem; height: .6rem; border-radius: 50%; background: var(--teal); }
-  .hero .nums, .hero .month { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+  .hero .nums, .hero .month { animation: heroRise .7s cubic-bezier(.2,.7,.2,1) both; }
   .hero .month { animation-delay: .12s; }
-  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes heroRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
   .star { position: absolute; z-index: 3; top: clamp(1.2rem, 6vw, 3.5rem); right: clamp(1.2rem, 9vw, 7rem); width: 34px; height: 34px; border: 0; background: transparent; color: var(--gold-2); text-shadow: 0 0 12px rgba(255,212,107,.85); font-size: 1.35rem; line-height: 1; cursor: pointer; border-radius: 50%; animation: twinkle 3.2s ease-in-out infinite; }
   .star:hover { color: #fff; transform: scale(1.25); }
   @keyframes twinkle { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
@@ -481,11 +481,49 @@
   .th-inline .th-stage { padding: 0; }
   .th-hint2 { color: #9DB8C0; font-size: .92rem; margin-top: 1rem; }
 
+  /* ===== Fall Summit: start lights, announcement teaser, timing board ===== */
+  .hero .count { background: #0B2530; color: #fff; border: 0; padding: .5rem 1.3rem .5rem .55rem; gap: .9rem; font-weight: 800; font-size: 1.05rem; }
+  .hero .count:hover { transform: none; }
+  .lights { display: inline-flex; gap: .4rem; background: #06161D; padding: .5rem .65rem; border-radius: 999px; }
+  .hero .count .lights i, .x-teaser .lights i { display: block; width: 1rem; height: 1rem; border-radius: 50%; background: #3A1B1B; box-shadow: none; animation: none; transform: none; }
+  @keyframes lamp1 { 0%, 5% { background: #3A1B1B; box-shadow: none; } 6%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
+  @keyframes lamp2 { 0%, 13% { background: #3A1B1B; box-shadow: none; } 14%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
+  @keyframes lamp3 { 0%, 21% { background: #3A1B1B; box-shadow: none; } 22%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
+  @keyframes lamp4 { 0%, 29% { background: #3A1B1B; box-shadow: none; } 30%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
+  @keyframes lamp5 { 0%, 37% { background: #3A1B1B; box-shadow: none; } 38%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
+  .hero .count .lights i:nth-child(1) { animation: lamp1 8s linear infinite; }
+  .hero .count .lights i:nth-child(2) { animation: lamp2 8s linear infinite; }
+  .hero .count .lights i:nth-child(3) { animation: lamp3 8s linear infinite; }
+  .hero .count .lights i:nth-child(4) { animation: lamp4 8s linear infinite; }
+  .hero .count .lights i:nth-child(5) { animation: lamp5 8s linear infinite; }
+  .x-teaser .lights i:nth-child(1) { animation: lamp1 8s linear infinite; }
+  .x-teaser .lights i:nth-child(2) { animation: lamp2 8s linear infinite; }
+  .x-teaser .lights i:nth-child(3) { animation: lamp3 8s linear infinite; }
+  .x-teaser .lights i:nth-child(4) { animation: lamp4 8s linear infinite; }
+  .x-teaser .lights i:nth-child(5) { animation: lamp5 8s linear infinite; }
+  .hero .count.out .lights i:nth-child(n) { animation: none; background: #3A1B1B; box-shadow: none; }
+  .x-teaser { background: #FF5A36; color: #0B2530; padding: clamp(4rem, 9vw, 8rem) 0; overflow: hidden; }
+  .x-teaser .lights.big { padding: .8rem 1.1rem; gap: .8rem; margin-bottom: clamp(1.4rem, 3vw, 2.4rem); }
+  .x-teaser .lights.big i { width: clamp(1.5rem, 3.4vw, 2.6rem); height: clamp(1.5rem, 3.4vw, 2.6rem); }
+  .x-teaser .big1 { font-family: var(--display); font-weight: 900; font-size: clamp(3rem, 11vw, 10rem); line-height: .86; letter-spacing: -0.05em; }
+  .x-teaser .big2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(3.2rem, 12vw, 11rem); line-height: .86; letter-spacing: -0.02em; color: #FFF5E1; }
+  .x-teaser .sub { max-width: 34rem; margin-top: clamp(1.2rem, 3vw, 2rem); font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; line-height: 1.3; }
+  .x-road::before { content: ""; position: absolute; right: 8%; top: 0; bottom: 0; width: clamp(32px, 5vw, 64px); background: conic-gradient(#FFF5E1 25%, #06161D 0 50%, #FFF5E1 0 75%, #06161D 0) 0 0 / 16px 16px; z-index: 1; }
+  .lb { background: #06161D; color: #fff; border-radius: 16px; padding: 1.1rem 1.2rem 1.2rem; }
+  .lb h3 { color: var(--gold-2); font-size: 1.2rem; margin-bottom: .6rem; }
+  .lb ol { list-style: none; margin: 0; padding: 0; }
+  .lb li { display: grid; grid-template-columns: 2.6rem 1fr auto; gap: .6rem; align-items: baseline; padding: .4rem 0; border-bottom: 1px solid rgba(255,255,255,.14); font-weight: 600; }
+  .lb li:last-child { border-bottom: 0; }
+  .lb li .pos { font-family: var(--display); font-weight: 900; color: var(--gold-2); }
+  .lb li .nm { float: none; color: #fff; font-family: var(--body); font-weight: 600; }
+  .lb li:first-child .nm { color: var(--gold-2); }
+  .lb li .sc { float: none; font-family: var(--display); font-weight: 800; color: var(--teal); font-variant-numeric: tabular-nums; }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero .nums, .hero .month, .star, .sun::before, .cloud, .coin, .coin b, .ticker-track, .pennant, .bob, .speed, .pop { animation: none; }
     .bolt { animation: none; opacity: .9; }
-    .hero .count i { animation: none; }
+    .lights i { animation: none !important; background: #FF3B30 !important; box-shadow: 0 0 8px rgba(255,59,48,.6) !important; }
     .puff, .x-road::after, .x-car:hover svg { animation: none; }
     .th-track { animation: none; }
     .th-dup { display: none; }
@@ -504,7 +542,7 @@
 
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="#top">WP Engine <b>Sales Kickoff</b></a>
+    <a class="brand" href="#top">WP Engine <b>Fall Summit</b></a>
     <div class="nav-right">
       <nav class="links" aria-label="Page sections">
         <a href="#schedule">Schedule</a>
@@ -538,13 +576,13 @@
     <i class="coin" style="--x:88%;--d:4.2s;--t:7.8s;--s:10px" aria-hidden="true"><b></b></i>
     <i class="coin" style="--x:94%;--d:7s;--t:9s;--s:13px" aria-hidden="true"><b></b></i>
     <div class="wrap">
-      <h1><span class="h1a">Sales Org</span><span class="h1b">Kickoff<span class="bang">!</span></span></h1>
+      <h1><span class="h1a">Fall</span><span class="h1b">Summit<span class="bang">!</span></span></h1>
       <div class="date">
         <div class="nums" aria-label="October 20th to 23rd">20<sup>th</sup><span>–</span>23<sup>rd</sup></div>
         <div class="month">October<small>2026 · Austin</small></div>
       </div>
-      <p class="tagline">Everything you need for the week lives right here.</p>
-      <div class="count" id="count"><i></i><span id="countText">Counting down</span></div>
+      <p class="tagline">Race to the finish. Everything you need for the week lives right here.</p>
+      <div class="count" id="count"><span class="lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span id="countText">Counting down</span></div>
     </div>
     <svg class="skyline" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
       <path fill="#6FB4D3" opacity=".6" d="M0 240 V172 H52 V142 H108 V160 H176 V118 H238 V98 H284 V150 H392 V112 H452 V132 H548 V96 H598 V126 H690 V104 H760 V128 H860 V90 H920 V118 H1010 V100 H1090 V128 H1180 V108 H1250 V138 H1330 V120 H1390 V150 H1440 V240 Z"/>
@@ -561,7 +599,7 @@
 
   <div class="x-track">
     <div class="wrap x-track-in">
-      <button class="x-car" id="carBtn" type="button" aria-label="Rev it up: play Deal Dash">
+      <button class="x-car" id="carBtn" type="button" aria-label="Rev it up: play Fastest Lap">
         <svg viewBox="-60 10 500 100" aria-hidden="true" focusable="false">
           <g fill="#0B2530"><circle class="puff" cx="8" cy="94" r="6"/><circle class="puff" cx="8" cy="94" r="6" style="animation-delay:-.8s"/><circle class="puff" cx="8" cy="94" r="6" style="animation-delay:-1.6s"/></g>
           <g class="sl" stroke="#0B2530" stroke-width="4" stroke-linecap="round" fill="none"><path d="M-6 58H-58M-2 76H-60M2 94H-44"/></g>
@@ -578,14 +616,14 @@
           <g><circle cx="338" cy="85" r="21" fill="#0B2530"/><circle cx="338" cy="85" r="15" fill="none" stroke="#FF5A36" stroke-width="3"/><circle cx="338" cy="85" r="9" fill="#FFD46B"/><circle cx="338" cy="85" r="3.5" fill="#0B2530"/></g>
         </svg>
       </button>
-      <p class="x-track-label">Rev it up.<span class="x-em">Go for the high score.</span></p>
+      <p class="x-track-label">Rev it up.<span class="x-em">Set the fastest lap.</span></p>
     </div>
     <div class="x-road" aria-hidden="true"></div>
   </div>
 
   <section class="x-lede">
     <div class="wrap">
-      <p>Four days in Austin. The whole sales org in <span class="x-em">one room.</span> Kickoff is <span class="x-mark">Wednesday, October 21.</span></p>
+      <p>Four days in Austin. The whole sales org in <span class="x-em">one room.</span> Race day is <span class="x-mark">Wednesday, October 21.</span></p>
     </div>
   </section>
 
@@ -600,18 +638,27 @@
     </div>
   </section>
 
+  <section class="x-teaser" id="announcement">
+    <div class="wrap">
+      <span class="lights big" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <p class="big1">What's next</p>
+      <p class="big2">starts Wednesday.</p>
+      <p class="sub">Updates on where we're headed and how we get there. Be in your seat by 8:55 AM on October 21.</p>
+    </div>
+  </section>
+
   <section class="x-week" id="schedule">
     <div class="wrap">
       <div class="x-head"><h2>This <span class="x-em">week.</span></h2></div>
       <div class="x-days" role="tablist" aria-label="Choose a day">
-        <button class="x-day" role="tab" id="tab-0" aria-controls="p-0" aria-selected="true" data-date="2026-10-20"><span class="d">20</span><span class="w">Tuesday</span><span class="t">Arrive</span></button>
-        <button class="x-day" role="tab" id="tab-1" aria-controls="p-1" aria-selected="false" data-date="2026-10-21" tabindex="-1"><span class="d">21</span><span class="w">Wednesday</span><span class="t">Kickoff</span></button>
-        <button class="x-day" role="tab" id="tab-2" aria-controls="p-2" aria-selected="false" data-date="2026-10-22" tabindex="-1"><span class="d">22</span><span class="w">Thursday</span><span class="t">Workshops</span></button>
-        <button class="x-day" role="tab" id="tab-3" aria-controls="p-3" aria-selected="false" data-date="2026-10-23" tabindex="-1"><span class="d">23</span><span class="w">Friday</span><span class="t">Travel home</span></button>
+        <button class="x-day" role="tab" id="tab-0" aria-controls="p-0" aria-selected="true" data-date="2026-10-20"><span class="d">20</span><span class="w">Tuesday</span><span class="t">Into the paddock</span></button>
+        <button class="x-day" role="tab" id="tab-1" aria-controls="p-1" aria-selected="false" data-date="2026-10-21" tabindex="-1"><span class="d">21</span><span class="w">Wednesday</span><span class="t">Race day</span></button>
+        <button class="x-day" role="tab" id="tab-2" aria-controls="p-2" aria-selected="false" data-date="2026-10-22" tabindex="-1"><span class="d">22</span><span class="w">Thursday</span><span class="t">Pit stop</span></button>
+        <button class="x-day" role="tab" id="tab-3" aria-controls="p-3" aria-selected="false" data-date="2026-10-23" tabindex="-1"><span class="d">23</span><span class="w">Friday</span><span class="t">Cool-down lap</span></button>
       </div>
       <div class="x-panel" role="tabpanel" id="p-0" aria-labelledby="tab-0">
         <h3 class="x-daytitle">Tuesday, <span class="x-em">October 20</span></h3>
-        <p class="x-daysub">Arrival day. Fly in, get settled, and meet up with the team.</p>
+        <p class="x-daysub">Into the paddock: fly in, get settled, and meet up with the team.</p>
         <ul class="x-rows">
           <li class="x-row"><div class="x-time">All day</div><div class="x-what"><h4>Travel and check-in</h4><p>Everyone is flying in today. Please check with your leader about your team's hotel.</p></div></li>
           <li class="x-row key"><div class="x-time">5:00–6:00 PM</div><div class="x-what"><h4>Sales org happy hour</h4><p>Kick off the week with the whole org. Location to be announced.</p><span class="x-tag">Time tentative</span></div></li>
@@ -620,7 +667,7 @@
       </div>
       <div class="x-panel" role="tabpanel" id="p-1" aria-labelledby="tab-1" hidden>
         <h3 class="x-daytitle">Wednesday, <span class="x-em">October 21</span></h3>
-        <p class="x-daysub">Revenue kickoff agenda</p>
+        <p class="x-daysub">Race day agenda</p>
         <div class="x-callout">
           <h5>Wednesday's venue</h5>
           <p><strong>Omni Austin Hotel Downtown</strong>, 700 San Jacinto Blvd (at E. 8th Street). We're in the <strong>Pennybacker</strong> conference room, and the hotel will have it on their sign. <a href="https://www.google.com/maps/search/?api=1&amp;query=Omni+Austin+Hotel+Downtown+700+San+Jacinto+Blvd+Austin+TX" target="_blank" rel="noopener">Open in Maps</a></p>
@@ -629,7 +676,7 @@
         <ul class="x-rows">
           <li class="x-row"><div class="x-time">8:30–8:50 AM</div><div class="x-what"><h4>Breakfast tacos and coffee or tea</h4><p>At the Omni Austin Hotel Downtown. Look for the Pennybacker conference room on the hotel sign.</p></div></li>
           <li class="x-row minor"><div class="x-time">8:50–8:55 AM</div><div class="x-what"><h4>Begin seating and settle in</h4><p>Please be seated so we can start promptly at 9:00 AM.</p></div></li>
-          <li class="x-row key"><div class="x-time">9:00–9:30 AM</div><div class="x-what"><h4>Kickoff: delivering the H2 plan</h4><p>YTD performance and future outlook.</p><span class="x-who">Simon</span></div></li>
+          <li class="x-row key"><div class="x-time">9:00–9:30 AM</div><div class="x-what"><h4>Opening: delivering the H2 plan</h4><p>YTD performance and future outlook.</p><span class="x-who">Simon</span></div></li>
           <li class="x-row"><div class="x-time">9:30–10:00 AM</div><div class="x-what"><h4>Product</h4><span class="x-who">Ramadass Prabhakar</span></div></li>
           <li class="x-row"><div class="x-time">10:00–10:20 AM</div><div class="x-what"><h4>GTM initiative</h4><span class="x-who">James Gleitman</span></div></li>
           <li class="x-row minor"><div class="x-time">10:20–10:25 AM</div><div class="x-what"><h4>Fun transition</h4></div></li>
@@ -638,7 +685,7 @@
           <li class="x-row minor"><div class="x-time">11:05–11:20 AM</div><div class="x-what"><h4>Snack break</h4><p>Coffee, tea, snacks, and pastries.</p></div></li>
           <li class="x-row"><div class="x-time">11:20 AM–12:05 PM</div><div class="x-what"><h4>MAP</h4><span class="x-who">Sarah Wells</span></div></li>
           <li class="x-row minor"><div class="x-time">12:05–12:10 PM</div><div class="x-what"><h4>Fun transition</h4></div></li>
-          <li class="x-row key"><div class="x-time">12:10–12:30 PM</div><div class="x-what"><h4>Closing</h4><p>Tying the Managed Agentic Platform and product transformation into the broader company vision.</p><span class="x-who">Heather Brunner</span></div></li>
+          <li class="x-row key"><div class="x-time">12:10–12:30 PM</div><div class="x-what"><h4>Closing</h4><p>Where we're headed next, and how it ties into the broader company vision.</p><span class="x-who">Heather Brunner</span></div></li>
           <li class="x-row minor"><div class="x-time">12:30 PM</div><div class="x-what"><h4>End of program</h4><p>We wrap by 12:30 so you can go grab lunch.</p></div></li>
           <li class="x-row key"><div class="x-time">6:00 PM</div><div class="x-what"><h4>Dinner and fun at Dave &amp; Buster's</h4><p>Dinner and some fun are on us. 9333 Research Blvd Service Rd, Suite A 600, Austin, TX 78759 · <a href="https://www.google.com/maps/search/?api=1&amp;query=Dave+%26+Buster%27s+9333+Research+Blvd+Service+Rd+Suite+A+600+Austin+TX+78759" target="_blank" rel="noopener">Open in Maps</a></p></div></li>
         </ul>
@@ -646,17 +693,17 @@
       </div>
       <div class="x-panel" role="tabpanel" id="p-2" aria-labelledby="tab-2" hidden>
         <h3 class="x-daytitle">Thursday, <span class="x-em">October 22</span></h3>
-        <p class="x-daysub">Workshops in the morning, with protected time to sell.</p>
+        <p class="x-daysub">Pit stop: workshops in the morning, with protected time to sell.</p>
         <ul class="x-rows">
           <li class="x-row"><div class="x-time">Morning</div><div class="x-what"><h4>Coffee and breakfast</h4><p>Served in the kitchen area on the ninth floor.</p><span class="x-tag">Details to be confirmed</span></div></li>
-          <li class="x-row"><div class="x-time">Morning</div><div class="x-what"><h4>Sales org workshops</h4><p>Breakout workshops and kickoffs for the different sales organizations. Your session and room will be listed here.</p><span class="x-tag">Time tentative</span><span class="x-tag">Details coming soon</span></div></li>
+          <li class="x-row"><div class="x-time">Morning</div><div class="x-what"><h4>Sales org workshops</h4><p>Breakout workshops for the different sales organizations. Your session and room will be listed here.</p><span class="x-tag">Time tentative</span><span class="x-tag">Details coming soon</span></div></li>
           <li class="x-row"><div class="x-time">Afternoon</div><div class="x-what"><h4>Focused selling time</h4><p>The rest of the day is yours to work pipeline and connect with customers.</p><span class="x-tag">Time tentative</span></div></li>
           <li class="x-row"><div class="x-time">Evening</div><div class="x-what"><h4>Team dinners</h4><p>For teams that didn't have dinner on Tuesday. Flights home are also available Thursday night.</p><span class="x-tag">Optional</span></div></li>
         </ul>
       </div>
       <div class="x-panel" role="tabpanel" id="p-3" aria-labelledby="tab-3" hidden>
         <h3 class="x-daytitle">Friday, <span class="x-em">October 23</span></h3>
-        <p class="x-daysub">Travel home.</p>
+        <p class="x-daysub">Cool-down lap: travel home.</p>
         <ul class="x-rows">
           <li class="x-row"><div class="x-time">All day</div><div class="x-what"><h4>Fly-out day</h4><p>Depart any time today. You can also fly out Thursday night if that works better for you.</p></div></li>
         </ul>
@@ -668,10 +715,10 @@
     <div class="wrap">
       <div class="x-head"><h2>Austin, <span class="x-em">Texas.</span></h2></div>
       <div class="x-tiles">
-        <div class="x-tile t1" style="--r:-.8deg"><h3>Wednesday kickoff</h3><p><strong>Omni Austin Hotel Downtown</strong>, 700 San Jacinto Blvd (at E. 8th Street). Our event is in the Pennybacker conference room, and the hotel will have it on their sign. <a href="https://www.google.com/maps/search/?api=1&amp;query=Omni+Austin+Hotel+Downtown+700+San+Jacinto+Blvd+Austin+TX" target="_blank" rel="noopener">Open in Maps</a></p></div>
+        <div class="x-tile t1" style="--r:-.8deg"><h3>Wednesday summit</h3><p><strong>Omni Austin Hotel Downtown</strong>, 700 San Jacinto Blvd (at E. 8th Street). Our event is in the Pennybacker conference room, and the hotel will have it on their sign. <a href="https://www.google.com/maps/search/?api=1&amp;query=Omni+Austin+Hotel+Downtown+700+San+Jacinto+Blvd+Austin+TX" target="_blank" rel="noopener">Open in Maps</a></p></div>
         <div class="x-tile t2" style="--r:1deg"><h3>Parking tip</h3><p>The hotel is about a 10-minute walk from the Austin office. Hotel parking is $55, so it may be best to park at the office and walk over.</p></div>
         <div class="x-tile t3" style="--r:.8deg"><h3>Wednesday night</h3><p>Dinner and some fun at Dave &amp; Buster's, on us. 9333 Research Blvd Service Rd, Suite A 600, Austin, TX 78759. <a href="https://www.google.com/maps/search/?api=1&amp;query=Dave+%26+Buster%27s+9333+Research+Blvd+Service+Rd+Suite+A+600+Austin+TX+78759" target="_blank" rel="noopener">Open in Maps</a></p></div>
-        <div class="x-tile t4" style="--r:-1deg"><h3>Breakfast</h3><p>Wednesday: breakfast tacos and coffee or tea at the Omni starting at 8:30 AM, before the 9:00 AM kickoff. Thursday: details coming soon.</p></div>
+        <div class="x-tile t4" style="--r:-1deg"><h3>Breakfast</h3><p>Wednesday: breakfast tacos and coffee or tea at the Omni starting at 8:30 AM, before the 9:00 AM start. Thursday: details coming soon.</p></div>
         <div class="x-tile t5" style="--r:.6deg"><h3>Your hotel</h3><p>Many teams are staying at our usual hotels. Please check with your leader for your team's plan.</p></div>
         <div class="x-tile t6" style="--r:-.8deg"><h3>Arriving and departing</h3><p>Fly in Tuesday, Oct 20. Fly out Thursday night, Oct 22 or Friday, Oct 23.</p></div>
         <div class="x-tile t7" style="--r:-.5deg"><h3>Getting around</h3><p>Double up on rides, carpool, or walk where you can.</p></div>
@@ -725,7 +772,7 @@
     <div class="wrap">
       <div class="x-head"><h2>Good <span class="x-em">questions.</span></h2></div>
       <div>
-        <details class="x-q"><summary>Where is Wednesday's kickoff?<i></i></summary><p>At the Omni Austin Hotel Downtown, 700 San Jacinto Blvd (at E. 8th Street), in the Pennybacker conference room. Breakfast tacos and coffee or tea start at 8:30 AM. Please be seated by 8:55 AM so the program can start promptly at 9:00 AM, and we'll wrap by 12:30 PM.</p></details>
+        <details class="x-q"><summary>Where is Wednesday's summit?<i></i></summary><p>At the Omni Austin Hotel Downtown, 700 San Jacinto Blvd (at E. 8th Street), in the Pennybacker conference room. Breakfast tacos and coffee or tea start at 8:30 AM. Please be seated by 8:55 AM so the program can start promptly at 9:00 AM, and we'll wrap by 12:30 PM.</p></details>
         <details class="x-q"><summary>Where should I park?<i></i></summary><p>The hotel is only about a 10-minute walk from the Austin office. Hotel parking is $55, so it may be best to park at the office and walk over.</p></details>
         <details class="x-q"><summary>When do I need to arrive?<i></i></summary><p>Plan to arrive on Tuesday, October 20. The sales org happy hour starts at 5:00 PM, though that time is still tentative.</p></details>
         <details class="x-q"><summary>Are team dinners required?<i></i></summary><p>No. Team dinners on Tuesday and Thursday are optional. Teams that don't have dinner on Tuesday can have one on Thursday. Wednesday night's dinner and fun at Dave &amp; Buster's is for everyone.</p></details>
@@ -741,7 +788,7 @@
 <footer class="x-foot">
   <div class="wrap">
     <h2>See you in <span class="o">Austin.</span></h2>
-    <div class="row"><span>WP Engine Sales Org Kickoff · October 20th–23rd, 2026</span><span>Last updated October 1, 2026. Details may change.</span></div>
+    <div class="row"><span>WP Engine Fall Summit · October 20th–23rd, 2026</span><span>Last updated October 1, 2026. Details may change.</span></div>
   </div>
 </footer>
 
@@ -749,13 +796,13 @@
 <dialog id="gameDlg" class="wide" aria-labelledby="gTitle">
   <div class="dlg-in">
     <div class="dlg-head">
-      <div><h2 id="gTitle">Deal Dash</h2><p>Jump the blockers, close the deals. Space, up arrow, or tap to jump.</p></div>
+      <div><h2 id="gTitle">Fastest Lap</h2><p>Jump the blockers, close the deals. Space, up arrow, or tap to jump.</p></div>
       <button class="x" type="button" id="gClose" aria-label="Close game">×</button>
     </div>
     <div class="stage">
-      <canvas id="cv" tabindex="0" aria-label="Deal Dash game"></canvas>
+      <canvas id="cv" tabindex="0" aria-label="Fastest Lap game"></canvas>
       <div class="ovl" id="gStart">
-        <h3>Ready to run the quarter?</h3>
+        <h3>Lights out. Ready to run the quarter?</h3>
         <p>Jump over blockers like Ghosted and Procurement. Every few blockers you reach a deal checkpoint: answer the sales question to bank bonus points.</p>
         <button class="btn" type="button" id="gGo">Start</button>
       </div>
@@ -776,8 +823,8 @@
       </div>
     </div>
     <div class="game-grid">
-      <div class="hint">Pick your name at the end of a run to post your score. Your best score is the one that stays on the board.</div>
-      <div class="lb"><h3>Leaderboard</h3><ol id="lbList"><li>Loading...</li></ol></div>
+      <div class="hint">Add your name at the end of a run to post your score. Your best run is the one that stays on the timing board.</div>
+      <div class="lb"><h3>Timing board</h3><ol id="lbList"><li>Loading...</li></ol></div>
     </div>
   </div>
 </dialog>
@@ -809,14 +856,15 @@
 
   // ---------- Countdown ----------
   (function () {
-    var el = document.getElementById('countText');
+    var el = document.getElementById('countText'); var box = document.getElementById('count');
     var start = new Date(2026, 9, 20, 0, 0, 0);
     var end = new Date(2026, 9, 24, 0, 0, 0);
     var now = new Date();
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     var days = Math.round((start - today) / 86400000);
-    if (now >= end) el.textContent = 'Thanks for a great kickoff';
-    else if (now >= start) el.textContent = 'Kickoff week is here';
+    if (now >= start && box) box.classList.add('out');
+    if (now >= end) el.textContent = 'Thanks for racing with us';
+    else if (now >= start) el.textContent = "Lights out. It's race week.";
     else if (days === 1) el.textContent = '1 day to go';
     else el.textContent = days + ' days to go';
   })();
@@ -883,7 +931,7 @@
         io.observe(el);
       });
     }
-    tag('.x-head, .x-lede p, .x-row, .x-tile, .x-q, .x-ask-lede, .x-form, .x-quote .wrap > *');
+    tag('.x-head, .x-lede p, .x-row, .x-tile, .x-q, .x-ask-lede, .x-form, .x-quote .wrap > *, .x-teaser .wrap > *');
     document.querySelectorAll('.x-v').forEach(function (el, i) { el.style.setProperty('--rd', i * 0.1 + 's'); io.observe(el); });
   })();
 
@@ -1157,11 +1205,12 @@
       db.collection('leaderboard').orderBy('score', 'desc').limit(10).onSnapshot(function (snap) {
         list.textContent = '';
         if (snap.empty) { var e = document.createElement('li'); e.textContent = 'No scores yet. Be the first.'; list.appendChild(e); return; }
-        snap.docs.forEach(function (d) {
+        snap.docs.forEach(function (d, i) {
           var v = d.data() || {}; var li = document.createElement('li');
-          li.appendChild(document.createTextNode(String(v.name || 'Anonymous').slice(0, 20)));
-          var s = document.createElement('span'); s.textContent = String(v.score || 0); li.appendChild(s);
-          list.appendChild(li);
+          var pos = document.createElement('b'); pos.className = 'pos'; pos.textContent = 'P' + (i + 1);
+          var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = String(v.name || 'Anonymous').slice(0, 20);
+          var sc = document.createElement('span'); sc.className = 'sc'; sc.textContent = String(v.score || 0);
+          li.appendChild(pos); li.appendChild(nm); li.appendChild(sc); list.appendChild(li);
         });
       }, function () { list.textContent = ''; var x = document.createElement('li'); x.textContent = 'Leaderboard unavailable right now.'; list.appendChild(x); });
     }
