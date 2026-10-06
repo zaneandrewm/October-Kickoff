@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Sales Org Kickoff, October 20th–23rd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B2530;
+    --navy-2: #123646;
+    --teal: #0ECAD4;
+    --amber: #FFB84D;
+    --gold: #F4B942;
+    --gold-2: #FFD46B;
+    --bg: #F3F8F9;
+    --surface: #FFFFFF;
+    --text: #0B2530;
+    --muted: #4A6470;
+    --line: #D5E3E7;
+    --accent-text: #067A82;
+    --pill-bg: #E3F4F6;
+    --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B2530; --surface: #123646; --text: #EAF6F7; --muted: #9DB8C0;
+      --line: #24495A; --accent-text: #0ECAD4; --pill-bg: #1B4456;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B2530; --surface: #123646; --text: #EAF6F7; --muted: #9DB8C0;
+    --line: #24495A; --accent-text: #0ECAD4; --pill-bg: #1B4456;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 64px); background: var(--navy); }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: var(--display); line-height: 1.1; margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(1080px, 100% - 2.5rem); margin-inline: auto; }
+
+  .btn { font: inherit; font-weight: 600; padding: .85rem 1.5rem; border-radius: 999px; border: 2px solid var(--teal); background: var(--teal); color: var(--navy); cursor: pointer; text-decoration: none; display: inline-block; transition: transform .15s; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.ghost { background: transparent; color: var(--text); border-color: var(--line); }
+  .btn.ghost:hover { border-color: var(--teal); }
+  .btn[disabled] { opacity: .55; cursor: default; transform: none; }
+
+  /* Nav */
+  .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--navy); color: #fff; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 56px; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 1.05rem; text-decoration: none; white-space: nowrap; }
+  .brand b { color: var(--teal); font-weight: 700; }
+  .nav-right { display: flex; align-items: center; gap: 1.2rem; min-width: 0; }
+  .links { display: flex; gap: 1.3rem; overflow-x: auto; scrollbar-width: none; }
+  .links::-webkit-scrollbar { display: none; }
+  .links a { color: #C9DDE2; text-decoration: none; font-weight: 500; font-size: .95rem; white-space: nowrap; padding: .25rem 0; }
+  .links a:hover { color: var(--teal); }
+  .ask { font: inherit; font-weight: 600; font-size: .9rem; white-space: nowrap; padding: .4rem .9rem; border-radius: 999px; border: 1.5px solid var(--teal); background: transparent; color: var(--teal); cursor: pointer; }
+  .ask:hover { background: var(--teal); color: var(--navy); }
+  @media (max-width: 720px) { .links { display: none; } }
+
+  /* Hero with Austin skyline */
+  .hero { position: relative; overflow: hidden; color: #fff; padding: clamp(3rem, 8vw, 6rem) 0 calc(clamp(120px, 19vw, 250px) + 2.5rem); background: linear-gradient(180deg, #0A4F94 0%, #1683C6 48%, #5CC6EA 76%, #D4F4FA 100%); }
+  .hero .wrap { position: relative; z-index: 2; }
+  .skyline { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: clamp(120px, 19vw, 250px); display: block; z-index: 1; }
+  .hero h1 .bang { color: var(--gold-2); text-shadow: 0 0 14px rgba(255,212,107,.7); margin-left: .05em; }
+  .hero h1 { font-size: clamp(1.6rem, 4vw, 2.5rem); font-weight: 700; color: #fff; margin-bottom: 1rem; }
+  .date { display: flex; align-items: flex-end; gap: clamp(1rem, 3vw, 2rem); }
+  .date .nums { font-family: var(--display); font-weight: 800; font-size: clamp(4.6rem, 21vw, 13.5rem); line-height: .82; letter-spacing: -0.045em; font-variation-settings: "opsz" 96; white-space: nowrap; text-shadow: 0 6px 0 rgba(6,40,80,.22); }
+  .date .nums span { color: var(--teal); display: inline-block; margin: 0 .09em; letter-spacing: 0; }
+  .date .nums sup { font-size: .2em; font-weight: 600; letter-spacing: 0; vertical-align: top; position: relative; top: .35em; margin-left: .08em; line-height: 1; }
+  .date .month { font-family: var(--display); font-weight: 600; font-size: clamp(1.1rem, 3.2vw, 2.2rem); line-height: 1.05; padding-bottom: .4em; }
+  .date .month small { display: block; font-size: .7em; font-weight: 500; color: #E1F3F8; }
+  .tagline { max-width: 34rem; margin-top: 2rem; font-size: clamp(1.1rem, 2.2vw, 1.3rem); color: #fff; text-shadow: 0 1px 14px rgba(6,40,80,.5); }
+  .count { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.75rem; padding: .55rem 1rem; border: 1.5px solid var(--teal); border-radius: 999px; font: inherit; font-weight: 600; color: #fff; background: rgba(11,37,48,.35); cursor: pointer; }
+  .count:hover { border-color: var(--gold-2); }
+  .count i { width: .6rem; height: .6rem; border-radius: 50%; background: var(--teal); }
+  .hero .nums, .hero .month { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+  .hero .month { animation-delay: .12s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .star { position: absolute; z-index: 3; top: clamp(1.2rem, 6vw, 3.5rem); right: clamp(1.2rem, 9vw, 7rem); width: 34px; height: 34px; border: 0; background: transparent; color: var(--gold-2); text-shadow: 0 0 12px rgba(255,212,107,.85); font-size: 1.35rem; line-height: 1; cursor: pointer; border-radius: 50%; animation: twinkle 3.2s ease-in-out infinite; }
+  .star:hover { color: #fff; transform: scale(1.25); }
+  @keyframes twinkle { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+
+  /* Quick facts */
+  .facts { background: var(--surface); border-bottom: 1px solid var(--line); }
+  .facts dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .facts div { padding: 1.4rem 1.25rem; border-left: 1px solid var(--line); }
+  .facts div:first-child { border-left: 0; padding-left: 0; }
+  .facts dt { font-size: .9rem; color: var(--muted); margin-bottom: .2rem; }
+  .facts dd { margin: 0; font-family: var(--display); font-weight: 600; font-size: 1.2rem; }
+  @media (max-width: 640px) { .facts div { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; } .facts div:first-child { border-top: 0; } }
+
+  section { padding: clamp(3rem, 7vw, 5rem) 0; }
+  .sec-head { margin-bottom: 2rem; max-width: 40rem; }
+  .sec-head h2 { font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 700; }
+  .sec-head p { color: var(--muted); margin-top: .6rem; }
+
+  /* Day tabs */
+  .tabs { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: .25rem; scrollbar-width: none; margin-bottom: 2rem; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex: 1 0 auto; min-width: 5.5rem; font: inherit; font-family: var(--display); font-weight: 600; font-size: 1.05rem; line-height: 1.15; padding: .8rem 1.1rem; text-align: left; color: var(--text); background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .tab small { display: block; font-family: var(--body); font-weight: 500; font-size: .82rem; color: var(--muted); }
+  .tab:hover { border-color: var(--teal); }
+  .tab[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+  .tab[aria-selected="true"] small { color: var(--navy); }
+  .panel[hidden] { display: none; }
+  .panel > h3 { font-size: clamp(1.5rem, 3.4vw, 2rem); margin-bottom: .35rem; }
+  .panel > .sub { color: var(--muted); margin-bottom: 1.75rem; }
+  .note { color: var(--muted); font-size: .95rem; margin-top: 1.75rem; }
+
+  .timeline { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--line); margin-left: .35rem; }
+  .ev { display: grid; grid-template-columns: 11rem 1fr; gap: 1.5rem; padding: 0 0 1.75rem 1.75rem; position: relative; }
+  .ev:last-child { padding-bottom: 0; }
+  .ev::before { content: ""; position: absolute; left: -.5rem; top: .45rem; width: .8rem; height: .8rem; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 4px var(--bg); }
+  .ev.optional::before { background: var(--bg); border: 2px solid var(--teal); }
+  .ev.minor::before { width: .5rem; height: .5rem; left: -.35rem; top: .6rem; background: var(--line); }
+  .ev.minor .what h4 { font-size: 1.05rem; font-weight: 550; color: var(--muted); }
+  .when { font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
+  .what h4 { font-size: 1.3rem; font-weight: 650; margin-bottom: .25rem; }
+  .what p { color: var(--muted); max-width: 38rem; }
+  .who { display: block; margin-top: .2rem; font-weight: 600; color: var(--accent-text); }
+  .what a.map { display: inline-block; margin-top: .4rem; color: var(--accent-text); font-weight: 600; }
+  .pill { display: inline-block; margin-top: .55rem; margin-right: .4rem; font-size: .82rem; font-weight: 600; padding: .15rem .65rem; border-radius: 999px; background: var(--pill-bg); color: var(--accent-text); }
+  @media (max-width: 640px) { .ev { grid-template-columns: 1fr; gap: .2rem; } }
+
+  /* Details */
+  .band { background: var(--surface); border-block: 1px solid var(--line); }
+  .info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 3.5rem; }
+  .info .row { padding: 1.3rem 0; border-top: 1px solid var(--line); }
+  .info h3 { font-size: 1.25rem; font-weight: 650; margin-bottom: .3rem; }
+  .info p { color: var(--muted); }
+  .tbd { color: var(--accent-text); font-weight: 600; }
+
+  .soon { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
+  .soon div { border: 2px dashed var(--line); border-radius: 14px; padding: 1.3rem 1.4rem; }
+  .soon h3 { font-size: 1.15rem; font-weight: 650; margin-bottom: .25rem; }
+  .soon p { color: var(--muted); font-size: 1rem; }
+
+  .ask-band .inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .ask-band h2 { font-size: clamp(1.6rem, 3.6vw, 2.2rem); }
+  .ask-band p { color: var(--muted); margin-top: .4rem; max-width: 34rem; }
+
+  .faq { max-width: 46rem; }
+  details { border-top: 1px solid var(--line); }
+  details:last-child { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; list-style: none; padding: 1.15rem 2.5rem 1.15rem 0; font-family: var(--display); font-weight: 600; font-size: 1.15rem; position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: .25rem; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--accent-text); transition: transform .2s; }
+  details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  details p { padding: 0 0 1.25rem; color: var(--muted); max-width: 38rem; }
+
+  footer { background: var(--navy); color: #C9DDE2; padding: 2.5rem 0 3rem; border-top: 4px solid var(--gold); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  footer strong { font-family: var(--display); color: #fff; font-size: 1.1rem; }
+  footer small { font-size: .92rem; }
+
+  /* Dialogs */
+  dialog { border: 0; border-radius: 20px; padding: 0; background: var(--surface); color: var(--text); width: min(94vw, 560px); max-height: 92vh; overflow: auto; }
+  dialog.wide { width: min(94vw, 900px); }
+  dialog::backdrop { background: rgba(6, 22, 29, .72); }
+  .dlg-in { padding: 1.5rem 1.6rem 1.7rem; }
+  .dlg-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+  .dlg-head h2 { font-size: 1.6rem; }
+  .dlg-head p { color: var(--muted); font-size: .98rem; margin-top: .25rem; }
+  .x { font: inherit; font-size: 1.4rem; line-height: 1; border: 0; background: transparent; color: var(--muted); cursor: pointer; padding: .25rem .5rem; border-radius: 8px; }
+  .x:hover { color: var(--text); }
+  label { display: block; font-weight: 600; font-size: .95rem; margin: 1rem 0 .3rem; }
+  input[type=text], select, textarea { width: 100%; font: inherit; color: var(--text); background: var(--bg); border: 1.5px solid var(--line); border-radius: 10px; padding: .65rem .8rem; }
+  textarea { min-height: 120px; resize: vertical; }
+  .status { margin-top: 1rem; font-weight: 500; min-height: 1.5em; }
+  .row-btns { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.2rem; }
+
+  /* Game */
+  .stage { position: relative; border-radius: 14px; overflow: hidden; background: #0B2530; }
+  #cv { display: block; width: 100%; height: auto; aspect-ratio: 720 / 260; touch-action: manipulation; outline-offset: -3px; }
+  .ovl { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: .7rem; padding: 1rem; background: rgba(11, 37, 48, .86); color: #fff; }
+  .ovl[hidden] { display: none; }
+  .ovl h3 { font-size: clamp(1.2rem, 3.4vw, 1.7rem); }
+  .ovl p { color: #CFE3E8; max-width: 30rem; font-size: .98rem; }
+  .ovl .opts { display: grid; gap: .5rem; width: min(100%, 26rem); }
+  .ovl .opts button { font: inherit; font-weight: 600; padding: .6rem .9rem; border-radius: 10px; border: 1.5px solid #2D5A6B; background: #123646; color: #fff; cursor: pointer; text-align: left; }
+  .ovl .opts button:hover { border-color: var(--teal); }
+  .ovl input[type=text] { max-width: 16rem; background: #fff; color: #0B2530; }
+  .game-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; margin-top: 1.2rem; }
+  @media (max-width: 720px) { .game-grid { grid-template-columns: 1fr; } }
+  .hint { color: var(--muted); font-size: .95rem; }
+  .lb h3 { font-size: 1.2rem; margin-bottom: .5rem; }
+  .lb ol { margin: 0; padding-left: 1.4rem; }
+  .lb li { padding: .3rem 0; border-bottom: 1px solid var(--line); }
+  .lb li span { float: right; font-family: var(--display); font-weight: 700; color: var(--accent-text); }
+
+
+  /* Gold layer: sun, clouds, coins, ticker, reveals */
+  .sun { position: absolute; z-index: 0; left: 72%; bottom: calc(clamp(120px, 19vw, 250px) * .5 - 280px); width: 560px; height: 560px; margin-left: -280px; border-radius: 50%; background: radial-gradient(circle, rgba(255,244,190,.95) 0, rgba(255,220,120,.55) 18%, rgba(255,214,110,0) 62%); pointer-events: none; }
+  .sun::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: repeating-conic-gradient(rgba(255,244,190,.55) 0 5deg, transparent 5deg 15deg); -webkit-mask-image: radial-gradient(circle, #000 10%, transparent 68%); mask-image: radial-gradient(circle, #000 10%, transparent 68%); animation: spinrays 50s linear infinite; }
+  .sun::after { content: ""; position: absolute; left: 50%; top: 50%; width: 130px; height: 130px; margin: -65px 0 0 -65px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #FFF8D0, #FFD46B 60%, #F4B942); box-shadow: 0 0 60px 20px rgba(255,214,110,.6); }
+  @keyframes spinrays { to { transform: rotate(360deg); } }
+  .cloud { position: absolute; z-index: 0; left: 0; width: clamp(120px, 18vw, 240px); opacity: .6; animation: drift var(--dur, 110s) linear infinite; animation-delay: var(--del, 0s); pointer-events: none; }
+  @keyframes drift { from { transform: translateX(-30vw); } to { transform: translateX(110vw); } }
+  .coin { position: absolute; z-index: 0; bottom: calc(clamp(120px, 19vw, 250px) * .55); left: var(--x); width: var(--s, 14px); height: var(--s, 14px); opacity: 0; animation: rise var(--t, 8s) ease-in infinite; animation-delay: var(--d, 0s); pointer-events: none; }
+  .coin b, .burst { display: block; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #FFF1B8, #F4B942 55%, #B8791A); border: 1px solid rgba(138,90,0,.55); box-shadow: 0 0 8px rgba(255,212,107,.6); }
+  .coin b { width: 100%; height: 100%; animation: spin 1.6s linear infinite; }
+  @keyframes rise { 0% { transform: translateY(0); opacity: 0; } 12% { opacity: .85; } 100% { transform: translateY(-300px); opacity: 0; } }
+  @keyframes spin { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.18); } }
+  .burst { position: fixed; z-index: 60; width: 14px; height: 14px; pointer-events: none; animation: burst 1.1s cubic-bezier(.2,.7,.3,1) forwards; }
+  @keyframes burst { 0% { transform: translate(0, 0) scale(.5); opacity: 1; } 45% { transform: translate(var(--dx), var(--dy)) scale(1); opacity: 1; } 100% { transform: translate(var(--dx), calc(var(--dy) + 190px)) scale(.9); opacity: 0; } }
+
+  .ticker { background: linear-gradient(90deg, #E9A62E, #FFD46B 35%, #F4B942 70%, #E9A62E); color: var(--navy); overflow: hidden; border-bottom: 1px solid rgba(11,37,48,.15); }
+  .ticker-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+  .ticker .grp { display: flex; }
+  .ticker span { font-family: var(--display); font-weight: 700; font-size: 1.05rem; padding: .7rem 0; white-space: nowrap; display: inline-flex; align-items: center; }
+  .ticker span::after { content: "★"; margin: 0 1.6rem; font-size: .85em; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  .sec-head h2::after { content: ""; display: block; width: 56px; height: 5px; border-radius: 3px; margin-top: .85rem; background: linear-gradient(90deg, var(--gold), var(--gold-2)); transform-origin: left; transition: transform .7s .25s ease; }
+  .js .sec-head.reveal:not(.in) h2::after { transform: scaleX(0); }
+  .ev.key::before { background: var(--gold); box-shadow: 0 0 0 4px var(--bg), 0 0 0 8px rgba(244,185,66,.35); }
+
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; transition-delay: var(--rd, 0s); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* Rally layer: bunting, bolts, crossing tickers, team band */
+  .bunting { position: absolute; left: 0; top: 0; width: 100%; height: clamp(48px, 6vw, 90px); z-index: 1; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(6,30,50,.25)); }
+  .pennant { transform-box: fill-box; transform-origin: 50% 0; animation: sway 3.4s ease-in-out infinite alternate; }
+  @keyframes sway { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
+  .bolt { position: absolute; z-index: 1; width: clamp(20px, 3vw, 38px); height: auto; pointer-events: none; filter: drop-shadow(0 0 8px rgba(255,212,107,.9)); opacity: 0; animation: zap 4.6s linear infinite; animation-delay: var(--del, 0s); }
+  .bolt path { fill: var(--gold-2); }
+  @keyframes zap { 0%, 84%, 100% { opacity: 0; } 86% { opacity: 1; } 89% { opacity: .25; } 92% { opacity: 1; } 96% { opacity: 0; } }
+
+  .tickers { background: var(--navy); padding: 1.6rem 0 1.9rem; display: grid; gap: .9rem; overflow: hidden; }
+  .tickers .ticker { position: relative; padding: .4rem 0; border: 0; }
+  .tickers .ticker.b { background: linear-gradient(90deg, #0ECAD4, #6EE7EE 50%, #0ECAD4); }
+  .ticker-track.slow { animation-duration: 40s; }
+  .tickers .ticker::before, .tickers .ticker::after { content: ""; position: absolute; left: 0; right: 0; height: 6px; z-index: 2; pointer-events: none; background: radial-gradient(circle, #fff 0 2px, transparent 2.6px) 0 0 / 20px 6px repeat-x; filter: drop-shadow(0 0 3px rgba(255,255,255,.9)); animation: bulb 1.4s steps(1) infinite; }
+  .tickers .ticker::before { top: 3px; }
+  .tickers .ticker::after { bottom: 3px; animation-delay: -.7s; }
+  @keyframes bulb { 0% { opacity: 1; } 50% { opacity: .25; } 100% { opacity: 1; } }
+
+  .team { position: relative; --cut: clamp(20px, 4vw, 56px); background: var(--navy); color: #fff; padding: calc(clamp(3rem, 7vw, 5rem) + var(--cut)) 0 calc(clamp(3rem, 7vw, 5rem) + var(--cut)); clip-path: polygon(0 var(--cut), 100% 0, 100% calc(100% - var(--cut)), 0 100%); margin-top: calc(var(--cut) * -1); }
+  .team .sec-head p { color: #B8D3DA; }
+  .team .wrap { position: relative; z-index: 1; }
+  .team-sky { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: clamp(90px, 14vw, 190px); z-index: 0; display: block; }
+  .quote { margin: 0; max-width: 56rem; }
+  .quote blockquote { margin: 0; }
+  .quote p { font-family: var(--display); font-weight: 700; font-size: clamp(2.1rem, 5.8vw, 4.2rem); line-height: 1.1; letter-spacing: -0.02em; color: #fff; min-height: 2.2em; transition: opacity .2s; }
+  .quote .btn { margin-top: 1.4rem; }
+  .quote p::before { content: "\201C"; color: var(--gold-2); margin-right: .05em; }
+  .quote p::after { content: "\201D"; color: var(--gold-2); margin-left: .02em; }
+  .quote figcaption { margin-top: 1rem; color: #B8D3DA; font-size: .98rem; }
+  .vigs { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+  .vig { margin: 0; }
+  .vig svg { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: 0 14px 30px rgba(0,0,0,.3); }
+  .vig figcaption { margin-top: .9rem; }
+  .vig figcaption b { display: block; font-family: var(--display); font-size: 1.25rem; font-weight: 700; }
+  .vig figcaption span { color: #B8D3DA; }
+  .bob { animation: bob 1.3s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+  @keyframes bob { to { transform: translateY(-7px); } }
+  .speed { animation: speed 1s linear infinite; }
+  @keyframes speed { from { transform: translateX(22px); opacity: 0; } 30% { opacity: .7; } to { transform: translateX(-22px); opacity: 0; } }
+  .pop { transform-box: fill-box; transform-origin: center; animation: pop 1.1s ease-in-out infinite; }
+  @keyframes pop { 0%, 100% { transform: scale(.85); opacity: .85; } 50% { transform: scale(1.18); opacity: 1; } }
+
+  .band.ask-band { background: linear-gradient(110deg, #0B2530 0%, #0E5A6E 100%); border: 0; color: #fff; }
+  .ask-band p { color: #CFE3E8; }
+  .ask-band .btn { background: var(--gold); border-color: var(--gold); color: var(--navy); font-size: 1.05rem; }
+
+  /* ===== Artist layer: editorial, oversized, color-blocked ===== */
+  :root { --paper: #FFF5E1; --ink: #0B2530; --ink-soft: #4A6470; --hilite: #FFC83D; --coral: #FF5A36; --serif: "Instrument Serif", "Times New Roman", Georgia, serif; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --paper: #0B2530; --ink: #FFF5E1; --ink-soft: #9DB8C0; } }
+  :root[data-theme="dark"] { --paper: #0B2530; --ink: #FFF5E1; --ink-soft: #9DB8C0; }
+  body { background: var(--paper); color: var(--ink); }
+  a.ask { text-decoration: none; display: inline-block; }
+  .x-em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.015em; }
+  .x-mark { background: var(--hilite); color: #0B2530; padding: 0 .12em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .x-head h2 { font-family: var(--display); font-weight: 900; font-size: clamp(3.4rem, 14vw, 12.5rem); line-height: .85; letter-spacing: -0.05em; margin: 0 0 clamp(1.5rem, 4vw, 3rem); }
+  .x-head .x-em { color: var(--coral); font-size: 1.05em; letter-spacing: -0.03em; }
+
+  .x-lede { background: var(--paper); padding: clamp(4rem, 10vw, 9rem) 0 clamp(3rem, 8vw, 6rem); }
+  .x-lede p { font-family: var(--display); font-weight: 800; font-size: clamp(2.3rem, 7.4vw, 6.6rem); line-height: 1; letter-spacing: -0.035em; max-width: 19ch; }
+  .x-lede .x-em { color: var(--coral); font-size: 1.1em; }
+
+  .x-values { background: var(--navy); color: #fff; padding: clamp(4rem, 9vw, 8rem) 0; overflow: hidden; }
+  .x-values .lab { font-weight: 600; color: var(--gold-2); font-size: 1.05rem; margin-bottom: clamp(1.5rem, 4vw, 3rem); }
+  .x-v { font-family: var(--display); font-weight: 900; font-size: clamp(2.6rem, 9.4vw, 9rem); line-height: .94; letter-spacing: -0.045em; margin: 0; padding-left: var(--in, 0); }
+  .x-v sup { font-family: var(--body); font-size: .13em; letter-spacing: 0; font-weight: 700; vertical-align: top; opacity: .6; margin-left: .4em; }
+  .x-v.o { color: transparent; -webkit-text-stroke: clamp(1.5px, .22vw, 3px) var(--gold-2); transition: color .3s; }
+  .x-v.o:hover { color: var(--gold-2); }
+  .x-v.s { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; color: var(--teal); font-size: clamp(3rem, 10.8vw, 10.4rem); }
+  .x-v.c { color: var(--coral); }
+  .x-v.g { color: var(--gold-2); }
+  .js .x-v { opacity: 0; transform: translateX(-8vw); }
+  .js .x-v.in { opacity: 1; transform: none; transition: opacity .7s ease, transform .9s cubic-bezier(.2,.8,.2,1); transition-delay: var(--rd, 0s); }
+  @media (max-width: 640px) { .x-v { padding-left: calc(var(--in, 0) * .4); } }
+
+  .x-week { background: var(--paper); padding: clamp(4rem, 9vw, 8rem) 0; }
+  .x-days { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 4px solid var(--ink); border-bottom: 4px solid var(--ink); }
+  .x-day { appearance: none; background: transparent; border: 0; border-left: 2px solid var(--ink); padding: 1rem 0 1.1rem 1rem; text-align: left; cursor: pointer; color: var(--ink); font: inherit; position: relative; }
+  .x-day:first-child { border-left: 0; padding-left: 0; }
+  .x-day .d { display: block; font-family: var(--display); font-weight: 900; font-size: clamp(3.2rem, 12vw, 10rem); line-height: .9; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: clamp(1.5px, .22vw, 3px) var(--ink); transition: color .2s; }
+  .x-day .w { display: block; font-weight: 700; font-size: clamp(.8rem, 1.6vw, 1.2rem); margin-top: .4rem; }
+  .x-day .t { display: block; font-family: var(--serif); font-style: italic; font-size: clamp(.95rem, 1.9vw, 1.5rem); color: var(--ink-soft); }
+  .x-day:hover .d { color: var(--ink); }
+  .x-day[aria-selected="true"] .d { color: var(--coral); -webkit-text-stroke-color: var(--coral); }
+  .x-day[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 10px; background: var(--hilite); }
+  .x-panel[hidden] { display: none; }
+  .x-panel { padding-top: clamp(2rem, 5vw, 4rem); }
+  .x-daytitle { font-family: var(--display); font-weight: 900; font-size: clamp(2rem, 6vw, 4.6rem); line-height: .95; letter-spacing: -0.04em; margin: 0; }
+  .x-daytitle .x-em { color: var(--coral); }
+  .x-daysub { font-family: var(--serif); font-style: italic; font-size: clamp(1.2rem, 2.4vw, 1.8rem); color: var(--ink-soft); margin: .5rem 0 clamp(1.5rem, 4vw, 2.5rem); }
+  .x-rows { list-style: none; margin: 0; padding: 0; border-bottom: 2px solid var(--ink); }
+  .x-row { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr; gap: 1rem 2rem; padding: 1.4rem 0; border-top: 2px solid var(--ink); }
+  .x-time { font-family: var(--display); font-weight: 800; font-size: clamp(1.15rem, 2.3vw, 1.8rem); letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .x-what h4 { font-family: var(--display); font-weight: 800; font-size: clamp(1.5rem, 3.6vw, 2.8rem); line-height: 1.02; letter-spacing: -0.03em; margin: 0; }
+  .x-what p { margin-top: .5rem; color: var(--ink-soft); max-width: 40rem; }
+  .x-what a { color: var(--ink); font-weight: 700; }
+  .x-who { display: block; margin-top: .4rem; font-family: var(--serif); font-style: italic; font-size: clamp(1.3rem, 2.4vw, 1.8rem); color: var(--coral); }
+  .x-tag { display: inline-block; margin: .7rem .5rem 0 0; padding: .15rem .75rem; border: 2px solid var(--ink); border-radius: 999px; font-weight: 700; font-size: .85rem; }
+  .x-row.minor { padding: .8rem 0; }
+  .x-row.minor h4 { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; color: var(--ink-soft); }
+  .x-row.minor .x-time { font-size: clamp(1rem, 1.6vw, 1.2rem); font-weight: 600; color: var(--ink-soft); }
+  .x-row.key .x-what h4 { display: inline; background: var(--hilite); color: #0B2530; padding: 0 .16em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .x-fine { margin-top: 1.2rem; font-family: var(--serif); font-style: italic; font-size: 1.2rem; color: var(--ink-soft); }
+  @media (max-width: 640px) { .x-row { grid-template-columns: 1fr; gap: .3rem; } }
+
+  .x-where { background: #BFE9F5; color: #0B2530; padding: clamp(4rem, 9vw, 8rem) 0; }
+  .x-where .x-head .x-em { color: var(--coral); }
+  .x-tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(.8rem, 1.6vw, 1.4rem); }
+  .x-tile { border-radius: 24px; padding: clamp(1.3rem, 2.4vw, 2.2rem); transform: rotate(var(--r, 0deg)); transition: transform .25s ease; }
+  .x-tile:hover { transform: rotate(0deg) translateY(-4px); }
+  .x-tile h3 { font-family: var(--display); font-weight: 900; font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1; letter-spacing: -0.035em; margin: 0 0 .6rem; }
+  .x-tile p { font-size: 1.08rem; line-height: 1.45; }
+  .x-tile a { color: inherit; font-weight: 700; }
+  .x-tile.t1 { grid-column: span 4; background: #0B2530; color: #fff; }
+  .x-tile.t1 h3, .x-tile.t3 h3 { font-size: clamp(2rem, 4.4vw, 3.6rem); }
+  .x-tile.t1 a { text-decoration: underline; text-decoration-color: var(--gold-2); text-underline-offset: .2em; }
+  .x-tile.t2 { grid-column: span 2; background: #FFC83D; }
+  .x-tile.t3 { grid-column: span 4; background: #FF5A36; }
+  .x-tile.t4 { grid-column: span 2; background: #0ECAD4; }
+  .x-tile.t5 { grid-column: span 3; background: #fff; }
+  .x-tile.t6 { grid-column: span 3; background: #FFF5E1; border: 3px solid #0B2530; }
+  .x-tile.t7 { grid-column: span 3; background: #1683C6; color: #fff; }
+  .x-tile.t8 { grid-column: span 3; background: #FFD46B; }
+  .js .x-tile.reveal { transform: translateY(26px) rotate(var(--r, 0deg)); }
+  .js .x-tile.reveal.in { transform: rotate(var(--r, 0deg)); }
+  .js .x-tile.reveal.in:hover { transform: rotate(0deg) translateY(-4px); transition-delay: 0s; }
+  @media (max-width: 820px) { .x-tiles { grid-template-columns: 1fr; } .x-tile.t1, .x-tile.t2, .x-tile.t3, .x-tile.t4, .x-tile.t5, .x-tile.t6, .x-tile.t7, .x-tile.t8 { grid-column: auto; } }
+
+  .x-quote { position: relative; background: #1683C6; color: #fff; padding: clamp(4.5rem, 10vw, 9rem) 0 clamp(8rem, 18vw, 15rem); overflow: hidden; }
+  .x-quote .wrap { position: relative; z-index: 1; }
+  .x-quote .lab { font-weight: 700; color: #FFD46B; font-size: 1.1rem; margin-bottom: 1.4rem; }
+  .x-quote .q { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(2.7rem, 8.4vw, 7.6rem); line-height: .97; letter-spacing: -0.02em; min-height: 2.9em; transition: opacity .2s; }
+  .x-quote .q::before { content: "\201C"; color: #FFD46B; }
+  .x-quote .q::after { content: "\201D"; color: #FFD46B; }
+  .x-quote .qa { font-family: var(--display); font-weight: 800; font-size: clamp(1.1rem, 2vw, 1.5rem); color: #E1F3F8; margin-top: 1.2rem; transition: opacity .2s; }
+  .x-quote .qa::before { content: "— "; }
+  .x-next { margin-top: 2rem; font: inherit; font-weight: 800; font-size: 1.1rem; padding: .9rem 1.7rem; border-radius: 999px; border: 2px solid #fff; background: transparent; color: #fff; cursor: pointer; transition: background .15s, color .15s; }
+  .x-next:hover { background: #fff; color: #1683C6; }
+
+  .x-ask { background: #FFC83D; color: #0B2530; padding: clamp(4rem, 9vw, 8rem) 0; }
+  .x-ask-lede { font-family: var(--display); font-weight: 900; font-size: clamp(3rem, 11vw, 10rem); line-height: .88; letter-spacing: -0.05em; margin: 0 0 clamp(2rem, 5vw, 4rem); }
+  .x-ask-lede .x-em { font-size: 1.05em; letter-spacing: -0.03em; }
+  .x-form { max-width: 62rem; }
+  .x-sentence { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3em .6em; font-family: var(--display); font-weight: 800; font-size: clamp(1.6rem, 4.6vw, 3.6rem); letter-spacing: -0.03em; line-height: 1.1; }
+  .x-sentence select { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.1em; letter-spacing: -0.01em; color: #0B2530; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%230B2530' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right .1em center / .5em; border: 0; border-bottom: .07em solid #0B2530; border-radius: 0; padding: 0 1.1em 0 .1em; appearance: none; -webkit-appearance: none; cursor: pointer; }
+  .x-msg { display: block; width: 100%; margin-top: 1.2rem; font-family: var(--display); font-weight: 700; font-size: clamp(1.4rem, 3.4vw, 2.6rem); line-height: 1.2; letter-spacing: -0.02em; color: #0B2530; background: transparent; border: 0; border-bottom: 4px solid #0B2530; padding: .6rem 0; resize: none; min-height: 7rem; }
+  .x-msg::placeholder { color: rgba(11,37,48,.42); }
+  .x-form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; margin-top: 1.6rem; }
+  .x-name { font: inherit; font-size: 1.1rem; color: #0B2530; background: rgba(255,255,255,.5); border: 2px solid #0B2530; border-radius: 999px; padding: .85rem 1.3rem; width: min(100%, 22rem); }
+  .x-name::placeholder { color: rgba(11,37,48,.55); }
+  .x-send { font: inherit; font-weight: 900; font-size: 1.3rem; padding: 1rem 2rem; border-radius: 999px; border: 0; background: #0B2530; color: #FFC83D; cursor: pointer; display: inline-flex; align-items: center; gap: .7rem; transition: transform .15s, background .15s, color .15s; }
+  .x-send:hover { background: #FF5A36; color: #0B2530; transform: rotate(-1.5deg) scale(1.03); }
+  .x-send[disabled] { opacity: .6; cursor: default; transform: none; }
+  .x-status { margin-top: 1rem; font-weight: 700; min-height: 1.6em; }
+  .x-note { font-family: var(--serif); font-style: italic; font-size: 1.25rem; margin-top: .4rem; color: rgba(11,37,48,.75); }
+
+  .x-faq { background: var(--paper); padding: clamp(4rem, 9vw, 8rem) 0; }
+  .x-q { border-top: 3px solid var(--ink); }
+  .x-q:last-child { border-bottom: 3px solid var(--ink); }
+  .x-q summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; padding: 1.4rem 0; font-family: var(--display); font-weight: 800; font-size: clamp(1.4rem, 3.6vw, 2.8rem); line-height: 1.02; letter-spacing: -0.03em; }
+  .x-q summary::-webkit-details-marker { display: none; }
+  .x-q summary::after { content: none; }
+  .x-q summary i { flex: none; position: relative; width: clamp(2.4rem, 4.4vw, 3.4rem); height: clamp(2.4rem, 4.4vw, 3.4rem); border: 3px solid var(--ink); border-radius: 50%; transition: transform .25s, background .25s; }
+  .x-q summary i::before, .x-q summary i::after { content: ""; position: absolute; background: var(--ink); }
+  .x-q summary i::before { left: 22%; right: 22%; top: calc(50% - 1.5px); height: 3px; }
+  .x-q summary i::after { top: 22%; bottom: 22%; left: calc(50% - 1.5px); width: 3px; }
+  .x-q[open] summary i { transform: rotate(45deg); background: var(--hilite); border-color: #0B2530; }
+  .x-q[open] summary i::before, .x-q[open] summary i::after { background: #0B2530; }
+  .x-q p { padding: 0 0 1.6rem; max-width: 40rem; color: var(--ink-soft); font-size: 1.15rem; }
+
+  .x-foot { background: var(--navy); color: #fff; padding: clamp(4rem, 9vw, 7rem) 0 clamp(2rem, 4vw, 3rem); border-top: 6px solid var(--gold); }
+  .x-foot h2 { font-family: var(--display); font-weight: 900; font-size: clamp(3rem, 13.5vw, 12rem); line-height: .86; letter-spacing: -0.05em; margin: 0 0 2.5rem; }
+  .x-foot .o { color: transparent; -webkit-text-stroke: clamp(1.5px, .25vw, 3px) var(--gold-2); }
+  .x-foot .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; border-top: 1px solid rgba(255,255,255,.2); padding-top: 1.4rem; color: #C9DDE2; font-size: .98rem; }
+
+  /* ===== Hero restyled to match the editorial layer ===== */
+  .hero { padding-top: clamp(4.5rem, 11vw, 8rem); }
+  .hero h1 { display: flex; flex-direction: column; margin: 0 0 clamp(1.2rem, 3vw, 2.2rem); font-size: 1rem; color: #fff; letter-spacing: 0; line-height: 1; }
+  .hero .h1a { font-family: var(--display); font-weight: 900; font-size: clamp(3.2rem, 13vw, 11.5rem); line-height: .86; letter-spacing: -0.05em; text-shadow: 0 6px 0 rgba(6,40,80,.2); }
+  .hero .h1b { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(4.2rem, 17.5vw, 15.5rem); line-height: .82; letter-spacing: -0.03em; color: var(--gold-2); text-shadow: 0 0 34px rgba(255,212,107,.4); }
+  .hero h1 .bang { margin-left: .02em; }
+  .hero .date { gap: .5rem clamp(1rem, 3vw, 2rem); align-items: baseline; }
+  .hero .date .nums { font-size: clamp(3.2rem, 11vw, 9rem); }
+  .hero .date .month { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(1.5rem, 3.8vw, 2.8rem); line-height: 1; padding-bottom: 0; letter-spacing: -0.01em; }
+  .hero .date .month small { font-family: var(--serif); font-size: .68em; font-weight: 400; color: #E1F3F8; margin-top: .15em; }
+  .hero .tagline { font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.1; max-width: 26ch; margin-top: clamp(1.2rem, 3vw, 2rem); }
+  .hero .count { margin-top: clamp(1.2rem, 3vw, 2rem); padding: .8rem 1.4rem; border: 0; background: var(--gold-2); color: #0B2530; font-weight: 800; font-size: 1.1rem; transition: transform .15s; }
+  .hero .count i { background: #FF5A36; animation: pulse 1.6s ease-in-out infinite; }
+  .hero .count:hover { transform: rotate(-1.5deg) scale(1.03); border: 0; }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+  .brand { font-weight: 900; letter-spacing: -0.02em; }
+
+  /* ===== F1 car strip and Thrive shout-outs ===== */
+  .hero .count { cursor: default; }
+  .hero .count:hover { transform: none; }
+  .x-track { background: var(--gold-2); overflow: hidden; position: relative; }
+  .x-track-in { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; padding-top: clamp(1.4rem, 3.5vw, 3rem); }
+  .x-car { background: none; border: 0; padding: 0; cursor: pointer; width: clamp(260px, 46vw, 640px); display: block; transition: transform .8s cubic-bezier(.2,.8,.2,1); margin-bottom: -1px; }
+  .x-car svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .x-car:hover svg { animation: rev .14s linear infinite; }
+  .x-car.go { transform: translateX(130vw); transition: transform .9s cubic-bezier(.5,0,.9,.5); }
+  .x-car .sl { opacity: 0; transition: opacity .2s; }
+  .x-car.go .sl { opacity: .6; }
+  .puff { transform-box: fill-box; transform-origin: center; animation: puff 2.4s ease-out infinite; opacity: 0; }
+  .x-car:hover .puff { animation-duration: .9s; }
+  @keyframes puff { 0% { transform: translateX(0) scale(.5); opacity: .45; } 100% { transform: translateX(-48px) scale(1.7); opacity: 0; } }
+  @keyframes rev { 0% { transform: translate(0, 0); } 25% { transform: translate(-1px, -1.5px); } 50% { transform: translate(1px, 0); } 75% { transform: translate(-1px, 1px); } 100% { transform: translate(0, 0); } }
+  .x-track-label { flex: 1 1 18rem; align-self: center; font-family: var(--display); font-weight: 900; font-size: clamp(2.2rem, 6vw, 5rem); line-height: .9; letter-spacing: -0.045em; color: #0B2530; margin-bottom: clamp(1rem, 2.4vw, 2.2rem); }
+  .x-track-label .x-em { display: block; font-size: .7em; letter-spacing: -0.01em; margin-top: .15em; }
+  .x-road { height: clamp(22px, 3vw, 34px); background: var(--navy); position: relative; }
+  .x-road::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 4px; margin-top: -2px; background: repeating-linear-gradient(90deg, var(--gold-2) 0 38px, transparent 38px 76px); animation: roadmove 2.4s linear infinite; }
+  @keyframes roadmove { to { background-position: -76px 0; } }
+
+  dialog.thrive { width: 100vw; max-width: none; height: 100vh; height: 100dvh; max-height: none; margin: 0; border-radius: 0; background: #0B2530; color: #fff; padding: 0; overflow: hidden; }
+  dialog.thrive::backdrop { background: #0B2530; }
+  .th-top { position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding: clamp(1rem, 3vw, 2rem) clamp(1.2rem, 4vw, 3rem) 3.6rem; background: linear-gradient(#0B2530 72%, rgba(11,37,48,0)); }
+  .th-top h2 { font-family: var(--display); font-weight: 900; font-size: clamp(2.6rem, 6.4vw, 5.4rem); line-height: .9; letter-spacing: -0.045em; }
+  .th-top h2 .x-em { color: var(--gold-2); }
+  .th-top p { color: #B8D3DA; margin-top: .6rem; max-width: 30rem; }
+  .th-close { flex: none; font: inherit; font-size: 2rem; line-height: 1; background: transparent; border: 2px solid #fff; color: #fff; border-radius: 50%; width: 3rem; height: 3rem; cursor: pointer; }
+  .th-close:hover { background: #fff; color: #0B2530; }
+  .th-stage { position: absolute; inset: 0; display: flex; gap: clamp(1.5rem, 4vw, 4rem); padding: 0 clamp(1.2rem, 4vw, 3rem); overflow: hidden; -webkit-mask-image: linear-gradient(transparent 0, #000 26%, #000 88%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 26%, #000 88%, transparent 100%); }
+  .th-lane { flex: 1 1 0; min-width: 0; overflow: hidden; }
+  .th-track { animation: fall var(--dur, 90s) linear infinite; animation-delay: var(--del, 0s); will-change: transform; }
+  @keyframes fall { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+  .th-stage:hover .th-track, .th-stage:active .th-track { animation-play-state: paused; }
+  .th-item { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1rem 1.4rem; padding-bottom: clamp(2.8rem, 6vw, 5rem); }
+  .th-meta { padding-top: .8rem; }
+  .th-to { font-weight: 800; font-size: 1rem; line-height: 1.2; color: var(--gold-2); }
+  .th-val { display: inline-block; margin-top: .5rem; font-size: .78rem; font-weight: 700; padding: .12rem .6rem; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.4); color: #CFE3E8; }
+  .th-date { display: block; margin-top: .4rem; font-size: .82rem; color: #9DB8C0; }
+  .th-quote { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.7rem); line-height: 1.05; letter-spacing: -0.01em; margin: 0; }
+  .th-quote::before { content: "\201C"; color: var(--gold-2); }
+  .th-quote::after { content: "\201D"; color: var(--gold-2); }
+  .th-by { margin-top: .8rem; font-weight: 700; font-size: .98rem; color: var(--teal); }
+  .th-hint { position: absolute; bottom: .9rem; left: 0; right: 0; text-align: center; z-index: 3; color: #9DB8C0; font-size: .9rem; }
+  @media (max-width: 899px) { .th-lane:nth-child(2) { display: none; } .th-item { grid-template-columns: 1fr; gap: .5rem; } .th-meta { padding-top: 0; } }
+
+  @media (max-width: 480px) { .nav .wrap { gap: .6rem; } .brand { font-size: .9rem; } .ask { font-size: .8rem; padding: .35rem .7rem; } }
+  .x-callout { background: var(--hilite); color: #0B2530; border-radius: 22px; padding: clamp(1.3rem, 2.6vw, 2.2rem); margin: 0 0 clamp(1.5rem, 4vw, 2.5rem); }
+  .x-callout h5 { font-family: var(--display); font-weight: 900; font-size: clamp(1.5rem, 3vw, 2.4rem); line-height: 1; letter-spacing: -0.03em; margin: 0 0 .6rem; }
+  .x-callout p { font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.45; max-width: 46rem; }
+  .x-callout p + p { margin-top: .7rem; }
+  .x-callout a { color: #0B2530; font-weight: 800; }
+
+  .x-shout { background: #0B2530; color: #fff; padding: clamp(4rem, 9vw, 8rem) 0 clamp(2.5rem, 5vw, 4rem); }
+  .x-shout .x-head h2 { color: #fff; }
+  .x-shout .x-head .x-em { color: var(--gold-2); }
+  .x-shout-sub { font-family: var(--serif); font-style: italic; font-size: clamp(1.2rem, 2.4vw, 1.8rem); color: #B8D3DA; margin: -1rem 0 clamp(1.5rem, 4vw, 2.5rem); }
+  .th-inline { position: relative; height: clamp(540px, 88vh, 800px); }
+  .th-inline .th-stage { padding: 0; }
+  .th-hint2 { color: #9DB8C0; font-size: .92rem; margin-top: 1rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero .nums, .hero .month, .star, .sun::before, .cloud, .coin, .coin b, .ticker-track, .pennant, .bob, .speed, .pop { animation: none; }
+    .bolt { animation: none; opacity: .9; }
+    .hero .count i { animation: none; }
+    .puff, .x-road::after, .x-car:hover svg { animation: none; }
+    .th-track { animation: none; }
+    .th-dup { display: none; }
+    .th-stage { overflow-y: auto; align-items: flex-start; padding-top: 0; -webkit-mask-image: none; mask-image: none; }
+    .th-lane { overflow: visible; }
+    .quote p { transition: none; }
+    .tickers .ticker::before, .tickers .ticker::after { animation: none; }
+    .coin, .burst { display: none; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .sec-head h2::after { transition: none; }
+    .tab, summary::after, .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">WP Engine <b>Sales Kickoff</b></a>
+    <div class="nav-right">
+      <nav class="links" aria-label="Page sections">
+        <a href="#schedule">Schedule</a>
+        <a href="#details">Location and travel</a>
+        <a href="#shoutouts">Shout-outs</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="ask" href="#ask">Ask a question</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <button class="star" id="star" type="button" aria-label="Secret">✦</button>
+    <div class="sun" aria-hidden="true"></div>
+    <svg class="bunting" viewBox="0 0 1440 90" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
+    <svg class="bolt" style="right:20%;top:26%;--del:0s" viewBox="0 0 24 40" aria-hidden="true"><path d="M14 0 L0 22 h9 l-3 18 L24 16 h-10z"/></svg>
+    <svg class="bolt" style="right:9%;top:44%;--del:1.7s;width:clamp(16px,2.4vw,30px);transform:rotate(14deg)" viewBox="0 0 24 40" aria-hidden="true"><path d="M14 0 L0 22 h9 l-3 18 L24 16 h-10z"/></svg>
+    <svg class="bolt" style="right:31%;top:14%;--del:3.1s;width:clamp(14px,2vw,24px);transform:rotate(-12deg)" viewBox="0 0 24 40" aria-hidden="true"><path d="M14 0 L0 22 h9 l-3 18 L24 16 h-10z"/></svg>
+    <svg class="cloud" style="top:13%;--dur:80s;--del:-30s" viewBox="0 0 150 80" aria-hidden="true"><g fill="#FFFFFF"><circle cx="40" cy="50" r="22"/><circle cx="72" cy="38" r="30"/><circle cx="110" cy="48" r="24"/><rect x="30" y="50" width="100" height="22" rx="11"/></g></svg>
+    <svg class="cloud" style="top:36%;--dur:110s;--del:-65s;width:clamp(90px,13vw,170px);opacity:.45" viewBox="0 0 150 80" aria-hidden="true"><g fill="#FFFFFF"><circle cx="40" cy="50" r="22"/><circle cx="72" cy="38" r="30"/><circle cx="110" cy="48" r="24"/><rect x="30" y="50" width="100" height="22" rx="11"/></g></svg>
+    <svg class="cloud" style="top:52%;--dur:70s;--del:-40s;opacity:.5" viewBox="0 0 150 80" aria-hidden="true"><g fill="#FFFFFF"><circle cx="40" cy="50" r="22"/><circle cx="72" cy="38" r="30"/><circle cx="110" cy="48" r="24"/><rect x="30" y="50" width="100" height="22" rx="11"/></g></svg>
+    <i class="coin" style="--x:8%;--d:0s;--t:9s" aria-hidden="true"><b></b></i>
+    <i class="coin" style="--x:19%;--d:2.4s;--t:7.5s;--s:10px" aria-hidden="true"><b></b></i>
+    <i class="coin" style="--x:31%;--d:5s;--t:10s;--s:16px" aria-hidden="true"><b></b></i>
+    <i class="coin" style="--x:43%;--d:1.2s;--t:8.5s;--s:11px" aria-hidden="true"><b></b></i>
+    <i class="coin" style="--x:55%;--d:3.6s;--t:9.5s" aria-hidden="true"><b></b></i>
+    <i class="coin" style="--x:66%;--d:6.2s;--t:8s;--s:12px" aria-hidden="true"><b></b></i>
+    <i class="coin" style="--x:77%;--d:0.8s;--t:10.5s;--s:16px" aria-hidden="true"><b></b></i>
+    <i class="coin" style="--x:88%;--d:4.2s;--t:7.8s;--s:10px" aria-hidden="true"><b></b></i>
+    <i class="coin" style="--x:94%;--d:7s;--t:9s;--s:13px" aria-hidden="true"><b></b></i>
+    <div class="wrap">
+      <h1><span class="h1a">Sales Org</span><span class="h1b">Kickoff<span class="bang">!</span></span></h1>
+      <div class="date">
+        <div class="nums" aria-label="October 20th to 23rd">20<sup>th</sup><span>–</span>23<sup>rd</sup></div>
+        <div class="month">October<small>2026 · Austin</small></div>
+      </div>
+      <p class="tagline">Everything you need for the week lives right here.</p>
+      <div class="count" id="count"><i></i><span id="countText">Counting down</span></div>
+    </div>
+    <svg class="skyline" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+      <path fill="#6FB4D3" opacity=".6" d="M0 240 V172 H52 V142 H108 V160 H176 V118 H238 V98 H284 V150 H392 V112 H452 V132 H548 V96 H598 V126 H690 V104 H760 V128 H860 V90 H920 V118 H1010 V100 H1090 V128 H1180 V108 H1250 V138 H1330 V120 H1390 V150 H1440 V240 Z"/>
+      <path fill="#0B2530" d="M0 240 V192 H64 V168 H126 V186 H176 V152 H248 V132 H298 V162 H340 V96 L366 52 L378 46 L404 70 V160 H440 V122 H500 V102 H522 V142 H592 V128 Q606 96 620 128 V142 H656 V102 H674 V72 H690 V42 H706 V72 H722 V102 H740 V142 H780 V62 L832 26 V142 H872 V122 H932 V102 H962 V132 H1012 V92 H1042 V118 H1092 V138 H1132 V108 H1182 V138 H1242 V158 H1292 V144 H1352 V172 H1440 V240 Z"/>
+      <rect x="697" y="18" width="2" height="26" fill="#0B2530"/>
+      <g fill="#BFEFFA" opacity=".9">
+        <rect x="372" y="84" width="3" height="3"/><rect x="386" y="98" width="3" height="3"/><rect x="372" y="114" width="3" height="3"/><rect x="386" y="130" width="3" height="3"/>
+        <rect x="800" y="72" width="3" height="3"/><rect x="814" y="90" width="3" height="3"/><rect x="800" y="108" width="3" height="3"/><rect x="814" y="124" width="3" height="3"/>
+        <rect x="695" y="60" width="3" height="3"/><rect x="706" y="82" width="3" height="3"/><rect x="684" y="116" width="3" height="3"/>
+        <rect x="1020" y="104" width="3" height="3"/><rect x="480" y="136" width="3" height="3"/><rect x="900" y="132" width="3" height="3"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="x-track">
+    <div class="wrap x-track-in">
+      <button class="x-car" id="carBtn" type="button" aria-label="Rev it up: play Deal Dash">
+        <svg viewBox="-60 10 500 100" aria-hidden="true" focusable="false">
+          <g fill="#0B2530"><circle class="puff" cx="8" cy="94" r="6"/><circle class="puff" cx="8" cy="94" r="6" style="animation-delay:-.8s"/><circle class="puff" cx="8" cy="94" r="6" style="animation-delay:-1.6s"/></g>
+          <g class="sl" stroke="#0B2530" stroke-width="4" stroke-linecap="round" fill="none"><path d="M-6 58H-58M-2 76H-60M2 94H-44"/></g>
+          <rect x="14" y="30" width="62" height="7" rx="3.5" fill="#0B2530"/>
+          <rect x="20" y="24" width="8" height="40" rx="3" fill="#0B2530"/>
+          <rect x="56" y="36" width="7" height="30" fill="#0B2530"/>
+          <path fill="#0B2530" d="M50 102 L50 68 Q62 60 92 54 L122 47 L134 34 Q146 30 155 36 L163 49 L212 53 Q226 51 242 55 L302 67 L360 77 Q398 83 430 91 L432 95 Q430 99 420 99 L300 102 L200 104 L60 104 Z"/>
+          <path d="M104 80 Q210 71 346 87" fill="none" stroke="#FF5A36" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="198" cy="46" r="9" fill="#FF5A36"/>
+          <path d="M176 52 Q198 22 232 51" fill="none" stroke="#0B2530" stroke-width="5" stroke-linecap="round"/>
+          <rect x="372" y="95" width="60" height="6" rx="3" fill="#0B2530"/>
+          <rect x="421" y="83" width="7" height="18" rx="3" fill="#0B2530"/>
+          <g><circle cx="94" cy="81" r="26" fill="#0B2530"/><circle cx="94" cy="81" r="19" fill="none" stroke="#FF5A36" stroke-width="3"/><circle cx="94" cy="81" r="11" fill="#FFD46B"/><circle cx="94" cy="81" r="4" fill="#0B2530"/></g>
+          <g><circle cx="338" cy="85" r="21" fill="#0B2530"/><circle cx="338" cy="85" r="15" fill="none" stroke="#FF5A36" stroke-width="3"/><circle cx="338" cy="85" r="9" fill="#FFD46B"/><circle cx="338" cy="85" r="3.5" fill="#0B2530"/></g>
+        </svg>
+      </button>
+      <p class="x-track-label">Rev it up.<span class="x-em">Go for the high score.</span></p>
+    </div>
+    <div class="x-road" aria-hidden="true"></div>
+  </div>
+
+  <section class="x-lede">
+    <div class="wrap">
+      <p>Four days in Austin. The whole sales org in <span class="x-em">one room.</span> Kickoff is <span class="x-mark">Wednesday, October 21.</span></p>
+    </div>
+  </section>
+
+  <section class="x-values" aria-label="Core values">
+    <div class="wrap">
+      <p class="lab">What we're built on</p>
+      <p class="x-v g" style="--in:0"><span>Customer inspired</span><sup>01</sup></p>
+      <p class="x-v o" style="--in:7vw"><span>Design matters</span><sup>02</sup></p>
+      <p class="x-v s" style="--in:2vw"><span>Do the right thing</span><sup>03</sup></p>
+      <p class="x-v c" style="--in:12vw"><span>Committed to give back</span><sup>04</sup></p>
+      <p class="x-v" style="--in:4vw"><span>Built for growth</span><sup>05</sup></p>
+    </div>
+  </section>
+
+  <section class="x-week" id="schedule">
+    <div class="wrap">
+      <div class="x-head"><h2>This <span class="x-em">week.</span></h2></div>
+      <div class="x-days" role="tablist" aria-label="Choose a day">
+        <button class="x-day" role="tab" id="tab-0" aria-controls="p-0" aria-selected="true" data-date="2026-10-20"><span class="d">20</span><span class="w">Tuesday</span><span class="t">Arrive</span></button>
+        <button class="x-day" role="tab" id="tab-1" aria-controls="p-1" aria-selected="false" data-date="2026-10-21" tabindex="-1"><span class="d">21</span><span class="w">Wednesday</span><span class="t">Kickoff</span></button>
+        <button class="x-day" role="tab" id="tab-2" aria-controls="p-2" aria-selected="false" data-date="2026-10-22" tabindex="-1"><span class="d">22</span><span class="w">Thursday</span><span class="t">Workshops</span></button>
+        <button class="x-day" role="tab" id="tab-3" aria-controls="p-3" aria-selected="false" data-date="2026-10-23" tabindex="-1"><span class="d">23</span><span class="w">Friday</span><span class="t">Travel home</span></button>
+      </div>
+      <div class="x-panel" role="tabpanel" id="p-0" aria-labelledby="tab-0">
+        <h3 class="x-daytitle">Tuesday, <span class="x-em">October 20</span></h3>
+        <p class="x-daysub">Arrival day. Fly in, get settled, and meet up with the team.</p>
+        <ul class="x-rows">
+          <li class="x-row"><div class="x-time">All day</div><div class="x-what"><h4>Travel and check-in</h4><p>Everyone is flying in today. Please check with your leader about your team's hotel.</p></div></li>
+          <li class="x-row key"><div class="x-time">5:00–6:00 PM</div><div class="x-what"><h4>Sales org happy hour</h4><p>Kick off the week with the whole org. Location to be announced.</p><span class="x-tag">Time tentative</span></div></li>
+          <li class="x-row"><div class="x-time">Evening</div><div class="x-what"><h4>Team dinners</h4><p>Dinner with your team after the happy hour. Your leader will share the plan.</p><span class="x-tag">Optional</span></div></li>
+        </ul>
+      </div>
+      <div class="x-panel" role="tabpanel" id="p-1" aria-labelledby="tab-1" hidden>
+        <h3 class="x-daytitle">Wednesday, <span class="x-em">October 21</span></h3>
+        <p class="x-daysub">Revenue kickoff agenda</p>
+        <div class="x-callout">
+          <h5>Wednesday's venue</h5>
+          <p><strong>Omni Austin Hotel Downtown</strong>, 700 San Jacinto Blvd (at E. 8th Street). We're in the <strong>Pennybacker</strong> conference room, and the hotel will have it on their sign. <a href="https://www.google.com/maps/search/?api=1&amp;query=Omni+Austin+Hotel+Downtown+700+San+Jacinto+Blvd+Austin+TX" target="_blank" rel="noopener">Open in Maps</a></p>
+          <p class="x-park"><b>Parking tip:</b> The hotel is only about a 10-minute walk from the Austin office. To avoid $55 hotel parking, park at the office and walk over.</p>
+        </div>
+        <ul class="x-rows">
+          <li class="x-row"><div class="x-time">8:30–8:50 AM</div><div class="x-what"><h4>Breakfast tacos and coffee or tea</h4><p>At the Omni Austin Hotel Downtown. Look for the Pennybacker conference room on the hotel sign.</p></div></li>
+          <li class="x-row minor"><div class="x-time">8:50–8:55 AM</div><div class="x-what"><h4>Begin seating and settle in</h4><p>Please be seated so we can start promptly at 9:00 AM.</p></div></li>
+          <li class="x-row key"><div class="x-time">9:00–9:30 AM</div><div class="x-what"><h4>Kickoff: delivering the H2 plan</h4><p>YTD performance and future outlook.</p><span class="x-who">Simon</span></div></li>
+          <li class="x-row"><div class="x-time">9:30–10:00 AM</div><div class="x-what"><h4>Product</h4><span class="x-who">Ramadass Prabhakar</span></div></li>
+          <li class="x-row"><div class="x-time">10:00–10:20 AM</div><div class="x-what"><h4>GTM initiative</h4><span class="x-who">James Gleitman</span></div></li>
+          <li class="x-row minor"><div class="x-time">10:20–10:25 AM</div><div class="x-what"><h4>Fun transition</h4></div></li>
+          <li class="x-row"><div class="x-time">10:25–10:45 AM</div><div class="x-what"><h4>CS market churn and the sales role</h4><span class="x-who">McAlister Southern</span></div></li>
+          <li class="x-row"><div class="x-time">10:45–11:05 AM</div><div class="x-what"><h4>Topic to be announced</h4><span class="x-who">James Hall</span></div></li>
+          <li class="x-row minor"><div class="x-time">11:05–11:20 AM</div><div class="x-what"><h4>Snack break</h4><p>Coffee, tea, snacks, and pastries.</p></div></li>
+          <li class="x-row"><div class="x-time">11:20 AM–12:05 PM</div><div class="x-what"><h4>MAP</h4><span class="x-who">Sarah Wells</span></div></li>
+          <li class="x-row minor"><div class="x-time">12:05–12:10 PM</div><div class="x-what"><h4>Fun transition</h4></div></li>
+          <li class="x-row key"><div class="x-time">12:10–12:30 PM</div><div class="x-what"><h4>Closing</h4><p>Tying the Managed Agentic Platform and product transformation into the broader company vision.</p><span class="x-who">Heather Brunner</span></div></li>
+          <li class="x-row minor"><div class="x-time">12:30 PM</div><div class="x-what"><h4>End of program</h4><p>We wrap by 12:30 so you can go grab lunch.</p></div></li>
+          <li class="x-row key"><div class="x-time">6:00 PM</div><div class="x-what"><h4>Dinner and fun at Dave &amp; Buster's</h4><p>Dinner and some fun are on us. 9333 Research Blvd Service Rd, Suite A 600, Austin, TX 78759 · <a href="https://www.google.com/maps/search/?api=1&amp;query=Dave+%26+Buster%27s+9333+Research+Blvd+Service+Rd+Suite+A+600+Austin+TX+78759" target="_blank" rel="noopener">Open in Maps</a></p></div></li>
+        </ul>
+        <p class="x-fine">The agenda is subject to change.</p>
+      </div>
+      <div class="x-panel" role="tabpanel" id="p-2" aria-labelledby="tab-2" hidden>
+        <h3 class="x-daytitle">Thursday, <span class="x-em">October 22</span></h3>
+        <p class="x-daysub">Workshops in the morning, with protected time to sell.</p>
+        <ul class="x-rows">
+          <li class="x-row"><div class="x-time">Morning</div><div class="x-what"><h4>Coffee and breakfast</h4><p>Served in the kitchen area on the ninth floor.</p><span class="x-tag">Details to be confirmed</span></div></li>
+          <li class="x-row"><div class="x-time">Morning</div><div class="x-what"><h4>Sales org workshops</h4><p>Breakout workshops and kickoffs for the different sales organizations. Your session and room will be listed here.</p><span class="x-tag">Time tentative</span><span class="x-tag">Details coming soon</span></div></li>
+          <li class="x-row"><div class="x-time">Afternoon</div><div class="x-what"><h4>Focused selling time</h4><p>The rest of the day is yours to work pipeline and connect with customers.</p><span class="x-tag">Time tentative</span></div></li>
+          <li class="x-row"><div class="x-time">Evening</div><div class="x-what"><h4>Team dinners</h4><p>For teams that didn't have dinner on Tuesday. Flights home are also available Thursday night.</p><span class="x-tag">Optional</span></div></li>
+        </ul>
+      </div>
+      <div class="x-panel" role="tabpanel" id="p-3" aria-labelledby="tab-3" hidden>
+        <h3 class="x-daytitle">Friday, <span class="x-em">October 23</span></h3>
+        <p class="x-daysub">Travel home.</p>
+        <ul class="x-rows">
+          <li class="x-row"><div class="x-time">All day</div><div class="x-what"><h4>Fly-out day</h4><p>Depart any time today. You can also fly out Thursday night if that works better for you.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="x-where" id="details">
+    <div class="wrap">
+      <div class="x-head"><h2>Austin, <span class="x-em">Texas.</span></h2></div>
+      <div class="x-tiles">
+        <div class="x-tile t1" style="--r:-.8deg"><h3>Wednesday kickoff</h3><p><strong>Omni Austin Hotel Downtown</strong>, 700 San Jacinto Blvd (at E. 8th Street). Our event is in the Pennybacker conference room, and the hotel will have it on their sign. <a href="https://www.google.com/maps/search/?api=1&amp;query=Omni+Austin+Hotel+Downtown+700+San+Jacinto+Blvd+Austin+TX" target="_blank" rel="noopener">Open in Maps</a></p></div>
+        <div class="x-tile t2" style="--r:1deg"><h3>Parking tip</h3><p>The hotel is about a 10-minute walk from the Austin office. Hotel parking is $55, so it may be best to park at the office and walk over.</p></div>
+        <div class="x-tile t3" style="--r:.8deg"><h3>Wednesday night</h3><p>Dinner and some fun at Dave &amp; Buster's, on us. 9333 Research Blvd Service Rd, Suite A 600, Austin, TX 78759. <a href="https://www.google.com/maps/search/?api=1&amp;query=Dave+%26+Buster%27s+9333+Research+Blvd+Service+Rd+Suite+A+600+Austin+TX+78759" target="_blank" rel="noopener">Open in Maps</a></p></div>
+        <div class="x-tile t4" style="--r:-1deg"><h3>Breakfast</h3><p>Wednesday: breakfast tacos and coffee or tea at the Omni starting at 8:30 AM, before the 9:00 AM kickoff. Thursday: details coming soon.</p></div>
+        <div class="x-tile t5" style="--r:.6deg"><h3>Your hotel</h3><p>Many teams are staying at our usual hotels. Please check with your leader for your team's plan.</p></div>
+        <div class="x-tile t6" style="--r:-.8deg"><h3>Arriving and departing</h3><p>Fly in Tuesday, Oct 20. Fly out Thursday night, Oct 22 or Friday, Oct 23.</p></div>
+        <div class="x-tile t7" style="--r:-.5deg"><h3>Getting around</h3><p>Double up on rides, carpool, or walk where you can.</p></div>
+        <div class="x-tile t8" style="--r:1deg"><h3>Questions</h3><p>Contact any of your sales leaders, or send a note using the form below.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="x-shout" id="shoutouts">
+    <div class="wrap">
+      <div class="x-head"><h2>Shout<span class="x-em">-outs</span></h2></div>
+      <p class="x-shout-sub">Real recognition from Thrive, where we say thanks to each other.</p>
+      <div class="th-inline"><div class="th-stage" id="thStage" aria-label="Recognition posts from Thrive"></div></div>
+      <p class="th-hint2">Hover or press and hold to pause.</p>
+    </div>
+  </section>
+
+  <section class="x-quote" id="team">
+    <svg class="team-sky" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><path fill="#1268A3" d="M0 240 V192 H64 V168 H126 V186 H176 V152 H248 V132 H298 V162 H340 V96 L366 52 L378 46 L404 70 V160 H440 V122 H500 V102 H522 V142 H592 V128 Q606 96 620 128 V142 H656 V102 H674 V72 H690 V42 H706 V72 H722 V102 H740 V142 H780 V62 L832 26 V142 H872 V122 H932 V102 H962 V132 H1012 V92 H1042 V118 H1092 V138 H1132 V108 H1182 V138 H1242 V158 H1292 V144 H1352 V172 H1440 V240 Z"/><rect x="697" y="18" width="2" height="26" fill="#1268A3"/></svg>
+    <svg class="bolt" style="left:7%;top:16%;--del:.4s" viewBox="0 0 24 40" aria-hidden="true"><path d="M14 0 L0 22 h9 l-3 18 L24 16 h-10z"/></svg>
+    <svg class="bolt" style="right:9%;top:30%;--del:2.2s;transform:rotate(12deg)" viewBox="0 0 24 40" aria-hidden="true"><path d="M14 0 L0 22 h9 l-3 18 L24 16 h-10z"/></svg>
+    <div class="wrap">
+      <p class="lab">Get charged up.</p>
+      <p class="q" id="qt" aria-live="polite">Nothing great was ever achieved without enthusiasm.</p>
+      <p class="qa" id="qa">Ralph Waldo Emerson</p>
+      <button class="x-next" type="button" id="qnext">Another one</button>
+    </div>
+  </section>
+
+  <section class="x-ask" id="ask">
+    <div class="wrap">
+      <h2 class="x-ask-lede">Got a question?<br><span class="x-em">Say it out loud.</span></h2>
+      <form class="x-form" id="askForm" novalidate>
+        <div class="x-sentence">
+          <span>I'd like to</span>
+          <select id="fbType" aria-label="What kind of note is this?"><option>ask a question</option><option>share feedback</option><option>pitch an idea</option></select>
+          <span>about</span>
+        </div>
+        <textarea class="x-msg" id="fbMsg" rows="3" maxlength="2000" placeholder="Type it here" aria-label="Your message"></textarea>
+        <div class="x-form-foot">
+          <input class="x-name" id="fbName" type="text" maxlength="60" autocomplete="name" placeholder="Your name (optional)" aria-label="Your name, optional">
+          <button class="x-send" type="submit"><span>Send it</span><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <p class="x-status" id="fbStatus" role="status"></p>
+        <p class="x-note">Notes are reviewed by sales leadership. Add your name if you'd like a reply.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="x-faq" id="faq">
+    <div class="wrap">
+      <div class="x-head"><h2>Good <span class="x-em">questions.</span></h2></div>
+      <div>
+        <details class="x-q"><summary>Where is Wednesday's kickoff?<i></i></summary><p>At the Omni Austin Hotel Downtown, 700 San Jacinto Blvd (at E. 8th Street), in the Pennybacker conference room. Breakfast tacos and coffee or tea start at 8:30 AM. Please be seated by 8:55 AM so the program can start promptly at 9:00 AM, and we'll wrap by 12:30 PM.</p></details>
+        <details class="x-q"><summary>Where should I park?<i></i></summary><p>The hotel is only about a 10-minute walk from the Austin office. Hotel parking is $55, so it may be best to park at the office and walk over.</p></details>
+        <details class="x-q"><summary>When do I need to arrive?<i></i></summary><p>Plan to arrive on Tuesday, October 20. The sales org happy hour starts at 5:00 PM, though that time is still tentative.</p></details>
+        <details class="x-q"><summary>Are team dinners required?<i></i></summary><p>No. Team dinners on Tuesday and Thursday are optional. Teams that don't have dinner on Tuesday can have one on Thursday. Wednesday night's dinner and fun at Dave &amp; Buster's is for everyone.</p></details>
+        <details class="x-q"><summary>When can I fly home?<i></i></summary><p>Thursday night and Friday are both fly-out times. Choose whichever works for you.</p></details>
+        <details class="x-q"><summary>Where is the agenda?<i></i></summary><p>Wednesday's agenda is posted in the schedule above. Thursday's workshop details are coming soon, so check back.</p></details>
+        <details class="x-q"><summary>Where do I stay?<i></i></summary><p>Many teams are staying at our usual hotels. Please check with your leader for your team's plan.</p></details>
+        <details class="x-q"><summary>Will there be time to sell?<i></i></summary><p>Yes. Thursday workshops only take up part of the day so there is focused selling time built in.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="x-foot">
+  <div class="wrap">
+    <h2>See you in <span class="o">Austin.</span></h2>
+    <div class="row"><span>WP Engine Sales Org Kickoff · October 20th–23rd, 2026</span><span>Last updated October 1, 2026. Details may change.</span></div>
+  </div>
+</footer>
+
+<!-- Game dialog -->
+<dialog id="gameDlg" class="wide" aria-labelledby="gTitle">
+  <div class="dlg-in">
+    <div class="dlg-head">
+      <div><h2 id="gTitle">Deal Dash</h2><p>Jump the blockers, close the deals. Space, up arrow, or tap to jump.</p></div>
+      <button class="x" type="button" id="gClose" aria-label="Close game">×</button>
+    </div>
+    <div class="stage">
+      <canvas id="cv" tabindex="0" aria-label="Deal Dash game"></canvas>
+      <div class="ovl" id="gStart">
+        <h3>Ready to run the quarter?</h3>
+        <p>Jump over blockers like Ghosted and Procurement. Every few blockers you reach a deal checkpoint: answer the sales question to bank bonus points.</p>
+        <button class="btn" type="button" id="gGo">Start</button>
+      </div>
+      <div class="ovl" id="gQuiz" hidden>
+        <h3 id="qText"></h3>
+        <div class="opts" id="qOpts"></div>
+        <p id="qMsg"></p>
+      </div>
+      <div class="ovl" id="gOver" hidden>
+        <h3 id="oTitle">Deal lost</h3>
+        <p id="oMsg"></p>
+        <input type="text" id="oName" maxlength="20" placeholder="Your name" aria-label="Your name for the leaderboard">
+        <div class="row-btns" style="margin-top:0;justify-content:center">
+          <button class="btn" type="button" id="oSubmit">Post to leaderboard</button>
+          <button class="btn ghost" type="button" id="oAgain" style="color:#fff;border-color:#2D5A6B">Play again</button>
+        </div>
+        <p id="oStatus" role="status"></p>
+      </div>
+    </div>
+    <div class="game-grid">
+      <div class="hint">Pick your name at the end of a run to post your score. Your best score is the one that stays on the board.</div>
+      <div class="lb"><h3>Leaderboard</h3><ol id="lbList"><li>Loading...</li></ol></div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // ---------- Day selector ----------
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.x-day'));
+    function select(i, focus) {
+      tabs.forEach(function (t, n) {
+        var on = n === i;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById('p-' + n).hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(i, false); });
+      t.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % tabs.length, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+      });
+    });
+    var now = new Date();
+    var key = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+    tabs.forEach(function (t, i) { if (t.getAttribute('data-date') === key) select(i, false); });
+  })();
+
+  // ---------- Countdown ----------
+  (function () {
+    var el = document.getElementById('countText');
+    var start = new Date(2026, 9, 20, 0, 0, 0);
+    var end = new Date(2026, 9, 24, 0, 0, 0);
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var days = Math.round((start - today) / 86400000);
+    if (now >= end) el.textContent = 'Thanks for a great kickoff';
+    else if (now >= start) el.textContent = 'Kickoff week is here';
+    else if (days === 1) el.textContent = '1 day to go';
+    else el.textContent = days + ' days to go';
+  })();
+
+  // ---------- Quotes ----------
+  (function () {
+    var qs = [
+      { q: "Nothing great was ever achieved without enthusiasm.", a: "Ralph Waldo Emerson" },
+      { q: "Alone we can do so little; together we can do so much.", a: "Helen Keller" },
+      { q: "Optimism is the faith that leads to achievement.", a: "Helen Keller" },
+      { q: "It always seems impossible until it's done.", a: "Nelson Mandela" },
+      { q: "Great things are done by a series of small things brought together.", a: "Vincent van Gogh" },
+      { q: "Start where you are. Use what you have. Do what you can.", a: "Arthur Ashe" },
+      { q: "The only way to do great work is to love what you do.", a: "Steve Jobs" }
+    ];
+    var el = document.getElementById('qt'), at = document.getElementById('qa'), b = document.getElementById('qnext');
+    if (!el || !at || !b) return;
+    var i = 0;
+    b.addEventListener('click', function () {
+      i = (i + 1) % qs.length; el.style.opacity = 0; at.style.opacity = 0;
+      setTimeout(function () { el.textContent = qs[i].q; at.textContent = qs[i].a; el.style.opacity = 1; at.style.opacity = 1; }, 200);
+    });
+  })();
+
+  // ---------- Pep-rally bunting ----------
+  (function () {
+    var svg = document.querySelector('.bunting'); if (!svg) return;
+    var NS = 'http://www.w3.org/2000/svg', cols = ['#0ECAD4', '#FFD46B', '#FF5A36', '#FFFFFF'];
+    var str = document.createElementNS(NS, 'path');
+    str.setAttribute('d', 'M0 4 Q360 50 720 4 Q1080 50 1440 4'); str.setAttribute('fill', 'none');
+    str.setAttribute('stroke', '#0B2530'); str.setAttribute('stroke-width', '2'); str.setAttribute('opacity', '.55');
+    svg.appendChild(str);
+    var n = 0;
+    for (var j = 0; j < 2; j++) {
+      var x0 = j * 720, y0 = 4, cx = x0 + 360, cy = 50, x1 = x0 + 720, y1 = 4;
+      for (var i = 1; i <= 9; i++) {
+        var t = i / 10, u = 1 - t;
+        var x = u * u * x0 + 2 * u * t * cx + t * t * x1, y = u * u * y0 + 2 * u * t * cy + t * t * y1;
+        var dx = 2 * u * (cx - x0) + 2 * t * (x1 - cx), dy = 2 * u * (cy - y0) + 2 * t * (y1 - cy);
+        var ang = Math.atan2(dy, dx) * 180 / Math.PI;
+        var g = document.createElementNS(NS, 'g');
+        g.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + ang.toFixed(1) + ')');
+        var pg = document.createElementNS(NS, 'polygon');
+        pg.setAttribute('points', '-15,0 15,0 0,34'); pg.setAttribute('fill', cols[n % 4]); pg.setAttribute('class', 'pennant');
+        pg.style.animationDelay = (-(n * 0.37)) + 's';
+        g.appendChild(pg); svg.appendChild(g); n++;
+      }
+    }
+  })();
+
+  // ---------- Scroll reveals ----------
+  (function () {
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+    document.documentElement.classList.add('js');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    function tag(sel) {
+      var groups = new Map();
+      document.querySelectorAll(sel).forEach(function (el) {
+        var g = groups.get(el.parentNode) || 0; groups.set(el.parentNode, g + 1);
+        el.classList.add('reveal'); el.style.setProperty('--rd', Math.min(g, 6) * 0.06 + 's');
+        io.observe(el);
+      });
+    }
+    tag('.x-head, .x-lede p, .x-row, .x-tile, .x-q, .x-ask-lede, .x-form, .x-quote .wrap > *');
+    document.querySelectorAll('.x-v').forEach(function (el, i) { el.style.setProperty('--rd', i * 0.1 + 's'); io.observe(el); });
+  })();
+
+  // ---------- Thrive shout-outs (home page waterfall) ----------
+  (function () {
+    var SHOUTS = [
+      {
+            "to": "Sara Matlin",
+            "by": "Rami Perry",
+            "value": "Customer Inspired",
+            "date": "Sep 1",
+            "text": "Sara has come in guns blazing! She has confidently and kindly jumping right in with our top agency partners. Having part Sara part of our agency teams/pods has already made a huge difference. Can't wait to continue to work alongside her and grow these relationships."
+      },
+      {
+            "to": "Joey Teng",
+            "by": "Chandler Pickett",
+            "value": "Built for Growth",
+            "date": "Sep 4",
+            "text": "Joey, your exceptional performance leaning into Commerce Connect for BigCommerce was truly impressive. You handled complex technical questions with grace and confidence, learning on the fly and seamlessly integrating a headless discussion."
+      },
+      {
+            "to": "Grace Pierce + John Wesley",
+            "by": "Anthony Bracamontez",
+            "value": "Design Matters",
+            "date": "Sep 30",
+            "text": "Huge thanks to Grace and John for their meticulous work on the Sales Leads initiative. Their sustained focus and thoughtful approach to untangling a complex process truly demonstrate that design matters."
+      },
+      {
+            "to": "Maddie Miser",
+            "by": "John Housholder",
+            "value": "Built for Growth",
+            "date": "Sep 30",
+            "text": "Thanks for creating a great forward facing presentation on AI and Standardization on WPE."
+      },
+      {
+            "to": "Miranda Pfahler",
+            "by": "John Housholder",
+            "value": "Built for Growth",
+            "date": "Sep 30",
+            "text": "Congrats on a HUGE month. 170% to plan and hit for the quarter!!!!!!"
+      }
+];
+    var stage = document.getElementById('thStage'); if (!stage) return;
+    function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
+    function item(s, dup) {
+      var d = el('div', 'th-item' + (dup ? ' th-dup' : '')); if (dup) d.setAttribute('aria-hidden', 'true');
+      var m = el('div', 'th-meta'); m.appendChild(el('div', 'th-to', s.to)); m.appendChild(el('span', 'th-val', s.value)); m.appendChild(el('span', 'th-date', s.date));
+      var b = el('div', 'th-body'); b.appendChild(el('p', 'th-quote', s.text)); b.appendChild(el('p', 'th-by', 'from ' + s.by));
+      d.appendChild(m); d.appendChild(b); return d;
+    }
+    function lane(order, dur, del) {
+      var l = el('div', 'th-lane'), t = el('div', 'th-track');
+      t.style.setProperty('--dur', dur + 's'); t.style.setProperty('--del', del + 's');
+      [false, true].forEach(function (dup) { order.forEach(function (i) { t.appendChild(item(SHOUTS[i], dup)); }); });
+      l.appendChild(t); return l;
+    }
+    stage.appendChild(lane([0, 2, 4, 1, 3], 34, 0));
+    stage.appendChild(lane([3, 0, 2, 4, 1], 42, -14));
+  })();
+
+  // ---------- F1 car launches the game ----------
+  (function () {
+    var car = document.getElementById('carBtn'), gd = document.getElementById('gameDlg'); if (!car || !gd) return;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function reset() {
+      car.style.transition = 'none'; car.classList.remove('go'); car.style.transform = 'translateX(-130vw)';
+      void car.offsetWidth; car.style.transition = ''; car.style.transform = '';
+    }
+    function launch() { if (window.__openGame) window.__openGame(); }
+    car.addEventListener('click', function () {
+      if (car.classList.contains('go')) return;
+      if (reduce) { launch(); return; }
+      car.classList.add('go'); setTimeout(launch, 750);
+    });
+    gd.addEventListener('close', function () { if (!reduce) reset(); });
+  })();
+
+  // ---------- Shared runtime helpers (degrade gracefully when unavailable) ----------
+  var dbP = null, userP = null;
+  function getDb() {
+    if (!dbP) dbP = (async function () {
+      try { return (window.claude && claude.use) ? await claude.use('db') : null; } catch (e) { return null; }
+    })();
+    return dbP;
+  }
+  function getUser() {
+    if (!userP) userP = (async function () {
+      try { return (window.claude && claude.use) ? await claude.use('user') : null; } catch (e) { return null; }
+    })();
+    return userP;
+  }
+  async function getUid() {
+    var u = await getUser();
+    if (!u || !u.id) return null;
+    try { return await u.id(); } catch (e) { return null; }
+  }
+  function remember(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ''; localStorage.setItem(k, v); } catch (e) { return ''; } }
+
+  // ---------- Ask / feedback form ----------
+  (function () {
+    var form = document.getElementById('askForm'); if (!form) return;
+    var st = document.getElementById('fbStatus'), btn = form.querySelector('.x-send');
+    var nm = document.getElementById('fbName'); nm.value = remember('kick_name') || '';
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var msg = document.getElementById('fbMsg').value.trim();
+      if (!msg) { st.textContent = 'Type your note first.'; return; }
+      btn.disabled = true; st.textContent = 'Sending...';
+      try {
+        var db = await getDb(); var uid = await getUid();
+        if (!db || !uid) { st.textContent = 'Sending needs a Claude sign-in. Please contact any of your sales leaders directly.'; btn.disabled = false; return; }
+        var name = nm.value.trim().slice(0, 60);
+        remember('kick_name', name);
+        var ref = db.doc('feedback/' + uid);
+        var snap = await ref.get();
+        var notes = (snap.exists && snap.data() && Array.isArray(snap.data().notes)) ? snap.data().notes.slice(-49) : [];
+        notes.push({ type: document.getElementById('fbType').value, name: name, text: msg, at: new Date().toISOString() });
+        await ref.set({ notes: notes, last: Date.now() });
+        document.getElementById('fbMsg').value = '';
+        st.textContent = 'Got it. Thank you!';
+      } catch (err) {
+        st.textContent = 'Something went wrong sending that. Please try again, or contact a sales leader.';
+      }
+      btn.disabled = false;
+    });
+  })();
+
+  // ---------- Easter egg: Deal Dash ----------
+  (function () {
+    var dlg = document.getElementById('gameDlg');
+    var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+    var W = 720, H = 260, G = 214, PX = 60, PW = 90, PH = 25;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var el = function (id) { return document.getElementById(id); };
+    var gStart = el('gStart'), gQuiz = el('gQuiz'), gOver = el('gOver');
+    var lbBuilt = false;
+
+    var LABELS = ['Cold lead', 'Ghosted', 'Procurement', 'Redlines', 'No budget', 'Legal review', 'Price check', 'Stalled deal', 'Vendor freeze'];
+    var QS = [
+      { q: 'What does ARR stand for?', a: 'Annual Recurring Revenue', w: ['Average Revenue Rate', 'Account Renewal Ratio'] },
+      { q: 'What does QBR usually stand for?', a: 'Quarterly Business Review', w: ['Quota Balance Report', 'Quick Buyer Reply'] },
+      { q: 'Net revenue retention above 100% means...', a: 'Existing customers are growing revenue', w: ['Every customer renewed', 'New logos beat quota'] },
+      { q: 'Which is a leading indicator of pipeline health?', a: 'Pipeline coverage', w: ['Last year\'s revenue', 'Office snack budget'] },
+      { q: 'In MEDDIC, what does the first M stand for?', a: 'Metrics', w: ['Meetings', 'Margin'] },
+      { q: 'What does CAC stand for?', a: 'Customer Acquisition Cost', w: ['Contract Approval Cycle', 'Close And Collect'] },
+      { q: 'An upsell is...', a: 'Selling a higher tier or more to an existing customer', w: ['Selling to a brand new logo', 'Discounting to close'] },
+      { q: 'A champion in a deal is...', a: 'An internal advocate at the buyer', w: ['Your top rep', 'The final signer'] },
+      { q: 'Quota attainment is...', a: 'Bookings divided by quota', w: ['Pipeline divided by quota', 'Calls made divided by goal'] },
+      { q: 'Best reply to "We need to think about it"?', a: 'Ask what specifically they need to think through', w: ['Offer a bigger discount right away', 'Say great and wait for their call'] }
+    ];
+
+    var S = { mode: 'idle', y: G, vy: 0, dist: 0, bonus: 0, score: 0, speed: 300, obs: [], spawnIn: 1, passed: 0, quizAt: 6, last: 0, raf: 0, qUsed: [] };
+    var skyline = [], total = 0;
+    (function () { var x = 0; while (x < W + 200) { var w = 28 + Math.random() * 40, h = 30 + Math.random() * 90; skyline.push({ x: x, w: w, h: h }); x += w + 4 + Math.random() * 10; } total = x; })();
+
+    function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    function show(node) { [gStart, gQuiz, gOver].forEach(function (n) { n.hidden = (n !== node); }); }
+
+    function startRun() {
+      S.mode = 'run'; S.y = G; S.vy = 0; S.dist = 0; S.bonus = 0; S.score = 0; S.speed = 300; S.obs = []; S.spawnIn = 1; S.passed = 0; S.quizAt = 6; S.last = performance.now();
+      show(null); cv.focus();
+    }
+    function jump() {
+      if (S.mode === 'idle') { startRun(); return; }
+      if (S.mode === 'run' && S.y >= G - 0.5) S.vy = -780;
+    }
+    function spawn() {
+      var h = 30 + Math.random() * 26, w = 34 + Math.random() * 14;
+      S.obs.push({ x: W + 20, w: w, h: h, label: LABELS[Math.floor(Math.random() * LABELS.length)], done: false });
+    }
+    function gameOver(reason) {
+      S.mode = 'over';
+      el('oTitle').textContent = 'Deal lost';
+      el('oMsg').textContent = reason + ' Final score: ' + S.score + '.';
+      el('oName').value = remember('kick_game_name') || remember('kick_name') || '';
+      el('oStatus').textContent = '';
+      el('oSubmit').disabled = false;
+      show(gOver);
+    }
+    function quiz() {
+      S.mode = 'quiz'; S.obs = []; S.y = G; S.vy = 0;
+      var pool = QS.map(function (_, i) { return i; }).filter(function (i) { return S.qUsed.indexOf(i) < 0; });
+      if (!pool.length) { S.qUsed = []; pool = QS.map(function (_, i) { return i; }); }
+      var idx = pool[Math.floor(Math.random() * pool.length)]; S.qUsed.push(idx);
+      var item = QS[idx];
+      el('qText').textContent = 'Deal checkpoint: ' + item.q;
+      el('qMsg').textContent = 'Right answer banks 100 bonus points.';
+      var box = el('qOpts'); box.textContent = '';
+      shuffle([item.a].concat(item.w)).forEach(function (opt) {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = opt;
+        b.addEventListener('click', function () {
+          if (S.mode !== 'quiz') return;
+          if (opt === item.a) {
+            S.bonus += 100; S.mode = 'pause'; el('qMsg').textContent = 'Closed won! +100';
+            setTimeout(function () { if (S.mode === 'pause') { S.quizAt = S.passed + 6; S.spawnIn = 1.2; S.last = performance.now(); S.mode = 'run'; show(null); cv.focus(); } }, 900);
+          } else {
+            gameOver('Not quite. The answer was "' + item.a + '".');
+          }
+        });
+        box.appendChild(b);
+      });
+      show(gQuiz);
+    }
+    function update(dt) {
+      S.speed = Math.min(620, 300 + S.dist / 40);
+      S.dist += S.speed * dt;
+      S.vy += 2300 * dt; S.y += S.vy * dt; if (S.y >= G) { S.y = G; S.vy = 0; }
+      S.spawnIn -= dt; if (S.spawnIn <= 0) { spawn(); S.spawnIn = 1.0 + Math.random() * 0.9; }
+      for (var i = S.obs.length - 1; i >= 0; i--) {
+        var o = S.obs[i]; o.x -= S.speed * dt;
+        if (!o.done && o.x + o.w < PX) { o.done = true; S.passed++; }
+        if (o.x + o.w < -60) { S.obs.splice(i, 1); continue; }
+        var px1 = PX + 5, px2 = PX + PW - 5, py1 = S.y - PH + 5, py2 = S.y;
+        if (px2 > o.x + 4 && px1 < o.x + o.w - 4 && py2 > G - o.h + 4 && py1 < G) { gameOver('You ran into "' + o.label + '".'); S.score = Math.floor(S.dist / 12) + S.bonus; el('oMsg').textContent = 'You ran into "' + o.label + '". Final score: ' + S.score + '.'; return; }
+      }
+      S.score = Math.floor(S.dist / 12) + S.bonus;
+      if (S.passed >= S.quizAt) quiz();
+    }
+    function draw() {
+      var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0B2530'); g.addColorStop(0.6, '#15506A'); g.addColorStop(1, '#5DB6CE');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      var off = (S.dist * 0.2) % total;
+      ctx.fillStyle = '#134559';
+      for (var r = -1; r < 2; r++) skyline.forEach(function (b) { ctx.fillRect(b.x - off + r * total, G - b.h, b.w, b.h); });
+      ctx.fillStyle = '#0B2530'; ctx.fillRect(0, G, W, H - G);
+      ctx.fillStyle = '#0ECAD4'; ctx.fillRect(0, G, W, 2);
+      var gOff = (S.dist % 40);
+      ctx.fillStyle = '#1B5A72'; for (var x = -gOff; x < W; x += 40) ctx.fillRect(x, G + 12, 18, 2);
+      // player: the F1 car
+      var cs = 0.24, tilt = Math.max(-0.14, Math.min(0.14, S.vy / 5500));
+      ctx.save();
+      ctx.translate(PX + PW / 2, S.y - 10); ctx.rotate(tilt); ctx.translate(-PW / 2, 10);
+      ctx.scale(cs, cs); ctx.translate(-14, -107);
+      ctx.fillStyle = '#FFD46B';
+      ctx.fillRect(14, 30, 62, 7); ctx.fillRect(20, 24, 8, 40); ctx.fillRect(56, 36, 7, 30);
+      ctx.fill(new Path2D('M50 102 L50 68 Q62 60 92 54 L122 47 L134 34 Q146 30 155 36 L163 49 L212 53 Q226 51 242 55 L302 67 L360 77 Q398 83 430 91 L432 95 Q430 99 420 99 L300 102 L200 104 L60 104 Z'));
+      ctx.fillRect(372, 95, 60, 6); ctx.fillRect(421, 83, 7, 18);
+      ctx.strokeStyle = '#FF5A36'; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.stroke(new Path2D('M104 80 Q210 71 346 87'));
+      ctx.fillStyle = '#0ECAD4'; ctx.beginPath(); ctx.arc(198, 46, 9, 0, 6.283); ctx.fill();
+      ctx.strokeStyle = '#FFD46B'; ctx.lineWidth = 5; ctx.stroke(new Path2D('M176 52 Q198 22 232 51'));
+      [[94, 81, 26, 19, 11, 4], [338, 85, 21, 15, 9, 3.5]].forEach(function (w) {
+        ctx.fillStyle = '#06161D'; ctx.beginPath(); ctx.arc(w[0], w[1], w[2], 0, 6.283); ctx.fill();
+        ctx.strokeStyle = '#FFF5E1'; ctx.lineWidth = 3; ctx.stroke();
+        ctx.strokeStyle = '#FF5A36'; ctx.beginPath(); ctx.arc(w[0], w[1], w[3], 0, 6.283); ctx.stroke();
+        ctx.fillStyle = '#FFF5E1'; ctx.beginPath(); ctx.arc(w[0], w[1], w[4], 0, 6.283); ctx.fill();
+        ctx.fillStyle = '#06161D'; ctx.beginPath(); ctx.arc(w[0], w[1], w[5], 0, 6.283); ctx.fill();
+      });
+      ctx.restore();
+      // obstacles
+      ctx.textAlign = 'center'; ctx.font = '600 12px Figtree, Segoe UI, sans-serif';
+      S.obs.forEach(function (o) {
+        ctx.fillStyle = '#FFB84D'; ctx.fillRect(o.x, G - o.h, o.w, o.h);
+        ctx.fillStyle = '#fff'; ctx.fillText(o.label, o.x + o.w / 2, G - o.h - 6);
+      });
+      ctx.textAlign = 'right'; ctx.font = '700 16px Bricolage Grotesque, Segoe UI, sans-serif'; ctx.fillStyle = '#fff';
+      ctx.fillText('Score ' + S.score, W - 14, 26);
+    }
+    function frame(now) {
+      var dt = Math.min(0.033, (now - S.last) / 1000); S.last = now;
+      if (S.mode === 'run') update(dt);
+      draw();
+      S.raf = requestAnimationFrame(frame);
+    }
+
+    async function buildLeaderboard() {
+      if (lbBuilt) return; lbBuilt = true;
+      var list = el('lbList');
+      var db = await getDb();
+      if (!db) { list.innerHTML = ''; var li = document.createElement('li'); li.textContent = 'The leaderboard needs a Claude sign-in.'; list.appendChild(li); return; }
+      db.collection('leaderboard').orderBy('score', 'desc').limit(10).onSnapshot(function (snap) {
+        list.textContent = '';
+        if (snap.empty) { var e = document.createElement('li'); e.textContent = 'No scores yet. Be the first.'; list.appendChild(e); return; }
+        snap.docs.forEach(function (d) {
+          var v = d.data() || {}; var li = document.createElement('li');
+          li.appendChild(document.createTextNode(String(v.name || 'Anonymous').slice(0, 20)));
+          var s = document.createElement('span'); s.textContent = String(v.score || 0); li.appendChild(s);
+          list.appendChild(li);
+        });
+      }, function () { list.textContent = ''; var x = document.createElement('li'); x.textContent = 'Leaderboard unavailable right now.'; list.appendChild(x); });
+    }
+
+    el('oSubmit').addEventListener('click', async function () {
+      var btn = el('oSubmit'), st = el('oStatus');
+      var name = el('oName').value.trim().slice(0, 20);
+      if (!name) { st.textContent = 'Add your name first.'; return; }
+      btn.disabled = true; st.textContent = 'Posting...';
+      try {
+        var db = await getDb(); var uid = await getUid();
+        if (!db || !uid) { st.textContent = 'Posting needs a Claude sign-in.'; btn.disabled = false; return; }
+        remember('kick_game_name', name);
+        var ref = db.doc('leaderboard/' + uid); var snap = await ref.get();
+        var best = snap.exists && snap.data() ? Number(snap.data().score) || 0 : 0;
+        if (S.score > best) { await ref.set({ name: name, score: S.score, at: Date.now() }); st.textContent = 'Posted! New personal best: ' + S.score + '.'; }
+        else { if (snap.exists && snap.data().name !== name) await ref.update({ name: name }); st.textContent = 'Your best of ' + best + ' stays on the board. Beat it!'; }
+      } catch (e) { st.textContent = 'Could not post that right now. Try again.'; btn.disabled = false; }
+    });
+
+    function open() {
+      S.mode = 'idle'; S.dist = 0; S.obs = []; S.score = 0; S.y = G; show(gStart);
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      S.last = performance.now(); cancelAnimationFrame(S.raf); S.raf = requestAnimationFrame(frame);
+      buildLeaderboard();
+    }
+    window.__openGame = open;
+    function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+    dlg.addEventListener('close', function () { cancelAnimationFrame(S.raf); S.mode = 'idle'; });
+    el('gClose').addEventListener('click', close);
+    el('gGo').addEventListener('click', startRun);
+    el('oAgain').addEventListener('click', startRun);
+    cv.addEventListener('pointerdown', function (e) { e.preventDefault(); jump(); });
+
+    window.addEventListener('keydown', function (e) {
+      if (dlg.open) {
+        var t = e.target && e.target.tagName;
+        if ((e.code === 'Space' || e.key === 'ArrowUp') && t !== 'INPUT' && t !== 'BUTTON' && t !== 'TEXTAREA') { e.preventDefault(); jump(); }
+        return;
+      }
+      // Konami code opens the game too
+      var seq = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+      window.__k = (window.__k || []); window.__k.push(e.key); window.__k = window.__k.slice(-10);
+      if (window.__k.join(',') === seq.join(',')) { window.__k = []; open(); }
+    });
+    el('star').addEventListener('click', open);
+  })();
+</script>
+</body>
+</html>
