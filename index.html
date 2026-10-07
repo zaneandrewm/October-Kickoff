@@ -542,6 +542,17 @@
   .th-toggle:hover { background: #fff; color: #0B2530; }
 
   .x-ask-say { font-family: var(--display); font-weight: 800; font-size: clamp(1.6rem, 4.4vw, 3.4rem); line-height: 1.08; letter-spacing: -0.03em; max-width: 24ch; }
+  .x-quote .qn { font-size: clamp(1rem, 1.8vw, 1.3rem); line-height: 1.4; color: #E1F3F8; max-width: 40rem; margin-top: .7rem; min-height: 4.2em; transition: opacity .2s; }
+  .believe-ov { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; background: rgba(6,22,29,.86); overflow: hidden; cursor: pointer; animation: bfade .25s ease; }
+  .believe-ov.out { opacity: 0; transition: opacity .25s; }
+  @keyframes bfade { from { opacity: 0; } to { opacity: 1; } }
+  .believe-card { position: relative; z-index: 2; text-align: center; padding: 2rem; max-width: 56rem; animation: bpop .5s cubic-bezier(.2,.9,.3,1.2); }
+  @keyframes bpop { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .believe-big { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(5rem, 22vw, 17rem); line-height: .9; letter-spacing: -0.03em; color: var(--gold-2); text-shadow: 0 0 60px rgba(255,212,107,.55); }
+  .believe-line { font-family: var(--display); font-weight: 800; font-size: clamp(1.4rem, 3.6vw, 2.8rem); line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-top: 1rem; }
+  .believe-hint { color: #9DB8C0; margin-top: 1.4rem; font-size: .95rem; }
+  .star-rain { position: absolute; top: -3rem; z-index: 1; color: var(--gold-2); pointer-events: none; animation: tacofall var(--t, 3s) linear forwards; }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero .nums, .hero .month, .star, .sun::before, .cloud, .coin, .coin b, .ticker-track, .pennant, .bob, .speed, .pop { animation: none; }
@@ -552,6 +563,7 @@
     .x-taco { animation: none; left: 70%; }
     .qbar { display: none; }
     .quote p { transition: none; }
+    .believe-card, .believe-ov { animation: none; }
     .tickers .ticker::before, .tickers .ticker::after { animation: none; }
     .coin, .burst { display: none; }
     .js .reveal { opacity: 1; transform: none; transition: none; }
@@ -772,6 +784,7 @@
       <p class="lab">Get charged up.</p>
       <p class="q" id="qt" aria-live="polite">Nothing great was ever achieved without enthusiasm.</p>
       <p class="qa" id="qa">Ralph Waldo Emerson</p>
+      <p class="qn" id="qn"></p>
       <div class="qbar" aria-hidden="true"><i></i></div>
       <button class="x-next" type="button" id="qnext">Another one</button>
       <button class="x-next" type="button" id="qpause" style="margin-left:.7rem">Pause</button>
@@ -893,7 +906,7 @@
   (function () {
     var qs = [
       { q: "Nothing great was ever achieved without enthusiasm.", a: "Ralph Waldo Emerson" },
-      { q: "Be a goldfish.", a: "Ted Lasso" },
+      { q: "Be a goldfish.", a: "Ted Lasso", n: "Ted's advice for shaking off a mistake: a goldfish has a ten-second memory, so it's the happiest animal on Earth. Let it go and play the next ball.", ms: 8000 },
       { q: "Alone we can do so little; together we can do so much.", a: "Helen Keller" },
       { q: "Doing the right thing is never the wrong thing.", a: "Ted Lasso" },
       { q: "It always seems impossible until it's done.", a: "Nelson Mandela" },
@@ -906,19 +919,19 @@
       { q: "Optimism is the faith that leads to achievement.", a: "Helen Keller" }
     ];
     var el = document.getElementById('qt'), at = document.getElementById('qa'), b = document.getElementById('qnext');
-    var bar = document.querySelector('.qbar i'), box = document.querySelector('.x-quote .wrap'), sec = document.getElementById('team');
+    var qn = document.getElementById('qn'), bar = document.querySelector('.qbar i'), box = document.querySelector('.x-quote .wrap'), sec = document.getElementById('team');
     if (!el || !at || !b) return;
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var i = 0, timer = null, held = false, userPaused = false;
-    function restartBar() { if (!bar) return; bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+    function restartBar() { if (!bar) return; bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; bar.style.animationDuration = ((qs[i].ms || 4000) / 1000) + 's'; }
     function show(n) {
-      i = n % qs.length; el.style.opacity = 0; at.style.opacity = 0;
-      setTimeout(function () { el.textContent = qs[i].q; at.textContent = qs[i].a; el.style.opacity = 1; at.style.opacity = 1; }, 200);
+      i = n % qs.length; el.style.opacity = 0; at.style.opacity = 0; if (qn) qn.style.opacity = 0;
+      setTimeout(function () { el.textContent = qs[i].q; at.textContent = qs[i].a; if (qn) { qn.textContent = qs[i].n || ''; qn.style.opacity = 1; } el.style.opacity = 1; at.style.opacity = 1; }, 200);
     }
     function schedule() {
       clearTimeout(timer); if (held || userPaused) return;
       restartBar();
-      timer = setTimeout(function () { show(i + 1); schedule(); }, 4000);
+      timer = setTimeout(function () { show(i + 1); schedule(); }, qs[i].ms || 4000);
     }
     b.addEventListener('click', function () { show(i + 1); schedule(); });
     var pz = document.getElementById('qpause');
@@ -970,7 +983,35 @@
       }
     });
     var bel = document.querySelector('.x-believe');
-    if (bel) bel.addEventListener('click', function () { toast('Be a goldfish.'); });
+    var HUDDLE = [
+      'Believe in the plan. Believe in each other.',
+      "You've got this. And you've got each other.",
+      'Doing the right thing is never the wrong thing.',
+      'Be curious, not judgmental. Ask the next question.',
+      'Short memory, big heart. Go again.'
+    ];
+    if (bel) bel.addEventListener('click', function () {
+      if (document.querySelector('.believe-ov')) return;
+      var ov = document.createElement('div'); ov.className = 'believe-ov'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-label', 'Believe');
+      var card = document.createElement('div'); card.className = 'believe-card';
+      var big = document.createElement('div'); big.className = 'believe-big'; big.textContent = 'Believe.';
+      var line = document.createElement('p'); line.className = 'believe-line'; line.textContent = HUDDLE[Math.floor(Math.random() * HUDDLE.length)];
+      var hint = document.createElement('p'); hint.className = 'believe-hint'; hint.textContent = 'Tap anywhere to keep going';
+      card.appendChild(big); card.appendChild(line); card.appendChild(hint); ov.appendChild(card);
+      if (!reduce) {
+        for (var i = 0; i < 26; i++) {
+          var st = document.createElement('span'); st.className = 'star-rain'; st.textContent = '\u2605';
+          st.style.left = (Math.random() * 96) + 'vw'; st.style.fontSize = (1 + Math.random() * 1.8) + 'rem';
+          st.style.setProperty('--t', (2.2 + Math.random() * 2) + 's'); st.style.setProperty('--r', (Math.random() * 360 - 180) + 'deg');
+          st.style.animationDelay = (Math.random() * 1.2) + 's'; ov.appendChild(st);
+        }
+      }
+      function close() { clearTimeout(tm); document.removeEventListener('keydown', onKey); ov.classList.add('out'); setTimeout(function () { ov.remove(); }, 250); }
+      function onKey(e) { if (e.key === 'Escape') close(); }
+      var tm = setTimeout(close, 4200);
+      ov.addEventListener('click', close); document.addEventListener('keydown', onKey);
+      document.body.appendChild(ov);
+    });
   })();
 
   // ---------- Pep-rally bunting ----------
