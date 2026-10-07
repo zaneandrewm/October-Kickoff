@@ -1072,6 +1072,27 @@
             "value": "Built for Growth",
             "date": "Sep 30",
             "text": "Congrats on a HUGE month. 170% to plan and hit for the quarter!!!!!!"
+      },
+      {
+            "to": "Austin Nimnicht + 3 others",
+            "by": "Matt Baum",
+            "value": "Built for Growth",
+            "date": "Sep 2",
+            "text": "Shout out to my Office Hours regulars who show up every week, asking the hard questions, and always willing to take a friendly jab from the hosts. You guys rule!"
+      },
+      {
+            "to": "Chris Benge",
+            "by": "Andrew Lacy",
+            "value": "Built for Growth",
+            "date": "",
+            "text": "I want to give a big shoutout to Chris for stepping up since our manager went on leave in May. He's taken on the interim manager role while continuing to support the team, handling forecasting, and helping onboard new reps. He's done an outstanding job keeping everything moving and brought a ton of consistency and accountability to the team. Appreciate you Chris!"
+      },
+      {
+            "to": "Matt Baum",
+            "by": "Chris Benge",
+            "value": "Committed to Give Back",
+            "date": "",
+            "text": "Matt is always bringing the heat! Super helpful when you need him and does a great job in office hours! Much appreciated!"
       }
 ];
     var stage = document.getElementById('thStage'); if (!stage) return;
@@ -1088,8 +1109,8 @@
       [false, true].forEach(function (dup) { order.forEach(function (i) { t.appendChild(item(SHOUTS[i], dup)); }); });
       l.appendChild(t); return l;
     }
-    stage.appendChild(lane([0, 2, 4, 1, 3], 34, 0));
-    stage.appendChild(lane([3, 0, 2, 4, 1], 42, -14));
+    stage.appendChild(lane([0, 5, 2, 7, 4, 1, 6, 3], 54, 0));
+    stage.appendChild(lane([3, 6, 0, 5, 2, 7, 4, 1], 67, -22));
     var tg = document.getElementById('thToggle'), inl = stage.parentNode;
     if (tg) tg.addEventListener('click', function () {
       var on = inl.classList.toggle('paused'); tg.textContent = on ? 'Play' : 'Pause'; tg.setAttribute('aria-pressed', on ? 'true' : 'false');
