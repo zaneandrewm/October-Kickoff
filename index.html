@@ -828,6 +828,9 @@
 </dialog>
 
 <script>
+  // Paste the Google Apps Script web app address between the quotes to turn on the feedback form and the leaderboard.
+  var APPS_SCRIPT_URL = '';
+
   // ---------- Day selector ----------
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.x-day'));
@@ -1033,8 +1036,6 @@
     var form = document.getElementById('askForm'); if (!form) return;
     var st = document.getElementById('fbStatus'), btn = form.querySelector('.x-send');
     var nm = document.getElementById('fbName'); nm.value = remember('kick_name') || '';
-    // Paste the Google Apps Script (or form service) web address between the quotes to turn delivery on.
-    var FORM_ENDPOINT = '';
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       var msg = document.getElementById('fbMsg').value.trim();
@@ -1045,9 +1046,9 @@
       remember('kick_name', name);
       var type = document.getElementById('fbType').value;
       var sent = false;
-      if (FORM_ENDPOINT) {
+      if (APPS_SCRIPT_URL) {
         try {
-          await fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ type: type, name: name, text: msg }).toString() });
+          await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ action: 'feedback', type: type, name: name, text: msg }).toString() });
           sent = true;
         } catch (err) { sent = false; }
       }
@@ -1082,6 +1083,7 @@
     var lbBuilt = false;
 
     var LABELS = ['Cold lead', 'Ghosted', 'Procurement', 'Redlines', 'No budget', 'Legal review', 'Price check', 'Stalled deal', 'Vendor freeze'];
+    // Sales questions. To add or swap one: { q: 'Question', a: 'Right answer', w: ['Wrong answer', 'Another wrong answer'] }
     var QS = [
       { q: 'What does ARR stand for?', a: 'Annual Recurring Revenue', w: ['Average Revenue Rate', 'Account Renewal Ratio'] },
       { q: 'What does QBR usually stand for?', a: 'Quarterly Business Review', w: ['Quota Balance Report', 'Quick Buyer Reply'] },
@@ -1095,7 +1097,7 @@
       { q: 'Best reply to "We need to think about it"?', a: 'Ask what specifically they need to think through', w: ['Offer a bigger discount right away', 'Say great and wait for their call'] }
     ];
 
-    var S = { mode: 'idle', y: G, vy: 0, dist: 0, bonus: 0, score: 0, speed: 300, obs: [], spawnIn: 1, passed: 0, quizAt: 6, last: 0, raf: 0, qUsed: [] };
+    var S = { mode: 'idle', y: G, vy: 0, dist: 0, bonus: 0, score: 0, speed: 300, obs: [], spawnIn: 1, passed: 0, quizAt: 2, last: 0, raf: 0, qUsed: [] };
     var skyline = [], total = 0;
     (function () { var x = 0; while (x < W + 200) { var w = 28 + Math.random() * 40, h = 30 + Math.random() * 90; skyline.push({ x: x, w: w, h: h }); x += w + 4 + Math.random() * 10; } total = x; })();
 
@@ -1103,7 +1105,7 @@
     function show(node) { [gStart, gQuiz, gOver].forEach(function (n) { n.hidden = (n !== node); }); }
 
     function startRun() {
-      S.mode = 'run'; S.y = G; S.vy = 0; S.dist = 0; S.bonus = 0; S.score = 0; S.speed = 300; S.obs = []; S.spawnIn = 1; S.passed = 0; S.quizAt = 6; S.last = performance.now();
+      S.mode = 'run'; S.y = G; S.vy = 0; S.dist = 0; S.bonus = 0; S.score = 0; S.speed = 300; S.obs = []; S.spawnIn = 1; S.passed = 0; S.quizAt = 2; S.last = performance.now();
       show(null); cv.focus();
     }
     function jump() {
@@ -1138,7 +1140,7 @@
           if (S.mode !== 'quiz') return;
           if (opt === item.a) {
             S.bonus += 100; S.mode = 'pause'; el('qMsg').textContent = 'Closed won! +100';
-            setTimeout(function () { if (S.mode === 'pause') { S.quizAt = S.passed + 6; S.spawnIn = 1.2; S.last = performance.now(); S.mode = 'run'; show(null); cv.focus(); } }, 900);
+            setTimeout(function () { if (S.mode === 'pause') { S.quizAt = S.passed + 4; S.spawnIn = 1.2; S.last = performance.now(); S.mode = 'run'; show(null); cv.focus(); } }, 900);
           } else {
             gameOver('Not quite. The answer was "' + item.a + '".');
           }
@@ -1208,22 +1210,36 @@
       S.raf = requestAnimationFrame(frame);
     }
 
+    function renderBoard(rows, emptyMsg) {
+      var list = el('lbList'); list.textContent = '';
+      if (!rows || !rows.length) { var e = document.createElement('li'); e.textContent = emptyMsg || 'No scores yet. Be the first.'; list.appendChild(e); return; }
+      rows.slice(0, 10).forEach(function (v, i) {
+        var li = document.createElement('li');
+        var pos = document.createElement('b'); pos.className = 'pos'; pos.textContent = 'P' + (i + 1);
+        var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = String(v.name || 'Anonymous').slice(0, 20);
+        var sc = document.createElement('span'); sc.className = 'sc'; sc.textContent = String(v.score || 0);
+        li.appendChild(pos); li.appendChild(nm); li.appendChild(sc); list.appendChild(li);
+      });
+    }
+    var boardTimer = null;
+    async function loadBoard() {
+      try {
+        var r = await fetch(APPS_SCRIPT_URL, { cache: 'no-store' });
+        var rows = await r.json();
+        if (Array.isArray(rows)) renderBoard(rows);
+      } catch (err) { renderBoard(null, 'Leaderboard unavailable right now.'); }
+    }
     async function buildLeaderboard() {
+      if (APPS_SCRIPT_URL) {
+        loadBoard(); clearInterval(boardTimer); boardTimer = setInterval(loadBoard, 20000);
+        return;
+      }
       if (lbBuilt) return; lbBuilt = true;
-      var list = el('lbList');
       var db = await getDb();
-      if (!db) { list.innerHTML = ''; var li = document.createElement('li'); li.textContent = 'The leaderboard needs a Claude sign-in.'; list.appendChild(li); return; }
+      if (!db) { renderBoard(null, "The leaderboard isn't connected yet."); return; }
       db.collection('leaderboard').orderBy('score', 'desc').limit(10).onSnapshot(function (snap) {
-        list.textContent = '';
-        if (snap.empty) { var e = document.createElement('li'); e.textContent = 'No scores yet. Be the first.'; list.appendChild(e); return; }
-        snap.docs.forEach(function (d, i) {
-          var v = d.data() || {}; var li = document.createElement('li');
-          var pos = document.createElement('b'); pos.className = 'pos'; pos.textContent = 'P' + (i + 1);
-          var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = String(v.name || 'Anonymous').slice(0, 20);
-          var sc = document.createElement('span'); sc.className = 'sc'; sc.textContent = String(v.score || 0);
-          li.appendChild(pos); li.appendChild(nm); li.appendChild(sc); list.appendChild(li);
-        });
-      }, function () { list.textContent = ''; var x = document.createElement('li'); x.textContent = 'Leaderboard unavailable right now.'; list.appendChild(x); });
+        renderBoard(snap.docs.map(function (d) { return d.data() || {}; }));
+      }, function () { renderBoard(null, 'Leaderboard unavailable right now.'); });
     }
 
     el('oSubmit').addEventListener('click', async function () {
@@ -1231,10 +1247,18 @@
       var name = el('oName').value.trim().slice(0, 20);
       if (!name) { st.textContent = 'Add your name first.'; return; }
       btn.disabled = true; st.textContent = 'Posting...';
+      remember('kick_game_name', name);
+      if (APPS_SCRIPT_URL) {
+        try {
+          await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ action: 'score', name: name, score: String(S.score) }).toString() });
+          st.textContent = 'Posted! You\'ll show up on the timing board if you made the top 10.';
+          setTimeout(loadBoard, 1500); setTimeout(loadBoard, 4000);
+        } catch (err) { st.textContent = 'Could not post that right now. Try again.'; btn.disabled = false; }
+        return;
+      }
       try {
         var db = await getDb(); var uid = await getUid();
-        if (!db || !uid) { st.textContent = 'Posting needs a Claude sign-in.'; btn.disabled = false; return; }
-        remember('kick_game_name', name);
+        if (!db || !uid) { st.textContent = "The leaderboard isn't connected yet."; btn.disabled = false; return; }
         var ref = db.doc('leaderboard/' + uid); var snap = await ref.get();
         var best = snap.exists && snap.data() ? Number(snap.data().score) || 0 : 0;
         if (S.score > best) { await ref.set({ name: name, score: S.score, at: Date.now() }); st.textContent = 'Posted! New personal best: ' + S.score + '.'; }
@@ -1250,7 +1274,7 @@
     }
     window.__openGame = open;
     function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
-    dlg.addEventListener('close', function () { cancelAnimationFrame(S.raf); S.mode = 'idle'; });
+    dlg.addEventListener('close', function () { cancelAnimationFrame(S.raf); S.mode = 'idle'; clearInterval(boardTimer); });
     el('gClose').addEventListener('click', close);
     el('gGo').addEventListener('click', startRun);
     el('oAgain').addEventListener('click', startRun);
