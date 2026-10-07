@@ -864,6 +864,14 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
+  // Shared links that end in #ask should still open at the top of the page.
+  (function () {
+    if (location.hash !== '#ask') return;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignore */ }
+    var top = function () { window.scrollTo(0, 0); };
+    top(); window.addEventListener('load', function () { top(); setTimeout(top, 60); setTimeout(top, 400); });
+  })();
+
   // ---------- Day selector ----------
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.x-day'));
