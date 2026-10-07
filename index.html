@@ -541,6 +541,7 @@
   .th-toggle { margin-top: 1rem; font: inherit; font-weight: 700; padding: .5rem 1.2rem; border-radius: 999px; border: 2px solid rgba(255,255,255,.5); background: transparent; color: #fff; cursor: pointer; }
   .th-toggle:hover { background: #fff; color: #0B2530; }
 
+  .x-ask-say { font-family: var(--display); font-weight: 800; font-size: clamp(1.6rem, 4.4vw, 3.4rem); line-height: 1.08; letter-spacing: -0.03em; max-width: 24ch; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero .nums, .hero .month, .star, .sun::before, .cloud, .coin, .coin b, .ticker-track, .pennant, .bob, .speed, .pop { animation: none; }
@@ -749,7 +750,7 @@
         <div class="x-tile t5" style="--r:.6deg"><h3>Your hotel</h3><p>Many teams are staying at our usual hotels. Please check with your leader for your team's plan.</p></div>
         <div class="x-tile t6" style="--r:-.8deg"><h3>Arriving and departing</h3><p>Fly in Tuesday, Oct 20. Fly out Thursday night, Oct 22 or Friday, Oct 23.</p></div>
         <div class="x-tile t7" style="--r:-.5deg"><h3>Getting around</h3><p>Double up on rides, carpool, or walk where you can.</p></div>
-        <div class="x-tile t8" style="--r:1deg"><h3>Questions</h3><p>Contact any of your sales leaders, or send a note using the form below.</p></div>
+        <div class="x-tile t8" style="--r:1deg"><h3>Questions</h3><p>Message your director or any of your sales leaders.</p></div>
       </div>
     </div>
   </section>
@@ -779,22 +780,8 @@
 
   <section class="x-ask" id="ask">
     <div class="wrap">
-      <h2 class="x-ask-lede">Got a question?<br><span class="x-em">Say it out loud.</span></h2>
-      <form class="x-form" id="askForm" novalidate>
-        <input type="text" id="fbWebsite" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-        <div class="x-sentence">
-          <span>I'd like to</span>
-          <select id="fbType" aria-label="What kind of note is this?"><option>ask a question</option><option>share feedback</option><option>pitch an idea</option></select>
-          <span>about</span>
-        </div>
-        <textarea class="x-msg" id="fbMsg" rows="3" maxlength="2000" placeholder="Type it here" aria-label="Your message"></textarea>
-        <div class="x-form-foot">
-          <input class="x-name" id="fbName" type="text" maxlength="60" autocomplete="name" placeholder="Your name (optional)" aria-label="Your name, optional">
-          <button class="x-send" type="submit"><span>Send it</span><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        </div>
-        <p class="x-status" id="fbStatus" role="status"></p>
-        <p class="x-note">Your note will go straight to sales leadership.</p>
-      </form>
+      <h2 class="x-ask-lede">Got a question?<br><span class="x-em">Ask your leader.</span></h2>
+      <p class="x-ask-say">Message your director or any of your sales leaders, and they'll get you an answer.</p>
     </div>
   </section>
 
@@ -863,9 +850,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-  // Paste the Google Apps Script web app address between the quotes to turn on the feedback form and the leaderboard.
-  var APPS_SCRIPT_URL = '';
-
   // ---------- Day selector ----------
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.x-day'));
@@ -1154,46 +1138,6 @@
     try { return await u.id(); } catch (e) { return null; }
   }
   function remember(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ''; localStorage.setItem(k, v); } catch (e) { return ''; } }
-
-  // ---------- Ask / feedback form ----------
-  (function () {
-    var form = document.getElementById('askForm'); if (!form) return;
-    var st = document.getElementById('fbStatus'), btn = form.querySelector('.x-send');
-    var nm = document.getElementById('fbName'); nm.value = remember('kick_name') || '';
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      var msg = document.getElementById('fbMsg').value.trim();
-      if (!msg) { st.textContent = 'Type your note first.'; return; }
-      if (document.getElementById('fbWebsite').value) { st.textContent = 'Got it. Thank you!'; return; }
-      btn.disabled = true; st.textContent = 'Sending...';
-      var name = nm.value.trim().slice(0, 60);
-      remember('kick_name', name);
-      var type = document.getElementById('fbType').value;
-      var sent = false;
-      if (APPS_SCRIPT_URL) {
-        try {
-          await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ action: 'feedback', type: type, name: name, text: msg }).toString() });
-          sent = true;
-        } catch (err) { sent = false; }
-      }
-      if (!sent) {
-        try {
-          var db = await getDb(); var uid = await getUid();
-          if (db && uid) {
-            var ref = db.doc('feedback/' + uid);
-            var snap = await ref.get();
-            var notes = (snap.exists && snap.data() && Array.isArray(snap.data().notes)) ? snap.data().notes.slice(-49) : [];
-            notes.push({ type: type, name: name, text: msg, at: new Date().toISOString() });
-            await ref.set({ notes: notes, last: Date.now() });
-            sent = true;
-          }
-        } catch (err) { sent = false; }
-      }
-      if (sent) { document.getElementById('fbMsg').value = ''; st.textContent = 'Got it. Thank you!'; }
-      else { st.textContent = "That didn't go through. Please contact any of your sales leaders directly."; }
-      btn.disabled = false;
-    });
-  })();
 
   // ---------- Easter egg: Deal Dash ----------
   (function () {
