@@ -383,6 +383,7 @@
   .x-send[disabled] { opacity: .6; cursor: default; transform: none; }
   .x-status { margin-top: 1rem; font-weight: 700; min-height: 1.6em; }
   .x-note { font-family: var(--serif); font-style: italic; font-size: 1.25rem; margin-top: .4rem; color: rgba(11,37,48,.75); }
+  .x-note a { color: #0B2530; font-weight: 700; }
 
   .x-faq { background: var(--paper); padding: clamp(4rem, 9vw, 8rem) 0; }
   .x-q { border-top: 3px solid var(--ink); }
@@ -486,22 +487,16 @@
   .hero .count:hover { transform: none; }
   .lights { display: inline-flex; gap: .4rem; background: #06161D; padding: .5rem .65rem; border-radius: 999px; }
   .hero .count .lights i, .x-teaser .lights i { display: block; width: 1rem; height: 1rem; border-radius: 50%; background: #3A1B1B; box-shadow: none; animation: none; transform: none; }
-  @keyframes lamp1 { 0%, 5% { background: #3A1B1B; box-shadow: none; } 6%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
-  @keyframes lamp2 { 0%, 13% { background: #3A1B1B; box-shadow: none; } 14%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
-  @keyframes lamp3 { 0%, 21% { background: #3A1B1B; box-shadow: none; } 22%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
-  @keyframes lamp4 { 0%, 29% { background: #3A1B1B; box-shadow: none; } 30%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
-  @keyframes lamp5 { 0%, 37% { background: #3A1B1B; box-shadow: none; } 38%, 60% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 61%, 100% { background: #3A1B1B; box-shadow: none; } }
-  .hero .count .lights i:nth-child(1) { animation: lamp1 8s linear infinite; }
-  .hero .count .lights i:nth-child(2) { animation: lamp2 8s linear infinite; }
-  .hero .count .lights i:nth-child(3) { animation: lamp3 8s linear infinite; }
-  .hero .count .lights i:nth-child(4) { animation: lamp4 8s linear infinite; }
-  .hero .count .lights i:nth-child(5) { animation: lamp5 8s linear infinite; }
-  .x-teaser .lights i:nth-child(1) { animation: lamp1 8s linear infinite; }
-  .x-teaser .lights i:nth-child(2) { animation: lamp2 8s linear infinite; }
-  .x-teaser .lights i:nth-child(3) { animation: lamp3 8s linear infinite; }
-  .x-teaser .lights i:nth-child(4) { animation: lamp4 8s linear infinite; }
-  .x-teaser .lights i:nth-child(5) { animation: lamp5 8s linear infinite; }
-  .hero .count.out .lights i:nth-child(n) { animation: none; background: #3A1B1B; box-shadow: none; }
+  .hero .count .lights i.y, .x-teaser .lights i.y { background: #3A3216; box-shadow: none; }
+  .hero .count .lights i.g, .x-teaser .lights i.g { background: #14301D; box-shadow: none; }
+  .hero .count .lights i.r, .x-teaser .lights i.r { animation: lampR 4s linear infinite; }
+  .hero .count .lights i.y, .x-teaser .lights i.y { animation: lampY 4s linear infinite; }
+  .hero .count .lights i.g, .x-teaser .lights i.g { animation: lampG 4s linear infinite; }
+  @keyframes lampR { 0%, 1% { background: #3A1B1B; box-shadow: none; } 2%, 24% { background: #FF3B30; box-shadow: 0 0 10px 2px rgba(255,59,48,.75); } 25%, 100% { background: #3A1B1B; box-shadow: none; } }
+  @keyframes lampY { 0%, 25% { background: #3A3216; box-shadow: none; } 26%, 49% { background: #FFCC00; box-shadow: 0 0 10px 2px rgba(255,204,0,.75); } 50%, 100% { background: #3A3216; box-shadow: none; } }
+  @keyframes lampG { 0%, 50% { background: #14301D; box-shadow: none; } 51%, 86% { background: #34C759; box-shadow: 0 0 10px 2px rgba(52,199,89,.8); } 87%, 100% { background: #14301D; box-shadow: none; } }
+  .hero .count.out .lights i.r, .hero .count.out .lights i.y { animation: none; background: #3A1B1B; box-shadow: none; }
+  .hero .count.out .lights i.g { animation: none; background: #34C759; box-shadow: 0 0 10px 2px rgba(52,199,89,.8); }
   .x-teaser { background: #FF5A36; color: #0B2530; padding: clamp(4rem, 9vw, 8rem) 0; overflow: hidden; }
   .x-teaser .lights.big { padding: .8rem 1.1rem; gap: .8rem; margin-bottom: clamp(1.4rem, 3vw, 2.4rem); }
   .x-teaser .lights.big i { width: clamp(1.5rem, 3.4vw, 2.6rem); height: clamp(1.5rem, 3.4vw, 2.6rem); }
@@ -523,7 +518,8 @@
     html { scroll-behavior: auto; }
     .hero .nums, .hero .month, .star, .sun::before, .cloud, .coin, .coin b, .ticker-track, .pennant, .bob, .speed, .pop { animation: none; }
     .bolt { animation: none; opacity: .9; }
-    .lights i { animation: none !important; background: #FF3B30 !important; box-shadow: 0 0 8px rgba(255,59,48,.6) !important; }
+    .lights i { animation: none !important; }
+    .lights i.g { background: #34C759 !important; box-shadow: 0 0 8px rgba(52,199,89,.7) !important; }
     .puff, .x-road::after, .x-car:hover svg { animation: none; }
     .th-track { animation: none; }
     .th-dup { display: none; }
@@ -582,7 +578,7 @@
         <div class="month">October<small>2026 · Austin</small></div>
       </div>
       <p class="tagline">Race to the finish. Everything you need for the week lives right here.</p>
-      <div class="count" id="count"><span class="lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span id="countText">Counting down</span></div>
+      <div class="count" id="count"><span class="lights" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i></span><span id="countText">Counting down</span></div>
     </div>
     <svg class="skyline" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
       <path fill="#6FB4D3" opacity=".6" d="M0 240 V172 H52 V142 H108 V160 H176 V118 H238 V98 H284 V150 H392 V112 H452 V132 H548 V96 H598 V126 H690 V104 H760 V128 H860 V90 H920 V118 H1010 V100 H1090 V128 H1180 V108 H1250 V138 H1330 V120 H1390 V150 H1440 V240 Z"/>
@@ -623,7 +619,7 @@
 
   <section class="x-lede">
     <div class="wrap">
-      <p>Four days in Austin. The whole sales org in <span class="x-em">one room.</span> Race day is <span class="x-mark">Wednesday, October 21.</span></p>
+      <p>Four days in Austin. The whole North American sales org in <span class="x-em">one room.</span> Race day is <span class="x-mark">Wednesday, October 21.</span></p>
     </div>
   </section>
 
@@ -640,7 +636,7 @@
 
   <section class="x-teaser" id="announcement">
     <div class="wrap">
-      <span class="lights big" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="lights big" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i></span>
       <p class="big1">What's next</p>
       <p class="big2">starts Wednesday.</p>
       <p class="sub">Updates on where we're headed and how we get there. Be in your seat by 8:55 AM on October 21.</p>
@@ -676,6 +672,7 @@
         <ul class="x-rows">
           <li class="x-row"><div class="x-time">8:30–8:50 AM</div><div class="x-what"><h4>Breakfast tacos and coffee or tea</h4><p>At the Omni Austin Hotel Downtown. Look for the Pennybacker conference room on the hotel sign.</p></div></li>
           <li class="x-row minor"><div class="x-time">8:50–8:55 AM</div><div class="x-what"><h4>Begin seating and settle in</h4><p>Please be seated so we can start promptly at 9:00 AM.</p></div></li>
+          <li class="x-row"><div class="x-time">Throughout the day</div><div class="x-what"><h4>Special MC guests</h4><p>Your hosts for the day are a surprise.</p><span class="x-tag">Surprise</span></div></li>
           <li class="x-row key"><div class="x-time">9:00–9:30 AM</div><div class="x-what"><h4>Opening: delivering the H2 plan</h4><p>YTD performance and future outlook.</p><span class="x-who">Simon</span></div></li>
           <li class="x-row"><div class="x-time">9:30–10:00 AM</div><div class="x-what"><h4>Product</h4><span class="x-who">Ramadass Prabhakar</span></div></li>
           <li class="x-row"><div class="x-time">10:00–10:20 AM</div><div class="x-what"><h4>GTM initiative</h4><span class="x-who">James Gleitman</span></div></li>
@@ -752,6 +749,7 @@
     <div class="wrap">
       <h2 class="x-ask-lede">Got a question?<br><span class="x-em">Say it out loud.</span></h2>
       <form class="x-form" id="askForm" novalidate>
+        <input type="text" id="fbWebsite" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="x-sentence">
           <span>I'd like to</span>
           <select id="fbType" aria-label="What kind of note is this?"><option>ask a question</option><option>share feedback</option><option>pitch an idea</option></select>
@@ -763,7 +761,7 @@
           <button class="x-send" type="submit"><span>Send it</span><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
         <p class="x-status" id="fbStatus" role="status"></p>
-        <p class="x-note">Notes are reviewed by sales leadership. Add your name if you'd like a reply.</p>
+        <p class="x-note">Your note will go straight to sales leadership.</p>
       </form>
     </div>
   </section>
@@ -788,7 +786,7 @@
 <footer class="x-foot">
   <div class="wrap">
     <h2>See you in <span class="o">Austin.</span></h2>
-    <div class="row"><span>WP Engine Fall Summit · October 20th–23rd, 2026</span><span>Last updated October 1, 2026. Details may change.</span></div>
+    <div class="row"><span>WP Engine North American Sales · Fall Summit, October 20th–23rd, 2026</span><span>Last updated October 1, 2026. Details may change.</span></div>
   </div>
 </footer>
 
@@ -802,7 +800,7 @@
     <div class="stage">
       <canvas id="cv" tabindex="0" aria-label="Fastest Lap game"></canvas>
       <div class="ovl" id="gStart">
-        <h3>Lights out. Ready to run the quarter?</h3>
+        <h3>Green light. Ready to run the quarter?</h3>
         <p>Jump over blockers like Ghosted and Procurement. Every few blockers you reach a deal checkpoint: answer the sales question to bank bonus points.</p>
         <button class="btn" type="button" id="gGo">Start</button>
       </div>
@@ -864,7 +862,7 @@
     var days = Math.round((start - today) / 86400000);
     if (now >= start && box) box.classList.add('out');
     if (now >= end) el.textContent = 'Thanks for racing with us';
-    else if (now >= start) el.textContent = "Lights out. It's race week.";
+    else if (now >= start) el.textContent = "Green light. It's race week.";
     else if (days === 1) el.textContent = '1 day to go';
     else el.textContent = days + ' days to go';
   })();
@@ -1035,26 +1033,39 @@
     var form = document.getElementById('askForm'); if (!form) return;
     var st = document.getElementById('fbStatus'), btn = form.querySelector('.x-send');
     var nm = document.getElementById('fbName'); nm.value = remember('kick_name') || '';
+    // Paste the Google Apps Script (or form service) web address between the quotes to turn delivery on.
+    var FORM_ENDPOINT = '';
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       var msg = document.getElementById('fbMsg').value.trim();
       if (!msg) { st.textContent = 'Type your note first.'; return; }
+      if (document.getElementById('fbWebsite').value) { st.textContent = 'Got it. Thank you!'; return; }
       btn.disabled = true; st.textContent = 'Sending...';
-      try {
-        var db = await getDb(); var uid = await getUid();
-        if (!db || !uid) { st.textContent = 'Sending needs a Claude sign-in. Please contact any of your sales leaders directly.'; btn.disabled = false; return; }
-        var name = nm.value.trim().slice(0, 60);
-        remember('kick_name', name);
-        var ref = db.doc('feedback/' + uid);
-        var snap = await ref.get();
-        var notes = (snap.exists && snap.data() && Array.isArray(snap.data().notes)) ? snap.data().notes.slice(-49) : [];
-        notes.push({ type: document.getElementById('fbType').value, name: name, text: msg, at: new Date().toISOString() });
-        await ref.set({ notes: notes, last: Date.now() });
-        document.getElementById('fbMsg').value = '';
-        st.textContent = 'Got it. Thank you!';
-      } catch (err) {
-        st.textContent = 'Something went wrong sending that. Please try again, or contact a sales leader.';
+      var name = nm.value.trim().slice(0, 60);
+      remember('kick_name', name);
+      var type = document.getElementById('fbType').value;
+      var sent = false;
+      if (FORM_ENDPOINT) {
+        try {
+          await fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ type: type, name: name, text: msg }).toString() });
+          sent = true;
+        } catch (err) { sent = false; }
       }
+      if (!sent) {
+        try {
+          var db = await getDb(); var uid = await getUid();
+          if (db && uid) {
+            var ref = db.doc('feedback/' + uid);
+            var snap = await ref.get();
+            var notes = (snap.exists && snap.data() && Array.isArray(snap.data().notes)) ? snap.data().notes.slice(-49) : [];
+            notes.push({ type: type, name: name, text: msg, at: new Date().toISOString() });
+            await ref.set({ notes: notes, last: Date.now() });
+            sent = true;
+          }
+        } catch (err) { sent = false; }
+      }
+      if (sent) { document.getElementById('fbMsg').value = ''; st.textContent = 'Got it. Thank you!'; }
+      else { st.textContent = "That didn't go through. Please contact any of your sales leaders directly."; }
       btn.disabled = false;
     });
   })();
