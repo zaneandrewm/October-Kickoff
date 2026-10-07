@@ -450,22 +450,23 @@
   .th-top p { color: #B8D3DA; margin-top: .6rem; max-width: 30rem; }
   .th-close { flex: none; font: inherit; font-size: 2rem; line-height: 1; background: transparent; border: 2px solid #fff; color: #fff; border-radius: 50%; width: 3rem; height: 3rem; cursor: pointer; }
   .th-close:hover { background: #fff; color: #0B2530; }
-  .th-stage { position: absolute; inset: 0; display: flex; gap: clamp(1.5rem, 4vw, 4rem); padding: 0 clamp(1.2rem, 4vw, 3rem); overflow: hidden; -webkit-mask-image: linear-gradient(transparent 0, #000 26%, #000 88%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 26%, #000 88%, transparent 100%); }
+  .th-stage { position: absolute; inset: 0; display: flex; gap: clamp(1rem, 2.4vw, 2.2rem); padding: 0 clamp(1.2rem, 4vw, 3rem); overflow: hidden; -webkit-mask-image: linear-gradient(transparent 0, #000 26%, #000 88%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 26%, #000 88%, transparent 100%); }
   .th-lane { flex: 1 1 0; min-width: 0; overflow: hidden; }
   .th-track { animation: fall var(--dur, 90s) linear infinite; animation-delay: var(--del, 0s); will-change: transform; }
   @keyframes fall { from { transform: translateY(-50%); } to { transform: translateY(0); } }
-  .th-stage:hover .th-track, .th-stage:active .th-track { animation-play-state: paused; }
-  .th-item { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1rem 1.4rem; padding-bottom: clamp(2.8rem, 6vw, 5rem); }
+  .th-inline.paused .th-track { animation-play-state: paused; }
+  .th-item { display: grid; grid-template-columns: 6.2rem 1fr; gap: .8rem 1.1rem; padding-bottom: clamp(1.8rem, 3.6vw, 3rem); }
   .th-meta { padding-top: .8rem; }
   .th-to { font-weight: 800; font-size: 1rem; line-height: 1.2; color: var(--gold-2); }
   .th-val { display: inline-block; margin-top: .5rem; font-size: .78rem; font-weight: 700; padding: .12rem .6rem; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.4); color: #CFE3E8; }
   .th-date { display: block; margin-top: .4rem; font-size: .82rem; color: #9DB8C0; }
-  .th-quote { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.7rem); line-height: 1.05; letter-spacing: -0.01em; margin: 0; }
+  .th-quote { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(1.25rem, 2.3vw, 2.15rem); line-height: 1.05; letter-spacing: -0.01em; margin: 0; }
   .th-quote::before { content: "\201C"; color: var(--gold-2); }
   .th-quote::after { content: "\201D"; color: var(--gold-2); }
   .th-by { margin-top: .8rem; font-weight: 700; font-size: .98rem; color: var(--teal); }
   .th-hint { position: absolute; bottom: .9rem; left: 0; right: 0; text-align: center; z-index: 3; color: #9DB8C0; font-size: .9rem; }
-  @media (max-width: 899px) { .th-lane:nth-child(2) { display: none; } .th-item { grid-template-columns: 1fr; gap: .5rem; } .th-meta { padding-top: 0; } }
+  @media (max-width: 899px) { .th-item { grid-template-columns: 1fr; gap: .4rem; } .th-meta { padding-top: 0; } }
+  @media (max-width: 599px) { .th-lane:nth-child(2) { display: none; } }
 
   @media (max-width: 480px) { .nav .wrap { gap: .6rem; } .brand { font-size: .9rem; } .ask { font-size: .8rem; padding: .35rem .7rem; } }
   .x-callout { background: var(--hilite); color: #0B2530; border-radius: 22px; padding: clamp(1.3rem, 2.6vw, 2.2rem); margin: 0 0 clamp(1.5rem, 4vw, 2.5rem); }
@@ -514,6 +515,30 @@
   .lb li:first-child .nm { color: var(--gold-2); }
   .lb li .sc { float: none; font-family: var(--display); font-weight: 800; color: var(--teal); font-variant-numeric: tabular-nums; }
 
+  /* ===== Austin touches, quote timer, shout-out controls ===== */
+  .lake { position: absolute; left: 0; right: 0; bottom: 0; height: clamp(14px, 2.2vw, 26px); z-index: 2; pointer-events: none; background: linear-gradient(#12546B, #0B2530); overflow: hidden; }
+  .lake::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,.24) 0 22px, transparent 22px 70px); -webkit-mask-image: linear-gradient(transparent 0, #000 45%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 45%, transparent 100%); animation: lakemove 6s linear infinite; }
+  @keyframes lakemove { to { background-position: -70px 0; } }
+  .skyline .dome { cursor: pointer; }
+  .bats { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+  .bat { position: absolute; width: 26px; height: 12px; opacity: 0; animation: batfly var(--t, 3.4s) cubic-bezier(.2,.7,.3,1) forwards; animation-delay: var(--d, 0s); }
+  .bat svg { display: block; width: 100%; height: 100%; animation: flap .22s ease-in-out infinite alternate; }
+  @keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(.35); } }
+  @keyframes batfly { 0% { transform: translate(0, 0) scale(.5); opacity: 0; } 10% { opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) scale(1.3); opacity: 0; } }
+  .toast { position: fixed; left: 50%; bottom: 1.4rem; transform: translate(-50%, 30px); background: #0B2530; color: #fff; border: 2px solid var(--gold-2); padding: .8rem 1.3rem; border-radius: 999px; font-weight: 700; z-index: 80; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; max-width: 92vw; text-align: center; }
+  .toast.on { opacity: 1; transform: translate(-50%, 0); }
+  .x-taco { position: absolute; z-index: 2; left: 0; bottom: 100%; margin-bottom: -3px; background: none; border: 0; padding: 0; font-size: clamp(1.4rem, 2.4vw, 2rem); line-height: 1; cursor: pointer; animation: tacoroll 28s linear infinite; }
+  @keyframes tacoroll { from { transform: translateX(-60px) rotate(0deg); } to { transform: translateX(calc(100vw + 60px)) rotate(1440deg); } }
+  .taco-rain { position: fixed; top: -3rem; z-index: 70; font-size: 2rem; pointer-events: none; animation: tacofall var(--t, 2.4s) linear forwards; }
+  @keyframes tacofall { to { transform: translateY(110vh) rotate(var(--r, 200deg)); } }
+  .x-believe { display: inline-block; margin-top: 1.6rem; background: transparent; border: 2px solid var(--gold-2); color: var(--gold-2); font-family: var(--serif); font-style: italic; font-size: 1.3rem; padding: .2rem .9rem; border-radius: 6px; cursor: pointer; }
+  .x-believe:hover { background: var(--gold-2); color: #0B2530; }
+  .qbar { height: 4px; background: rgba(255,255,255,.22); border-radius: 2px; margin-top: 1.4rem; max-width: 18rem; overflow: hidden; }
+  .qbar i { display: block; height: 100%; width: 100%; background: #FFD46B; transform-origin: left; animation: qbar 4s linear forwards; }
+  @keyframes qbar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .th-toggle { margin-top: 1rem; font: inherit; font-weight: 700; padding: .5rem 1.2rem; border-radius: 999px; border: 2px solid rgba(255,255,255,.5); background: transparent; color: #fff; cursor: pointer; }
+  .th-toggle:hover { background: #fff; color: #0B2530; }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero .nums, .hero .month, .star, .sun::before, .cloud, .coin, .coin b, .ticker-track, .pennant, .bob, .speed, .pop { animation: none; }
@@ -522,6 +547,8 @@
     .lights i.g { background: #34C759 !important; box-shadow: 0 0 8px rgba(52,199,89,.7) !important; }
     .puff, .x-road::after, .x-car:hover svg { animation: none; }
     .th-track { animation: none; }
+    .lake::before, .x-taco, .qbar i { animation: none; }
+    .x-taco, .qbar, .th-toggle { display: none; }
     .th-dup { display: none; }
     .th-stage { overflow-y: auto; align-items: flex-start; padding-top: 0; -webkit-mask-image: none; mask-image: none; }
     .th-lane { overflow: visible; }
@@ -555,6 +582,7 @@
   <div class="hero">
     <button class="star" id="star" type="button" aria-label="Secret">✦</button>
     <div class="sun" aria-hidden="true"></div>
+    <div class="bats" aria-hidden="true"></div>
     <svg class="bunting" viewBox="0 0 1440 90" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
     <svg class="bolt" style="right:20%;top:26%;--del:0s" viewBox="0 0 24 40" aria-hidden="true"><path d="M14 0 L0 22 h9 l-3 18 L24 16 h-10z"/></svg>
     <svg class="bolt" style="right:9%;top:44%;--del:1.7s;width:clamp(16px,2.4vw,30px);transform:rotate(14deg)" viewBox="0 0 24 40" aria-hidden="true"><path d="M14 0 L0 22 h9 l-3 18 L24 16 h-10z"/></svg>
@@ -590,7 +618,9 @@
         <rect x="695" y="60" width="3" height="3"/><rect x="706" y="82" width="3" height="3"/><rect x="684" y="116" width="3" height="3"/>
         <rect x="1020" y="104" width="3" height="3"/><rect x="480" y="136" width="3" height="3"/><rect x="900" y="132" width="3" height="3"/>
       </g>
+    <g class="dome"><rect x="584" y="84" width="44" height="62" fill="transparent"/><polygon points="606.0,90.5 607.8,95.6 613.1,95.7 608.9,98.9 610.4,104.1 606.0,101.0 601.6,104.1 603.1,98.9 598.9,95.7 604.2,95.6" fill="#FFD46B"/></g>
     </svg>
+    <div class="lake" aria-hidden="true"></div>
   </div>
 
   <div class="x-track">
@@ -614,7 +644,7 @@
       </button>
       <p class="x-track-label">Rev it up.<span class="x-em">Set the fastest lap.</span></p>
     </div>
-    <div class="x-road" aria-hidden="true"></div>
+    <div class="x-road" aria-hidden="true"><button class="x-taco" type="button" tabindex="-1">🌮</button></div>
   </div>
 
   <section class="x-lede">
@@ -729,7 +759,7 @@
       <div class="x-head"><h2>Shout<span class="x-em">-outs</span></h2></div>
       <p class="x-shout-sub">Real recognition from Thrive, where we say thanks to each other.</p>
       <div class="th-inline"><div class="th-stage" id="thStage" aria-label="Recognition posts from Thrive"></div></div>
-      <p class="th-hint2">Hover or press and hold to pause.</p>
+      <button class="th-toggle" id="thToggle" type="button" aria-pressed="false">Pause</button>
     </div>
   </section>
 
@@ -741,6 +771,7 @@
       <p class="lab">Get charged up.</p>
       <p class="q" id="qt" aria-live="polite">Nothing great was ever achieved without enthusiasm.</p>
       <p class="qa" id="qa">Ralph Waldo Emerson</p>
+      <div class="qbar" aria-hidden="true"><i></i></div>
       <button class="x-next" type="button" id="qnext">Another one</button>
     </div>
   </section>
@@ -787,6 +818,7 @@
   <div class="wrap">
     <h2>See you in <span class="o">Austin.</span></h2>
     <div class="row"><span>WP Engine North American Sales · Fall Summit, October 20th–23rd, 2026</span><span>Last updated October 1, 2026. Details may change.</span></div>
+    <button class="x-believe" type="button">Believe</button>
   </div>
 </footer>
 
@@ -826,6 +858,8 @@
     </div>
   </div>
 </dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
   // Paste the Google Apps Script web app address between the quotes to turn on the feedback form and the leaderboard.
@@ -870,24 +904,85 @@
     else el.textContent = days + ' days to go';
   })();
 
-  // ---------- Quotes ----------
+  // ---------- Quotes (auto-cycle every 4 seconds) ----------
   (function () {
     var qs = [
       { q: "Nothing great was ever achieved without enthusiasm.", a: "Ralph Waldo Emerson" },
+      { q: "Be a goldfish.", a: "Ted Lasso" },
       { q: "Alone we can do so little; together we can do so much.", a: "Helen Keller" },
-      { q: "Optimism is the faith that leads to achievement.", a: "Helen Keller" },
+      { q: "Doing the right thing is never the wrong thing.", a: "Ted Lasso" },
       { q: "It always seems impossible until it's done.", a: "Nelson Mandela" },
+      { q: "Be curious, not judgmental.", a: "Ted Lasso" },
       { q: "Great things are done by a series of small things brought together.", a: "Vincent van Gogh" },
+      { q: "I believe in believe.", a: "Ted Lasso" },
       { q: "Start where you are. Use what you have. Do what you can.", a: "Arthur Ashe" },
-      { q: "The only way to do great work is to love what you do.", a: "Steve Jobs" }
+      { q: "If you're comfortable while you're doing it, you're probably doing it wrong.", a: "Ted Lasso" },
+      { q: "The only way to do great work is to love what you do.", a: "Steve Jobs" },
+      { q: "Optimism is the faith that leads to achievement.", a: "Helen Keller" }
     ];
     var el = document.getElementById('qt'), at = document.getElementById('qa'), b = document.getElementById('qnext');
+    var bar = document.querySelector('.qbar i'), box = document.querySelector('.x-quote .wrap'), sec = document.getElementById('team');
     if (!el || !at || !b) return;
-    var i = 0;
-    b.addEventListener('click', function () {
-      i = (i + 1) % qs.length; el.style.opacity = 0; at.style.opacity = 0;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var i = 0, timer = null, held = false;
+    function restartBar() { if (!bar) return; bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+    function show(n) {
+      i = n % qs.length; el.style.opacity = 0; at.style.opacity = 0;
       setTimeout(function () { el.textContent = qs[i].q; at.textContent = qs[i].a; el.style.opacity = 1; at.style.opacity = 1; }, 200);
+    }
+    function schedule() {
+      clearTimeout(timer); if (reduce || held) return;
+      restartBar();
+      timer = setTimeout(function () { show(i + 1); schedule(); }, 4000);
+    }
+    b.addEventListener('click', function () { show(i + 1); schedule(); });
+    if (box) {
+      box.addEventListener('mouseenter', function () { held = true; clearTimeout(timer); if (bar) bar.style.animationPlayState = 'paused'; });
+      box.addEventListener('mouseleave', function () { held = false; if (bar) bar.style.animationPlayState = ''; schedule(); });
+    }
+    if ('IntersectionObserver' in window && sec) {
+      new IntersectionObserver(function (en) { if (en[0].isIntersecting) { if (!held) schedule(); } else { clearTimeout(timer); } }).observe(sec);
+    } else { schedule(); }
+  })();
+
+  // ---------- Austin easter eggs ----------
+  (function () {
+    var toastEl = document.getElementById('toast'), tt = null;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function toast(msg) { if (!toastEl) return; toastEl.textContent = msg; toastEl.classList.add('on'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('on'); }, 2800); }
+    var BAT = '<svg viewBox="0 0 26 12"><path d="M0 6 Q5 -1 10 5 L13 3 L16 5 Q21 -1 26 6 Q21 4 17 8 L13 6 L9 8 Q5 4 0 6Z" fill="#0B2530"/></svg>';
+    var dome = document.querySelector('.skyline .dome'), bats = document.querySelector('.bats'), hero = document.querySelector('.hero');
+    if (dome && bats && hero) dome.addEventListener('click', function () {
+      toast('Keep Austin weird.');
+      if (reduce) return;
+      var h = hero.getBoundingClientRect(), r = dome.getBoundingClientRect();
+      var ox = r.left + r.width / 2 - h.left, oy = r.top + r.height / 2 - h.top;
+      for (var i = 0; i < 24; i++) {
+        var b = document.createElement('div'); b.className = 'bat'; b.innerHTML = BAT;
+        b.style.left = ox + 'px'; b.style.top = oy + 'px';
+        b.style.setProperty('--dx', ((Math.random() - 0.5) * h.width * 0.9) + 'px');
+        b.style.setProperty('--dy', (-(h.height * 0.2 + Math.random() * h.height * 0.55)) + 'px');
+        b.style.setProperty('--t', (2.6 + Math.random() * 1.6) + 's');
+        b.style.setProperty('--d', (Math.random() * 0.6) + 's');
+        bats.appendChild(b);
+        (function (n) { setTimeout(function () { n.remove(); }, 5200); })(b);
+      }
     });
+    var taco = document.querySelector('.x-taco');
+    if (taco) taco.addEventListener('click', function () {
+      toast('Breakfast tacos at 8:30 AM Wednesday, Pennybacker conference room.');
+      if (reduce) return;
+      for (var i = 0; i < 14; i++) {
+        var t = document.createElement('span'); t.className = 'taco-rain'; t.textContent = '\uD83C\uDF2E';
+        t.style.left = (Math.random() * 94) + 'vw';
+        t.style.setProperty('--t', (1.8 + Math.random() * 1.6) + 's'); t.style.setProperty('--r', (Math.random() * 500 - 250) + 'deg');
+        t.style.animationDelay = (Math.random() * 0.6) + 's';
+        document.body.appendChild(t);
+        (function (n) { setTimeout(function () { n.remove(); }, 4500); })(t);
+      }
+    });
+    var bel = document.querySelector('.x-believe');
+    if (bel) bel.addEventListener('click', function () { toast('Be a goldfish.'); });
   })();
 
   // ---------- Pep-rally bunting ----------
@@ -991,6 +1086,10 @@
     }
     stage.appendChild(lane([0, 2, 4, 1, 3], 34, 0));
     stage.appendChild(lane([3, 0, 2, 4, 1], 42, -14));
+    var tg = document.getElementById('thToggle'), inl = stage.parentNode;
+    if (tg) tg.addEventListener('click', function () {
+      var on = inl.classList.toggle('paused'); tg.textContent = on ? 'Play' : 'Pause'; tg.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
   })();
 
   // ---------- F1 car launches the game ----------
@@ -1221,19 +1320,19 @@
         li.appendChild(pos); li.appendChild(nm); li.appendChild(sc); list.appendChild(li);
       });
     }
-    var boardTimer = null;
+    var boardTimer = null, useServer = false;
     async function loadBoard() {
       try {
-        var r = await fetch(APPS_SCRIPT_URL, { cache: 'no-store' });
+        var r = await fetch('/api/scores', { cache: 'no-store' });
+        if (!r.ok) throw new Error('no board');
         var rows = await r.json();
-        if (Array.isArray(rows)) renderBoard(rows);
-      } catch (err) { renderBoard(null, 'Leaderboard unavailable right now.'); }
+        if (!Array.isArray(rows)) throw new Error('no board');
+        useServer = true; renderBoard(rows); return true;
+      } catch (err) { useServer = false; return false; }
     }
     async function buildLeaderboard() {
-      if (APPS_SCRIPT_URL) {
-        loadBoard(); clearInterval(boardTimer); boardTimer = setInterval(loadBoard, 20000);
-        return;
-      }
+      if (await loadBoard()) { clearInterval(boardTimer); boardTimer = setInterval(loadBoard, 15000); return; }
+      // Not on the live site (for example the Claude link): use the Claude-hosted board if it's there.
       if (lbBuilt) return; lbBuilt = true;
       var db = await getDb();
       if (!db) { renderBoard(null, "The leaderboard isn't connected yet."); return; }
@@ -1248,11 +1347,13 @@
       if (!name) { st.textContent = 'Add your name first.'; return; }
       btn.disabled = true; st.textContent = 'Posting...';
       remember('kick_game_name', name);
-      if (APPS_SCRIPT_URL) {
+      if (useServer) {
         try {
-          await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ action: 'score', name: name, score: String(S.score) }).toString() });
-          st.textContent = 'Posted! You\'ll show up on the timing board if you made the top 10.';
-          setTimeout(loadBoard, 1500); setTimeout(loadBoard, 4000);
+          var r = await fetch('/api/scores', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: name, score: S.score }) });
+          if (!r.ok) throw new Error('post failed');
+          var rows = await r.json(); renderBoard(rows);
+          var on = rows.some(function (v) { return String(v.name).toLowerCase() === name.toLowerCase(); });
+          st.textContent = on ? "You're on the timing board!" : 'Posted! Keep going to crack the top 10.';
         } catch (err) { st.textContent = 'Could not post that right now. Try again.'; btn.disabled = false; }
         return;
       }
