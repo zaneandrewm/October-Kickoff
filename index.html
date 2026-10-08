@@ -182,7 +182,7 @@
 
   /* Game */
   .stage { position: relative; border-radius: 14px; overflow: hidden; background: #0B2530; }
-  #cv { display: block; width: 100%; height: auto; aspect-ratio: 720 / 260; touch-action: manipulation; outline-offset: -3px; }
+  #cv { display: block; width: 100%; height: auto; aspect-ratio: 720 / 260; touch-action: none; outline-offset: -3px; }
   .ovl { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: .7rem; padding: 1rem; background: rgba(11, 37, 48, .86); color: #fff; }
   .ovl[hidden] { display: none; }
   .ovl h3 { font-size: clamp(1.2rem, 3.4vw, 1.7rem); }
@@ -558,6 +558,25 @@
   .x-bam { margin-top: 1.4rem; padding: 1rem 1.3rem; background: var(--hilite); color: #0B2530; border-radius: 16px; font-size: clamp(1.05rem, 1.8vw, 1.3rem); line-height: 1.4; max-width: 46rem; }
   .x-bam b { font-weight: 900; }
 
+  .stage { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  dialog { overscroll-behavior: contain; }
+  .ovl { overflow-y: auto; }
+  .ovl .opts button { min-height: 46px; font-size: 1rem; }
+  .ovl .rank { font-weight: 700; color: var(--gold-2); font-size: 1.05rem; min-height: 1.2em; }
+  @media (max-width: 700px) {
+    dialog.wide { width: 100vw; max-width: 100vw; height: 100vh; height: 100dvh; max-height: 100vh; max-height: 100dvh; margin: 0; border-radius: 0; }
+    dialog.wide .dlg-in { padding: 1rem 1rem 2rem; }
+    .ovl { padding: .7rem .8rem; gap: .4rem; justify-content: center; }
+    .ovl h3 { font-size: 1.15rem; line-height: 1.1; }
+    .ovl p { font-size: .88rem; line-height: 1.3; }
+    .ovl .rank { font-size: .95rem; }
+    .ovl .opts { width: 100%; gap: .4rem; }
+    .ovl .opts button { min-height: 42px; font-size: .92rem; padding: .45rem .8rem; line-height: 1.2; }
+    .ovl .btn { padding: .65rem 1.2rem; font-size: .95rem; }
+    .ovl input[type=text] { padding: .55rem .8rem; }
+    .dlg-head h2 { font-size: 1.4rem; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero .nums, .hero .month, .star, .sun::before, .cloud, .coin, .coin b, .ticker-track, .pennant, .bob, .speed, .pop { animation: none; }
@@ -835,14 +854,14 @@
 <dialog id="gameDlg" class="wide" aria-labelledby="gTitle">
   <div class="dlg-in">
     <div class="dlg-head">
-      <div><h2 id="gTitle">Fastest Lap</h2><p>Jump the blockers, close the deals. Space, up arrow, or tap to jump.</p></div>
+      <div><h2 id="gTitle">Fastest Lap</h2><p id="gHint">Jump the blockers, grab tacos, close the deals.</p></div>
       <button class="x" type="button" id="gClose" aria-label="Close game">&#215;</button>
     </div>
     <div class="stage">
       <canvas id="cv" tabindex="0" aria-label="Fastest Lap game"></canvas>
       <div class="ovl" id="gStart">
         <h3>Green light. Ready to run the quarter?</h3>
-        <p>Jump over blockers like Ghosted and Procurement. Every few blockers you reach a deal checkpoint: answer the sales question to bank bonus points.</p>
+        <p>Hop the blockers (Ghosted, Procurement, I-35 traffic), grab breakfast tacos for bonus points, and answer the sales question at each checkpoint. It speeds up the longer you last.</p>
         <button class="btn" type="button" id="gGo">Start</button>
       </div>
       <div class="ovl" id="gQuiz" hidden>
@@ -853,6 +872,7 @@
       <div class="ovl" id="gOver" hidden>
         <h3 id="oTitle">Deal lost</h3>
         <p id="oMsg"></p>
+        <p id="oRank" class="rank"></p>
         <input type="text" id="oName" maxlength="20" placeholder="Your name" aria-label="Your name for the leaderboard">
         <div class="row-btns" style="margin-top:0;justify-content:center">
           <button class="btn" type="button" id="oSubmit">Post to leaderboard</button>
@@ -1200,37 +1220,104 @@
   (function () {
     var dlg = document.getElementById('gameDlg');
     var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
-    var W = 720, H = 260, G = 214, PX = 60, PW = 90, PH = 25;
+    var W = 720, H = 260, G = 214, PX = 60, PW = 90, PH = 25, CS = 0.24, small = false;
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     var el = function (id) { return document.getElementById(id); };
     var gStart = el('gStart'), gQuiz = el('gQuiz'), gOver = el('gOver');
-    var lbBuilt = false;
+    var lbBuilt = false, healed = false;
 
-    var LABELS = ['Cold lead', 'Ghosted', 'Procurement', 'Redlines', 'No budget', 'Legal review', 'Price check', 'Stalled deal', 'Vendor freeze'];
+    // Blockers: label, emoji, and what the crash says. Add or swap freely.
+    var OBS = [
+      { l: 'Ghosted', e: '\ud83d\udc7b', c: 'They left you on read. The ghost wins.' },
+      { l: 'Procurement', e: '\ud83d\udccb', c: 'Procurement has 47 follow-up questions.' },
+      { l: 'Legal review', e: '\ud83d\udcdc', c: 'Legal found a comma. Back to redlines.' },
+      { l: 'Reply-all', e: '\ud83d\udce7', c: 'You hit reply-all. Everyone saw it.' },
+      { l: 'Out of office', e: '\ud83c\udf34', c: 'Their auto-reply is having a great vacation.' },
+      { l: "You're on mute", e: '\ud83d\udd07', c: "We couldn't hear you. You were on mute." },
+      { l: 'Wrong Zoom link', e: '\ud83d\udd17', c: 'Stuck in the waiting room. Forever.' },
+      { l: 'I-35 traffic', e: '\ud83d\udea7', c: "You've been on I-35 since Tuesday." },
+      { l: 'Scooter!', e: '\ud83d\udef4', c: 'An Austin scooter strikes again.' },
+      { l: 'Budget freeze', e: '\ud83e\udd76', c: 'Brrr. The budget froze.' },
+      { l: 'Circle back', e: '\ud83d\udd04', c: 'You circled back. Still circling.' },
+      { l: 'New stakeholder', e: '\ud83d\udc54', c: 'A new stakeholder appeared at the last minute.' },
+      { l: 'Calendar Tetris', e: '\ud83d\udcc5', c: 'Calendar Tetris. You lost.' },
+      { l: 'No budget', e: '\ud83d\udcb8', c: 'No budget this year. Maybe next.' },
+      { l: 'Redlines', e: '\ud83d\udcdd', c: 'So. Many. Redlines.' }
+    ];
+    var FASTER = ['Faster!', 'Hold on to your tacos', 'Pedal to the metal', 'Now we are cooking', 'Full send'];
+    var MSGS = ['Pipeline looking healthy', 'Your manager just smiled', 'CRM updated (somehow)', 'Forecast moved to commit', 'Someone said "synergy"', 'Taco break soon', 'Slack is lighting up (the good kind)', 'The VP just noticed'];
+    var CHEERS = ['Closed won! +100', 'Procurement approved it. Somehow. +100', 'Champion confirmed. +100', 'Legal said "looks fine." +100', 'Forecast moved to commit. +100'];
+    var WRONG = ['Not quite. The CRM is disappointed.', 'Ouch. That is a closed lost.', 'Bold guess. Wrong, but bold.'];
+    var TITLES = ['Deal lost', 'Closed lost', 'Back to discovery', 'Forecast: yikes'];
+    function rank(sc) { return sc < 150 ? 'Still finding the gas pedal' : sc < 350 ? 'Pipeline builder' : sc < 600 ? 'Quota crusher' : sc < 900 ? "President's Club energy" : 'Legend. Please take a break.'; }
+
     // Sales questions. To add or swap one: { q: 'Question', a: 'Right answer', w: ['Wrong answer', 'Another wrong answer'] }
     var QS = [
       { q: 'What does ARR stand for?', a: 'Annual Recurring Revenue', w: ['Average Revenue Rate', 'Account Renewal Ratio'] },
       { q: 'What does QBR usually stand for?', a: 'Quarterly Business Review', w: ['Quota Balance Report', 'Quick Buyer Reply'] },
       { q: 'Net revenue retention above 100% means...', a: 'Existing customers are growing revenue', w: ['Every customer renewed', 'New logos beat quota'] },
-      { q: 'Which is a leading indicator of pipeline health?', a: 'Pipeline coverage', w: ['Last year\'s revenue', 'Office snack budget'] },
+      { q: 'Which is a leading indicator of pipeline health?', a: 'Pipeline coverage', w: ["Last year's revenue", 'Office snack budget'] },
       { q: 'In MEDDIC, what does the first M stand for?', a: 'Metrics', w: ['Meetings', 'Margin'] },
       { q: 'What does CAC stand for?', a: 'Customer Acquisition Cost', w: ['Contract Approval Cycle', 'Close And Collect'] },
       { q: 'An upsell is...', a: 'Selling a higher tier or more to an existing customer', w: ['Selling to a brand new logo', 'Discounting to close'] },
       { q: 'A champion in a deal is...', a: 'An internal advocate at the buyer', w: ['Your top rep', 'The final signer'] },
       { q: 'Quota attainment is...', a: 'Bookings divided by quota', w: ['Pipeline divided by quota', 'Calls made divided by goal'] },
-      { q: 'Best reply to "We need to think about it"?', a: 'Ask what specifically they need to think through', w: ['Offer a bigger discount right away', 'Say great and wait for their call'] }
+      { q: 'Best reply to "We need to think about it"?', a: 'Ask what specifically they need to think through', w: ['Offer a bigger discount right away', 'Say great and wait for their call'] },
+      { q: 'Someone says "let\'s circle back." Best move?', a: 'Put a date on the calendar', w: ['Wait patiently forever', 'Reply-all with confetti'] },
+      { q: 'How many stakeholders does a deal need?', a: 'Whoever signs, plus the 6 who appear at the end', w: ['Exactly one, forever', 'None. It closes itself.'] },
+      { q: 'Which animal lives under the Congress Avenue Bridge in Austin?', a: 'Bats', w: ['Flamingos', 'Armadillos in tiny hats'] },
+      { q: 'What fuels Austin before 9 AM?', a: 'Breakfast tacos', w: ['Kale smoothies', 'Pure optimism'] },
+      { q: 'You said you would send a follow-up. When?', a: 'Today, while it is fresh', w: ['After the quarter ends', 'When the stars align'] },
+      { q: 'What does pipeline coverage tell you?', a: 'How much pipeline you have versus your target', w: ['How many meetings fit in a day', 'Whether the CRM is open'] },
+      { q: 'The mute button on a customer call is best used...', a: 'Knowing where it is and checking it often', w: ['Never. Just speak louder.', 'Always. Mystery is good.'] },
+      { q: "In BANT, what does the A stand for?", a: "Authority", w: ["Agenda", "Appetite"] },
+      { q: "What does SQL stand for in sales?", a: "Sales Qualified Lead", w: ["Super Quick Lunch", "Standard Quote Letter"] },
+      { q: "What does MQL stand for?", a: "Marketing Qualified Lead", w: ["Most Questionable Lead", "Monthly Quota Limit"] },
+      { q: "What does ICP stand for?", a: "Ideal Customer Profile", w: ["Instant Close Process", "Internal Call Plan"] },
+      { q: "What does ACV stand for?", a: "Annual Contract Value", w: ["Average Close Velocity", "Account Capacity View"] },
+      { q: "What is churn?", a: "Customers who leave or cancel", w: ["New customers who sign up", "Deals stuck in legal"] },
+      { q: "What does land and expand mean?", a: "Win a first deal, then grow the account", w: ["Land a plane, then expand lunch", "Sell everything on day one"] },
+      { q: "What is multi-threading a deal?", a: "Building relationships with several stakeholders", w: ["Sending one email 12 times", "Using two phones"] },
+      { q: "What is a discovery call for?", a: "Learning the customer's real problems", w: ["Pitching every feature", "Practicing your slides"] },
+      { q: "What is win rate?", a: "Deals won divided by deals won and lost", w: ["Pipeline divided by quota", "Calls divided by coffee"] },
+      { q: "Best way to end a customer call?", a: "Agree on clear next steps", w: ["Say talk soon and hope", "Share a new 40-slide deck"] },
+      { q: "What makes a great demo?", a: "Solving the customer's actual problem", w: ["Showing every feature you have", "Narrating the settings menu"] },
+      { q: "Your champion goes quiet. First move?", a: "Reach out with something helpful", w: ["Send 14 emails in an hour", "Assume the deal is dead"] },
+      { q: "How many times should you say \"per my last email\"?", a: "Zero. Be kind.", w: ["As many as needed", "Only on Fridays"] },
+      { q: "Complete our value: Customer ____", a: "Inspired", w: ["Obsessed", "Adjacent"] },
+      { q: "Complete our value: Design ____", a: "Matters", w: ["Optional", "Later"] },
+      { q: "Complete our value: Committed to give ____", a: "Back", w: ["Up", "Discounts"] },
+      { q: "Complete our value: Built for ____", a: "Growth", w: ["Speed", "Meetings"] },
+      { q: "What does WP stand for in WP Engine?", a: "WordPress", w: ["Web Pizza", "Wide Pipeline"] },
+      { q: "Which lake runs through downtown Austin?", a: "Lady Bird Lake", w: ["Lake Wobegon", "Lake Tahoe"] },
+      { q: "Austin is the Live Music Capital of the...", a: "World", w: ["County", "Block"] },
+      { q: "What is Austin's unofficial motto?", a: "Keep Austin Weird", w: ["Keep Austin Quiet", "Keep Austin Beige"] },
+      { q: "Best way to celebrate a teammate's win?", a: "Give them a shout-out in Thrive", w: ["Say nothing and hope they notice", "Schedule a meeting about the meeting"] },
+      { q: "What does a good forecast need?", a: "Honest, well-supported deal stages", w: ["Optimism and confetti", "A very confident font"] }
     ];
 
-    var S = { mode: 'idle', y: G, vy: 0, dist: 0, bonus: 0, score: 0, speed: 300, obs: [], spawnIn: 1, passed: 0, quizAt: 2, last: 0, raf: 0, qUsed: [] };
+    var S = { mode: 'idle', y: G, vy: 0, dist: 0, bonus: 0, score: 0, speed: 300, obs: [], tacos: [], pops: [], spawnIn: 1, passed: 0, quizAt: 2, last: 0, raf: 0, qUsed: [], msg: '', msgT: 0, nextMsg: 150, msgI: 0, lvl: 0 };
     var skyline = [], total = 0;
-    (function () { var x = 0; while (x < W + 200) { var w = 28 + Math.random() * 40, h = 30 + Math.random() * 90; skyline.push({ x: x, w: w, h: h }); x += w + 4 + Math.random() * 10; } total = x; })();
+    function setup() {
+      small = window.innerWidth < 700;
+      W = small ? 480 : 720; H = small ? 500 : 260; G = H - (small ? 60 : 46);
+      PX = small ? 36 : 60; CS = small ? 0.22 : 0.24; PW = Math.round(375 * CS); PH = Math.round(104 * CS);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = W * dpr; cv.height = H * dpr; cv.style.aspectRatio = W + ' / ' + H; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      skyline = []; var x = 0;
+      while (x < W + 200) { var w = 28 + Math.random() * 40, h = 30 + Math.random() * (small ? 150 : 90); skyline.push({ x: x, w: w, h: h }); x += w + 4 + Math.random() * 10; }
+      total = x; S.y = G;
+      var hint = el('gHint'); if (hint) hint.textContent = 'Jump the blockers, grab tacos, close the deals. ' + (small ? 'Tap to jump.' : 'Space, up arrow, or tap to jump.');
+    }
+    setup();
+    window.addEventListener('resize', function () { if (dlg.open && (S.mode === 'idle' || S.mode === 'over')) setup(); });
 
     function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
     function show(node) { [gStart, gQuiz, gOver].forEach(function (n) { n.hidden = (n !== node); }); }
 
     function startRun() {
-      S.mode = 'run'; S.y = G; S.vy = 0; S.dist = 0; S.bonus = 0; S.score = 0; S.speed = 300; S.obs = []; S.spawnIn = 1; S.passed = 0; S.quizAt = 2; S.last = performance.now();
+      S.mode = 'run'; S.y = G; S.vy = 0; S.dist = 0; S.bonus = 0; S.score = 0; S.speed = 300; S.obs = []; S.tacos = []; S.pops = []; S.spawnIn = 1; S.passed = 0; S.quizAt = 2;
+      S.msg = ''; S.msgT = 0; S.lvl = 0; S.nextMsg = 150; S.msgI = Math.floor(Math.random() * MSGS.length); S.last = performance.now();
       show(null); cv.focus();
     }
     function jump() {
@@ -1238,20 +1325,23 @@
       if (S.mode === 'run' && S.y >= G - 0.5) S.vy = -780;
     }
     function spawn() {
-      var h = 30 + Math.random() * 26, w = 34 + Math.random() * 14;
-      S.obs.push({ x: W + 20, w: w, h: h, label: LABELS[Math.floor(Math.random() * LABELS.length)], done: false });
+      var h = (small ? 34 : 30) + Math.random() * 26, w = (small ? 42 : 36) + Math.random() * 10;
+      var o = OBS[Math.floor(Math.random() * OBS.length)];
+      S.obs.push({ x: W + 20, w: w, h: h, label: o.l, e: o.e, c: o.c, done: false });
+      if (Math.random() < 0.55) S.tacos.push({ x: W + 20 + w / 2, y: Math.max(G - 118, G - h - 46 - Math.random() * 16) });
     }
-    function gameOver(reason) {
-      S.mode = 'over';
-      el('oTitle').textContent = 'Deal lost';
-      el('oMsg').textContent = reason + ' Final score: ' + S.score + '.';
+    function gameOver(text) {
+      S.mode = 'over'; S.score = Math.floor(S.dist / 12) + S.bonus;
+      el('oTitle').textContent = TITLES[Math.floor(Math.random() * TITLES.length)];
+      el('oMsg').textContent = text + ' Final score: ' + S.score + '.';
+      el('oRank').textContent = 'Your title: ' + rank(S.score);
       el('oName').value = remember('kick_game_name') || remember('kick_name') || '';
       el('oStatus').textContent = '';
       el('oSubmit').disabled = false;
       show(gOver);
     }
     function quiz() {
-      S.mode = 'quiz'; S.obs = []; S.y = G; S.vy = 0;
+      S.mode = 'quiz'; S.obs = []; S.tacos = []; S.y = G; S.vy = 0;
       var pool = QS.map(function (_, i) { return i; }).filter(function (i) { return S.qUsed.indexOf(i) < 0; });
       if (!pool.length) { S.qUsed = []; pool = QS.map(function (_, i) { return i; }); }
       var idx = pool[Math.floor(Math.random() * pool.length)]; S.qUsed.push(idx);
@@ -1264,10 +1354,10 @@
         b.addEventListener('click', function () {
           if (S.mode !== 'quiz') return;
           if (opt === item.a) {
-            S.bonus += 100; S.mode = 'pause'; el('qMsg').textContent = 'Closed won! +100';
-            setTimeout(function () { if (S.mode === 'pause') { S.quizAt = S.passed + 4; S.spawnIn = 1.2; S.last = performance.now(); S.mode = 'run'; show(null); cv.focus(); } }, 900);
+            S.bonus += 100; S.mode = 'pause'; el('qMsg').textContent = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+            setTimeout(function () { if (S.mode === 'pause') { S.quizAt = S.passed + 4; S.spawnIn = 1.2; S.last = performance.now(); S.mode = 'run'; show(null); cv.focus(); } }, 1100);
           } else {
-            gameOver('Not quite. The answer was "' + item.a + '".');
+            gameOver(WRONG[Math.floor(Math.random() * WRONG.length)] + ' The answer was "' + item.a + '".');
           }
         });
         box.appendChild(b);
@@ -1275,18 +1365,30 @@
       show(gQuiz);
     }
     function update(dt) {
-      S.speed = Math.min(620, 300 + S.dist / 40);
+      var k = small ? 0.86 : 1;
+      var base = Math.min(small ? 700 : 780, 300 + S.dist / 24);
+      S.speed = k * base;
+      var lvl = Math.floor((base - 300) / 90);
+      if (lvl > S.lvl) { S.lvl = lvl; S.msg = FASTER[(lvl - 1) % FASTER.length]; S.msgT = 1.7; }
       S.dist += S.speed * dt;
       S.vy += 2300 * dt; S.y += S.vy * dt; if (S.y >= G) { S.y = G; S.vy = 0; }
-      S.spawnIn -= dt; if (S.spawnIn <= 0) { spawn(); S.spawnIn = 1.0 + Math.random() * 0.9; }
+      S.spawnIn -= dt; if (S.spawnIn <= 0) { spawn(); S.spawnIn = (1.0 + Math.random() * 0.9) * Math.max(0.8, 1 - (S.speed / k - 300) / 1000); }
+      var px1 = PX + 5, px2 = PX + PW - 5, py1 = S.y - PH + 5, py2 = S.y;
       for (var i = S.obs.length - 1; i >= 0; i--) {
         var o = S.obs[i]; o.x -= S.speed * dt;
         if (!o.done && o.x + o.w < PX) { o.done = true; S.passed++; }
         if (o.x + o.w < -60) { S.obs.splice(i, 1); continue; }
-        var px1 = PX + 5, px2 = PX + PW - 5, py1 = S.y - PH + 5, py2 = S.y;
-        if (px2 > o.x + 4 && px1 < o.x + o.w - 4 && py2 > G - o.h + 4 && py1 < G) { gameOver('You ran into "' + o.label + '".'); S.score = Math.floor(S.dist / 12) + S.bonus; el('oMsg').textContent = 'You ran into "' + o.label + '". Final score: ' + S.score + '.'; return; }
+        if (px2 > o.x + 4 && px1 < o.x + o.w - 4 && py2 > G - o.h + 4 && py1 < G) { gameOver(o.c); return; }
       }
+      for (var j = S.tacos.length - 1; j >= 0; j--) {
+        var t = S.tacos[j]; t.x -= S.speed * dt;
+        if (t.x < -40) { S.tacos.splice(j, 1); continue; }
+        if (t.x + 13 > PX && t.x - 13 < PX + PW && t.y + 13 > S.y - PH - 6 && t.y - 13 < S.y + 4) { S.tacos.splice(j, 1); S.bonus += 25; S.pops.push({ x: t.x, y: t.y, t: 0.9 }); }
+      }
+      for (var q = S.pops.length - 1; q >= 0; q--) { S.pops[q].t -= dt; S.pops[q].y -= 42 * dt; if (S.pops[q].t <= 0) S.pops.splice(q, 1); }
+      if (S.msgT > 0) S.msgT -= dt;
       S.score = Math.floor(S.dist / 12) + S.bonus;
+      if (S.score >= S.nextMsg) { S.msg = MSGS[S.msgI++ % MSGS.length]; S.msgT = 2.2; S.nextMsg += 150; }
       if (S.passed >= S.quizAt) quiz();
     }
     function draw() {
@@ -1300,10 +1402,10 @@
       var gOff = (S.dist % 40);
       ctx.fillStyle = '#1B5A72'; for (var x = -gOff; x < W; x += 40) ctx.fillRect(x, G + 12, 18, 2);
       // player: the F1 car
-      var cs = 0.24, tilt = Math.max(-0.14, Math.min(0.14, S.vy / 5500));
+      var tilt = Math.max(-0.14, Math.min(0.14, S.vy / 5500));
       ctx.save();
       ctx.translate(PX + PW / 2, S.y - 10); ctx.rotate(tilt); ctx.translate(-PW / 2, 10);
-      ctx.scale(cs, cs); ctx.translate(-14, -107);
+      ctx.scale(CS, CS); ctx.translate(-14, -107);
       ctx.fillStyle = '#FFD46B';
       ctx.fillRect(14, 30, 62, 7); ctx.fillRect(20, 24, 8, 40); ctx.fillRect(56, 36, 7, 30);
       ctx.fill(new Path2D('M50 102 L50 68 Q62 60 92 54 L122 47 L134 34 Q146 30 155 36 L163 49 L212 53 Q226 51 242 55 L302 67 L360 77 Q398 83 430 91 L432 95 Q430 99 420 99 L300 102 L200 104 L60 104 Z'));
@@ -1319,14 +1421,27 @@
         ctx.fillStyle = '#06161D'; ctx.beginPath(); ctx.arc(w[0], w[1], w[5], 0, 6.283); ctx.fill();
       });
       ctx.restore();
-      // obstacles
-      ctx.textAlign = 'center'; ctx.font = '600 12px Figtree, Segoe UI, sans-serif';
+      // blockers: a block, an emoji, and a label
+      var lf = small ? 15 : 12;
       S.obs.forEach(function (o) {
         ctx.fillStyle = '#FFB84D'; ctx.fillRect(o.x, G - o.h, o.w, o.h);
-        ctx.fillStyle = '#fff'; ctx.fillText(o.label, o.x + o.w / 2, G - o.h - 6);
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = Math.floor(o.w * 0.78) + 'px serif'; ctx.fillStyle = '#fff';
+        ctx.fillText(o.e, o.x + o.w / 2, G - o.h / 2 + 1);
+        ctx.textBaseline = 'alphabetic'; ctx.font = '700 ' + lf + 'px Figtree, Segoe UI, sans-serif';
+        ctx.fillText(o.label, o.x + o.w / 2, G - o.h - 7);
       });
-      ctx.textAlign = 'right'; ctx.font = '700 16px Bricolage Grotesque, Segoe UI, sans-serif'; ctx.fillStyle = '#fff';
-      ctx.fillText('Score ' + S.score, W - 14, 26);
+      // breakfast tacos
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = (small ? 30 : 26) + 'px serif';
+      S.tacos.forEach(function (t) { ctx.fillText('\ud83c\udf2e', t.x, t.y + Math.sin((S.dist + t.x) / 40) * 3); });
+      ctx.textBaseline = 'alphabetic';
+      S.pops.forEach(function (p) { ctx.globalAlpha = Math.max(0, Math.min(1, p.t * 1.6)); ctx.fillStyle = '#FFD46B'; ctx.font = '800 ' + (small ? 20 : 17) + 'px Bricolage Grotesque, Segoe UI, sans-serif'; ctx.fillText('+25', p.x, p.y); ctx.globalAlpha = 1; });
+      // little commentary
+      if (S.msgT > 0 && S.mode === 'run') {
+        ctx.globalAlpha = Math.max(0, Math.min(1, S.msgT)); ctx.fillStyle = '#FFF5E1'; ctx.font = 'italic ' + (small ? 19 : 17) + 'px Instrument Serif, Georgia, serif';
+        ctx.fillText(S.msg, W / 2, small ? 58 : 50); ctx.globalAlpha = 1;
+      }
+      ctx.textAlign = 'right'; ctx.font = '700 ' + (small ? 18 : 16) + 'px Bricolage Grotesque, Segoe UI, sans-serif'; ctx.fillStyle = '#fff';
+      ctx.fillText('Score ' + S.score, W - 14, small ? 30 : 26);
     }
     function frame(now) {
       var dt = Math.min(0.033, (now - S.last) / 1000); S.last = now;
@@ -1360,13 +1475,24 @@
       useLocal = true; renderBoard(localRows().sort(byScore), 'No scores yet. Be the first.');
       el('lbNote').textContent = 'The shared board is offline right now, so this shows scores from this device only.';
     }
+    // If the shared board was reset (a redeploy), a returning player quietly puts their own best score back.
+    function heal(rows) {
+      if (healed) return; healed = true;
+      try {
+        var mine = JSON.parse(localStorage.getItem('kick_my_best') || 'null'); if (!mine || !mine.name || !mine.score) return;
+        var f = rows.filter(function (r) { return String(r.name).toLowerCase() === String(mine.name).toLowerCase(); })[0];
+        if (f && f.score >= mine.score) return;
+        fetch('/api/scores', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: mine.name, score: mine.score }) })
+          .then(function (r) { return r.ok ? r.json() : null; }).then(function (r2) { if (r2) renderBoard(r2); }).catch(function () {});
+      } catch (e) { /* ignore */ }
+    }
     async function loadBoard() {
       try {
         var r = await fetch('/api/scores', { cache: 'no-store' });
         if (!r.ok) throw new Error('no board');
         var rows = await r.json();
         if (!Array.isArray(rows)) throw new Error('no board');
-        useServer = true; useLocal = false; el('lbNote').textContent = ''; renderBoard(rows); return true;
+        useServer = true; useLocal = false; el('lbNote').textContent = ''; renderBoard(rows); heal(rows); return true;
       } catch (err) { useServer = false; return false; }
     }
     async function buildLeaderboard() {
@@ -1392,6 +1518,7 @@
           var r = await fetch('/api/scores', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: name, score: S.score }) });
           if (!r.ok) throw new Error('post failed');
           var rows = await r.json(); renderBoard(rows);
+          try { var mb = JSON.parse(localStorage.getItem('kick_my_best') || 'null'); var keep = (mb && String(mb.name).toLowerCase() === name.toLowerCase()) ? Math.max(mb.score, S.score) : S.score; localStorage.setItem('kick_my_best', JSON.stringify({ name: name, score: keep })); } catch (e2) { /* ignore */ }
           var on = rows.some(function (v) { return String(v.name).toLowerCase() === name.toLowerCase(); });
           st.textContent = on ? "You're on the timing board!" : 'Posted! Keep going to crack the top 10.';
         } catch (err) { st.textContent = 'Could not post that right now. Try again.'; btn.disabled = false; }
@@ -1415,7 +1542,7 @@
     function showLocal_note() { useLocal = true; el('lbNote').textContent = 'The shared board is offline right now, so this shows scores from this device only.'; }
 
     function open() {
-      S.mode = 'idle'; S.dist = 0; S.obs = []; S.score = 0; S.y = G; show(gStart);
+      setup(); S.mode = 'idle'; S.dist = 0; S.obs = []; S.tacos = []; S.pops = []; S.score = 0; S.y = G; show(gStart);
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
       S.last = performance.now(); cancelAnimationFrame(S.raf); S.raf = requestAnimationFrame(frame);
       buildLeaderboard();
